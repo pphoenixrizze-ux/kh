@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market and Marketing Feasibility Analysis</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .dynamic-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dynamic-field input {
+            flex: 1;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+        .age-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .competitor-rating {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .market-share-year {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .short-term-goals {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .short-term-goals input {
+            flex: 1;
+        }
+        .price-comparison {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .percentage-input {
+            display: none;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Market and Marketing Feasibility Analysis</h1>
+            <p>This section aims to provide a structured assessment of your project’s market potential and the effectiveness of its proposed marketing approach. Through carefully designed questions, you will evaluate market size, growth trends, customer segments, and competitive dynamics, as well as promotional and positioning strategies. The insights gathered will not only clarify the attractiveness of your target market but also highlight the most effective pathways to reach and retain customers. Ultimately, this analysis will serve as a cornerstone for shaping a robust business model and guiding strategic decision-making.</p>
+
+            <div class="section-title">Target Market Analysis</div>
+            
+            <div class="form-group">
+                <label for="market-size">What is the total market size your project targets? (Required)</label>
+                <p>Please estimate in financial value (e.g., 10 million)</p>
+                <input type="number" id="market-size" placeholder="Enter estimated value">
+            </div>
+
+            <div class="form-group">
+                <label for="growth-rate">What are the expected annual growth rates in this market? (Required)</label>
+                <p>Please answer as a percentage (e.g., 5% annually)</p>
+                <input type="number" id="growth-rate" placeholder="Enter growth rate percentage"> %
+            </div>
+
+            <div class="form-group">
+                <label>What are the most prominent current and future trends affecting this market as a whole? (Optional)</label>
+                <p>Examples: Digital transformation, increasing environmental awareness, changes in consumption patterns</p>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="trend1" name="market-trends" value="digital">
+                    <label for="trend1">Digital transformation</label><br>
+                    <input type="checkbox" id="trend2" name="market-trends" value="environmental">
+                    <label for="trend2">Environmental awareness</label><br>
+                    <input type="checkbox" id="trend3" name="market-trends" value="consumption">
+                    <label for="trend3">Changes in consumption patterns</label><br>
+                    <input type="checkbox" id="trend4" name="market-trends" value="other">
+                    <label for="trend4">Other</label>
+                </div>
+                <div id="other-trend-container" style="display: none;">
+                    <label for="other-trend">Please specify other trends:</label>
+                    <textarea id="other-trend"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What are the key characteristics of the target market? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="characteristic1" name="market-characteristics" value="seasonal">
+                    <label for="characteristic1">Seasonal: (Is demand affected by specific seasons or times? Example: Heating sales increase in winter)</label><br>
+                    <input type="checkbox" id="characteristic2" name="market-characteristics" value="price-sensitive">
+                    <label for="characteristic2">Price sensitive: (Is the purchase decision in this market heavily influenced by price? Example: Customers look for the cheapest options)</label><br>
+                    <input type="checkbox" id="characteristic3" name="market-characteristics" value="demographic">
+                    <label for="characteristic3">Demographic: (Is there a focus on a specific age group, gender, or income level? Example: Market targeting youth, high-income earners)</label><br>
+                    <input type="checkbox" id="characteristic4" name="market-characteristics" value="geographic">
+                    <label for="characteristic4">Geographic: (Is there a focus on a specific geographical area? Example: Major cities market, rural areas)</label><br>
+                    <input type="checkbox" id="characteristic5" name="market-characteristics" value="other-char">
+                    <label for="characteristic5">Other characteristics</label>
+                </div>
+                <div id="other-char-container" style="display: none;">
+                    <label for="other-char">Please specify other characteristics and factors not mentioned:</label>
+                    <textarea id="other-char"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there specific regulatory, legal, or cultural constraints that significantly affect market entry or operation? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="constraints-yes" name="market-constraints" value="yes">
+                    <label for="constraints-yes">Yes</label>
+                    <input type="radio" id="constraints-no" name="market-constraints" value="no">
+                    <label for="constraints-no">No</label>
+                </div>
+            </div>
+
+            <div class="section-title">Customer Analysis</div>
+            
+            <div class="form-group">
+                <label>Who is the ideal customer (Persona) for your project? (Required)</label>
+                <div class="age-range">
+                    <label for="age-from">Age range: from</label>
+                    <input type="number" id="age-from" placeholder="Age" style="width: 80px;">
+                    <label for="age-to">to</label>
+                    <input type="number" id="age-to" placeholder="Age" style="width: 80px;">
+                </div>
+                
+                <label>Gender:</label>
+                <div class="radio-group">
+                    <input type="radio" id="gender-male" name="customer-gender" value="male">
+                    <label for="gender-male">Male</label>
+                    <input type="radio" id="gender-female" name="customer-gender" value="female">
+                    <label for="gender-female">Female</label>
+                    <input type="radio" id="gender-both" name="customer-gender" value="both">
+                    <label for="gender-both">Both</label>
+                </div>
+                
+                <label>Income level:</label>
+                <div class="radio-group">
+                    <input type="radio" id="income-low" name="customer-income" value="low">
+                    <label for="income-low">Low</label>
+                    <input type="radio" id="income-medium" name="customer-income" value="medium">
+                    <label for="income-medium">Medium</label>
+                    <input type="radio" id="income-high" name="customer-income" value="high">
+                    <label for="income-high">High</label>
+                </div>
+                
+                <label for="interests">Interests and behaviors: (Example: Prefers online shopping, interested in sustainability, looks for value for money)</label>
+                <textarea id="interests"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="potential-customers">How many potential customers (estimated) can you reach in the initial phase? (Required)</label>
+                <input type="number" id="potential-customers" placeholder="Enter number of potential customers">
+            </div>
+
+            <div class="form-group">
+                <label for="product-features-needs">What are the basic features of your product/service and how do they address customer needs and pain points? (Required)</label>
+                <textarea id="product-features-needs" placeholder="Describe product features and how they address customer needs"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What is their ability to pay for the proposed product/service? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="payment-low" name="payment-ability" value="low">
+                    <label for="payment-low">Low</label>
+                    <input type="radio" id="payment-medium" name="payment-ability" value="medium">
+                    <label for="payment-medium">Medium</label>
+                    <input type="radio" id="payment-high" name="payment-ability" value="high">
+                    <label for="payment-high">High</label>
+                </div>
+                <label for="payment-explanation">Please clarify based on the value provided and expected price:</label>
+                <textarea id="payment-explanation"></textarea>
+            </div>
+
+            <div class="section-title">Competitor Analysis</div>
+            
+            <div class="form-group">
+                <label for="competitors-location">Where are their main geographical locations concentrated (Are they local, regional, international)? (Required)</label>
+                <textarea id="competitors-location"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What are the main strengths and weaknesses of each of the main competitors? (SWOT Analysis) (Required)</label>
+                <label for="competitors-strengths">Strengths (Example: Strong distribution network, well-known brand, advanced technology):</label>
+                <textarea id="competitors-strengths"></textarea>
+                <label for="competitors-weaknesses">Weaknesses (Example: High prices, poor customer service, lack of innovation, limited distribution channels):</label>
+                <textarea id="competitors-weaknesses"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="pricing-strategies">What pricing strategies do the main competitors follow? (Optional)</label>
+                <textarea id="pricing-strategies"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What are the main marketing strategies they use to reach customers? (Please select what applies or specify) (Optional)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="strategy1" name="marketing-strategies" value="digital-ads">
+                    <label for="strategy1">Digital ads (social media, search)</label><br>
+                    <input type="checkbox" id="strategy2" name="marketing-strategies" value="discounts">
+                    <label for="strategy2">Discounts and promotional offers</label><br>
+                    <input type="checkbox" id="strategy3" name="marketing-strategies" value="agents">
+                    <label for="strategy3">Agents/distributors</label><br>
+                    <input type="checkbox" id="strategy4" name="marketing-strategies" value="partnerships">
+                    <label for="strategy4">Strategic partnerships</label><br>
+                    <input type="checkbox" id="strategy5" name="marketing-strategies" value="pr">
+                    <label for="strategy5">Public relations</label><br>
+                    <input type="checkbox" id="strategy6" name="marketing-strategies" value="community">
+                    <label for="strategy6">Community building</label><br>
+                    <input type="checkbox" id="strategy7" name="marketing-strategies" value="other-strategy">
+                    <label for="strategy7">Other</label>
+                </div>
+                <div id="other-strategy-container" style="display: none;">
+                    <label for="other-strategy">Please specify other strategies:</label>
+                    <textarea id="other-strategy"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is there strong indirect competition (alternative products or services that meet the same customer need in a different way)? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="indirect-yes" name="indirect-competition" value="yes">
+                    <label for="indirect-yes">Yes</label>
+                    <input type="radio" id="indirect-no" name="indirect-competition" value="no">
+                    <label for="indirect-no">No</label>
+                </div>
+                <div id="indirect-explanation-container" style="display: none;">
+                    <label for="indirect-explanation">If yes, what are these alternative products/services?</label>
+                    <textarea id="indirect-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Supply and Demand Analysis</div>
+            
+            <div class="form-group">
+                <label>Is there a clear gap (shortage or surplus) between current supply and demand in the target market? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="gap-yes" name="supply-demand-gap" value="yes">
+                    <label for="gap-yes">Yes (supply shortage)</label>
+                    <input type="radio" id="gap-no" name="supply-demand-gap" value="no">
+                    <label for="gap-no">No (relative balance)</label>
+                    <input type="radio" id="gap-unknown" name="supply-demand-gap" value="unknown">
+                    <label for="gap-unknown">Unknown</label>
+                </div>
+                <label for="gap-explanation">Please briefly explain (what indicates this gap or its balance?):</label>
+                <textarea id="gap-explanation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Based on your analysis, is the market saturated or are there opportunities for growth and expansion? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="saturated-yes" name="market-saturation" value="yes">
+                    <label for="saturated-yes">Saturated</label>
+                    <input type="radio" id="saturated-no" name="market-saturation" value="no">
+                    <label for="saturated-no">Growth opportunities</label>
+                    <input type="radio" id="saturated-unknown" name="market-saturation" value="unknown">
+                    <label for="saturated-unknown">Unknown</label>
+                </div>
+                <label for="saturation-explanation">Please explain the reasons that led to this assessment:</label>
+                <textarea id="saturation-explanation"></textarea>
+            </div>
+
+            <div class="section-title">Product/Service Value Proposition</div>
+            
+            <div class="form-group">
+                <label for="value-proposition">What is the unique value that distinguishes your product or service from competitors, and why would customers choose it? (Required)</label>
+                <textarea id="value-proposition" placeholder="Describe your unique value proposition"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Future Development Plans: Do you have plans to develop or modify the product/service in the future to keep up with market changes or face competition? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="dev-yes" name="dev-plans" value="yes">
+                    <label for="dev-yes">Yes</label>
+                    <input type="radio" id="dev-no" name="dev-plans" value="no">
+                    <label for="dev-no">No</label>
+                </div>
+                <div id="dev-explanation-container" style="display: none;">
+                    <label for="dev-explanation">If yes, please briefly explain (Example: adding new features, improving design, offering different packages):</label>
+                    <textarea id="dev-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Pricing Strategy</div>
+            
+            <div class="form-group">
+                <label>Proposed Price: What is the proposed price per unit/service? Is it appropriate for the target segment and their purchasing power? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="price-appropriate" name="price-suitability" value="appropriate">
+                    <label for="price-appropriate">Appropriate</label>
+                    <input type="radio" id="price-inappropriate" name="price-suitability" value="inappropriate">
+                    <label for="price-inappropriate">Inappropriate</label>
+                    <input type="radio" id="price-unsure" name="price-suitability" value="unsure">
+                    <label for="price-unsure">Unsure</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Competitive Price Positioning: Based on the analysis of competitors' prices, how does your price compare to the main competitor? (Required)</label>
+                <div class="price-comparison">
+                    <input type="radio" id="price-cheaper" name="price-comparison" value="cheaper">
+                    <label for="price-cheaper">Cheaper by ~</label>
+                    <input type="number" id="cheaper-percentage" class="percentage-input" placeholder="%" min="0" max="100">
+                    <label>%</label>
+                </div>
+                <div class="price-comparison">
+                    <input type="radio" id="price-higher" name="price-comparison" value="higher">
+                    <label for="price-higher">Higher by ~</label>
+                    <input type="number" id="higher-percentage" class="percentage-input" placeholder="%" min="0" max="100">
+                    <label>%</label>
+                </div>
+                <div class="price-comparison">
+                    <input type="radio" id="price-similar" name="price-comparison" value="similar">
+                    <label for="price-similar">Similar</label>
+                </div>
+                <label for="price-reason">Why? (Explain the reasoning behind your pricing):</label>
+                <textarea id="price-reason"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Pricing Strategy: What pricing strategy will you adopt for your project? (Required - you can choose more than one option)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="strategy-competitive" name="pricing-strategy" value="competitive">
+                    <label for="strategy-competitive">Competitive: Price similar to competitors or slightly lower.</label><br>
+                    <input type="checkbox" id="strategy-premium" name="pricing-strategy" value="premium">
+                    <label for="strategy-premium">Premium with added value: Higher price justified by high quality or excellent service.</label><br>
+                    <input type="checkbox" id="strategy-penetration" name="pricing-strategy" value="penetration">
+                    <label for="strategy-penetration">Penetration: Very low price initially to gain market share.</label><br>
+                    <input type="checkbox" id="strategy-value" name="pricing-strategy" value="value">
+                    <label for="strategy-value">Value-based pricing: Setting price based on perceived customer value.</label><br>
+                    <input type="checkbox" id="strategy-other" name="pricing-strategy" value="other">
+                    <label for="strategy-other">Other: (Please specify:)</label>
+                </div>
+                <div id="other-pricing-container" style="display: none;">
+                    <input type="text" id="other-pricing" placeholder="Specify other pricing strategy">
+                </div>
+                <label for="strategy-explanation">Please explain why you chose this strategy and how it fits the market and product:</label>
+                <textarea id="strategy-explanation"></textarea>
+            </div>
+
+            <div class="section-title">Marketing and Distribution Channels</div>
+            
+            <div class="form-group">
+                <label>What are the main channels you will use to reach customers, whether for promotion (e.g., digital ads) or distribution (e.g., physical stores)? (Required - you can choose more than one option)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel-digital" name="marketing-channels" value="digital">
+                    <label for="channel-digital">Digital ads: (Example: search engine ads, social media ads)</label><br>
+                    <input type="checkbox" id="channel-social" name="marketing-channels" value="social">
+                    <label for="channel-social">Social media: (Example: Facebook, Instagram, LinkedIn, TikTok)</label><br>
+                    <input type="checkbox" id="channel-content" name="marketing-channels" value="content">
+                    <label for="channel-content">Content marketing: (Example: blogs, educational videos, e-books)</label><br>
+                    <input type="checkbox" id="channel-influencer" name="marketing-channels" value="influencer">
+                    <label for="channel-influencer">Influencer marketing: (Collaboration with influencers)</label><br>
+                    <input type="checkbox" id="channel-pr" name="marketing-channels" value="pr">
+                    <label for="channel-pr">Public relations: (Example: press releases, media events)</label><br>
+                    <input type="checkbox" id="channel-retail" name="distribution-channels" value="retail">
+                    <label for="channel-retail">Retail stores (physical)</label><br>
+                    <input type="checkbox" id="channel-online" name="distribution-channels" value="online">
+                    <label for="channel-online">Online platform/website</label><br>
+                    <input type="checkbox" id="channel-wholesale" name="distribution-channels" value="wholesale">
+                    <label for="channel-wholesale">Wholesale distributors</label><br>
+                    <input type="checkbox" id="channel-agents" name="distribution-channels" value="agents">
+                    <label for="channel-agents">Sales agents</label><br>
+                    <input type="checkbox" id="channel-direct" name="distribution-channels" value="direct">
+                    <label for="channel-direct">Direct sales (from manufacturer to customer)</label><br>
+                    <input type="checkbox" id="channel-mobile" name="distribution-channels" value="mobile">
+                    <label for="channel-mobile">Mobile applications</label><br>
+                    <input type="checkbox" id="channel-partnerships" name="distribution-channels" value="partnerships">
+                    <label for="channel-partnerships">Strategic partnerships</label><br>
+                    <input type="checkbox" id="channel-o2o" name="distribution-channels" value="o2o">
+                    <label for="channel-o2o">Integrated channels (Online-to-Offline O2O)</label><br>
+                    <input type="checkbox" id="channel-other" name="marketing-channels" value="other">
+                    <label for="channel-other">Other: (Please specify:)</label>
+                </div>
+                <div id="other-channel-container" style="display: none;">
+                    <input type="text" id="other-channel" placeholder="Specify other marketing/distribution channel">
+                </div>
+                <label for="channel-details">Please specify the most important platforms for each selected channel:</label>
+                <textarea id="channel-details"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="marketing-messages">Key Marketing Messages: What are the main marketing messages that will be delivered to customers to convince them of the product/service? (Required)</label>
+                <textarea id="marketing-messages" placeholder="Enter key marketing messages"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Are there significant additional costs associated with using the selected distribution channels? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="costs-yes" name="channel-costs" value="yes">
+                    <label for="costs-yes">Yes</label>
+                    <input type="radio" id="costs-no" name="channel-costs" value="no">
+                    <label for="costs-no">No</label>
+                </div>
+                <div id="costs-explanation-container" style="display: none;">
+                    <label for="costs-explanation">If yes, please specify the estimated costs (Example: Shipping fees per unit, agent commissions %, digital platform subscription costs):</label>
+                    <textarea id="costs-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Marketing SWOT Analysis</div>
+            
+            <div class="form-group">
+                <label for="strengths">Strengths: What are the internal marketing strengths of the project? (Required - Example: potential brand, experienced marketing team, unique product)</label>
+                <textarea id="strengths" placeholder="Enter strengths"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="weaknesses">Weaknesses: What are the internal weaknesses in the marketing aspect of the project? (Required - Example: lack of experience, limited budget, product requiring significant awareness)</label>
+                <textarea id="weaknesses" placeholder="Enter weaknesses"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="opportunities">Opportunities: What external market trends or conditions can be leveraged for marketing? (Required - Example: growth of a specific segment, emergence of new marketing channels)</label>
+                <textarea id="opportunities" placeholder="Enter opportunities"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="threats">Threats: What external factors may pose a marketing challenge to the project? (Required - Example: strong new competition, changes in consumer behavior)</label>
+                <textarea id="threats" placeholder="Enter threats"></textarea>
+            </div>
+
+            <div class="section-title">Preliminary Marketing Plan</div>
+            
+            <div class="form-group">
+                <label>Short-term Marketing Goals: What are the main marketing goals for the first 6-12 months? (Required - Example: achieve 1000 customers, increase brand awareness by 20%)</label>
+                <div class="short-term-goals">
+                    <input type="number" id="customer-goal" placeholder="Number of customers">
+                    <input type="number" id="awareness-goal" placeholder="Brand awareness %" min="0" max="100">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="long-term-goals">Long-term Marketing Goals: What are the marketing goals after 1 to 3 years? (Required - Example: reach 10% market share, build a brand loyalty community)</label>
+                <textarea id="long-term-goals" placeholder="Enter long-term goals"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="segment-focus">Segment Targeting: Based on the target audience analysis, which segment will be focused on in the launch plan and why? (Required)</label>
+                <textarea id="segment-focus" placeholder="Enter segment focus details"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Key Performance Indicators (KPIs): What performance indicators will you use to measure the success of your marketing efforts? (Optional - you can choose more than one option)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="kpi-customers" name="kpis" value="customers">
+                    <label for="kpi-customers">Number of new customers: (New Customers)</label><br>
+                    <input type="checkbox" id="kpi-conversion" name="kpis" value="conversion">
+                    <label for="kpi-conversion">Conversion rate: (Conversion Rate)</label><br>
+                    <input type="checkbox" id="kpi-cac" name="kpis" value="cac">
+                    <label for="kpi-cac">Customer acquisition cost: (Customer Acquisition Cost - CAC)</label><br>
+                    <input type="checkbox" id="kpi-awareness" name="kpis" value="awareness">
+                    <label for="kpi-awareness">Brand awareness: (Brand Awareness)</label><br>
+                    <input type="checkbox" id="kpi-retention" name="kpis" value="retention">
+                    <label for="kpi-retention">Customer retention rate: (Retention Rate)</label><br>
+                    <input type="checkbox" id="kpi-other" name="kpis" value="other">
+                    <label for="kpi-other">Other: (Please specify:)</label>
+                </div>
+                <div id="other-kpi-container" style="display: none;">
+                    <input type="text" id="other-kpi" placeholder="Specify other KPI">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Measurement Tools: What tools do you expect to use to measure these indicators? (Optional - Example: Google Analytics, surveys, CRM system)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="tool-analytics" name="measurement-tools" value="analytics">
+                    <label for="tool-analytics">Google Analytics</label><br>
+                    <input type="checkbox" id="tool-surveys" name="measurement-tools" value="surveys">
+                    <label for="tool-surveys">Surveys</label><br>
+                    <input type="checkbox" id="tool-crm" name="measurement-tools" value="crm">
+                    <label for="tool-crm">CRM System</label><br>
+                    <input type="checkbox" id="tool-social" name="measurement-tools" value="social">
+                    <label for="tool-social">Social Media Analytics</label><br>
+                    <input type="checkbox" id="tool-other" name="measurement-tools" value="other">
+                    <label for="tool-other">Other: (Please specify:)</label>
+                </div>
+                <div id="other-tool-container" style="display: none;">
+                    <input type="text" id="other-tool" placeholder="Specify other tool">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="general-notes">General Notes: Any general notes or additional marketing considerations (Optional)</label>
+                <textarea id="general-notes" placeholder="Enter any additional notes"></textarea>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../Brief-feasibility/Com-Technical and Operational Feasibility.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            const trendCheckbox = document.getElementById('trend4');
+            const trendContainer = document.getElementById('other-trend-container');
+            
+            trendCheckbox.addEventListener('change', function() {
+                trendContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const charCheckbox = document.getElementById('characteristic5');
+            const charContainer = document.getElementById('other-char-container');
+            
+            charCheckbox.addEventListener('change', function() {
+                charContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const strategyCheckbox = document.getElementById('strategy7');
+            const strategyContainer = document.getElementById('other-strategy-container');
+            
+            strategyCheckbox.addEventListener('change', function() {
+                strategyContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const indirectRadios = document.querySelectorAll('input[name="indirect-competition"]');
+            const indirectContainer = document.getElementById('indirect-explanation-container');
+            
+            indirectRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    indirectContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const costsRadios = document.querySelectorAll('input[name="channel-costs"]');
+            const costsContainer = document.getElementById('costs-explanation-container');
+            
+            costsRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    costsContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const devRadios = document.querySelectorAll('input[name="dev-plans"]');
+            const devContainer = document.getElementById('dev-explanation-container');
+            
+            devRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    devContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const priceComparisonRadios = document.querySelectorAll('input[name="price-comparison"]');
+            const cheaperInput = document.getElementById('cheaper-percentage');
+            const higherInput = document.getElementById('higher-percentage');
+            
+            priceComparisonRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'cheaper') {
+                        cheaperInput.style.display = 'inline-block';
+                        higherInput.style.display = 'none';
+                    } else if (this.value === 'higher') {
+                        cheaperInput.style.display = 'none';
+                        higherInput.style.display = 'inline-block';
+                    } else {
+                        cheaperInput.style.display = 'none';
+                        higherInput.style.display = 'none';
+                    }
+                    updateOutput();
+                });
+            });
+
+            const pricingStrategyCheckbox = document.getElementById('strategy-other');
+            const pricingStrategyContainer = document.getElementById('other-pricing-container');
+            
+            pricingStrategyCheckbox.addEventListener('change', function() {
+                pricingStrategyContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const channelCheckbox = document.getElementById('channel-other');
+            const channelContainer = document.getElementById('other-channel-container');
+            
+            channelCheckbox.addEventListener('change', function() {
+                channelContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const kpiCheckbox = document.getElementById('kpi-other');
+            const kpiContainer = document.getElementById('other-kpi-container');
+            
+            kpiCheckbox.addEventListener('change', function() {
+                kpiContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const toolCheckbox = document.getElementById('tool-other');
+            const toolContainer = document.getElementById('other-tool-container');
+            
+            toolCheckbox.addEventListener('change', function() {
+                toolContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Target Market Analysis
+            addOutputItem('Market Size', document.getElementById('market-size').value);
+            addOutputItem('Growth Rate', document.getElementById('growth-rate').value ? document.getElementById('growth-rate').value + '%' : '');
+            
+            const selectedTrends = [];
+            document.querySelectorAll('input[name="market-trends"]:checked').forEach(trend => {
+                selectedTrends.push(trend.id.replace('trend', 'Trend '));
+            });
+            if (selectedTrends.length > 0) {
+                addOutputItem('Market Trends', selectedTrends.join(', '));
+                if (document.getElementById('trend4').checked) {
+                    addOutputItem('Other Trends', document.getElementById('other-trend').value);
+                }
+            }
+            
+            const selectedChars = [];
+            document.querySelectorAll('input[name="market-characteristics"]:checked').forEach(char => {
+                selectedChars.push(char.id.replace('characteristic', 'Characteristic '));
+            });
+            if (selectedChars.length > 0) {
+                addOutputItem('Market Characteristics', selectedChars.join(', '));
+                if (document.getElementById('characteristic5').checked) {
+                    addOutputItem('Other Characteristics', document.getElementById('other-char').value);
+                }
+            }
+            
+            const selectedConstraints = document.querySelector('input[name="market-constraints"]:checked');
+            if (selectedConstraints) {
+                addOutputItem('Market Constraints', selectedConstraints.id.replace('constraints-', ''));
+            }
+
+            // Customer Analysis
+            const ageFrom = document.getElementById('age-from').value;
+            const ageTo = document.getElementById('age-to').value;
+            if (ageFrom || ageTo) {
+                addOutputItem('Age Range', `${ageFrom} to ${ageTo}`);
+            }
+            
+            const selectedGender = document.querySelector('input[name="customer-gender"]:checked');
+            if (selectedGender) {
+                addOutputItem('Gender', selectedGender.id.replace('gender-', ''));
+            }
+            
+            const selectedIncome = document.querySelector('input[name="customer-income"]:checked');
+            if (selectedIncome) {
+                addOutputItem('Income Level', selectedIncome.id.replace('income-', ''));
+            }
+            
+            addOutputItem('Interests and Behaviors', document.getElementById('interests').value);
+            addOutputItem('Potential Customers', document.getElementById('potential-customers').value);
+            addOutputItem('Product Features and Customer Needs', document.getElementById('product-features-needs').value);
+            
+            const selectedPayment = document.querySelector('input[name="payment-ability"]:checked');
+            if (selectedPayment) {
+                addOutputItem('Payment Ability', selectedPayment.id.replace('payment-', ''));
+                addOutputItem('Payment Explanation', document.getElementById('payment-explanation').value);
+            }
+
+            // Competitor Analysis
+            addOutputItem('Competitors Location', document.getElementById('competitors-location').value);
+            addOutputItem('Competitors Strengths', document.getElementById('competitors-strengths').value);
+            addOutputItem('Competitors Weaknesses', document.getElementById('competitors-weaknesses').value);
+            addOutputItem('Pricing Strategies', document.getElementById('pricing-strategies').value);
+            
+            const selectedStrategies = [];
+            document.querySelectorAll('input[name="marketing-strategies"]:checked').forEach(strategy => {
+                selectedStrategies.push(strategy.id.replace('strategy', 'Strategy '));
+            });
+            if (selectedStrategies.length > 0) {
+                addOutputItem('Competitors Marketing Strategies', selectedStrategies.join(', '));
+                if (document.getElementById('strategy7').checked) {
+                    addOutputItem('Other Strategies', document.getElementById('other-strategy').value);
+                }
+            }
+            
+            const selectedIndirect = document.querySelector('input[name="indirect-competition"]:checked');
+            if (selectedIndirect) {
+                addOutputItem('Indirect Competition', selectedIndirect.id.replace('indirect-', ''));
+                if (selectedIndirect.value === 'yes') {
+                    addOutputItem('Indirect Competition Explanation', document.getElementById('indirect-explanation').value);
+                }
+            }
+
+            // Supply and Demand Analysis
+            const selectedGap = document.querySelector('input[name="supply-demand-gap"]:checked');
+            if (selectedGap) {
+                addOutputItem('Supply-Demand Gap', selectedGap.id.replace('gap-', ''));
+                addOutputItem('Gap Explanation', document.getElementById('gap-explanation').value);
+            }
+            
+            const selectedSaturation = document.querySelector('input[name="market-saturation"]:checked');
+            if (selectedSaturation) {
+                addOutputItem('Market Saturation', selectedSaturation.id.replace('saturated-', ''));
+                addOutputItem('Saturation Explanation', document.getElementById('saturation-explanation').value);
+            }
+
+            // Product/Service Value Proposition
+            addOutputItem('Value Proposition', document.getElementById('value-proposition').value);
+            
+            const selectedDev = document.querySelector('input[name="dev-plans"]:checked');
+            if (selectedDev) {
+                addOutputItem('Development Plans', selectedDev.id.replace('dev-', ''));
+                if (selectedDev.value === 'yes') {
+                    addOutputItem('Development Explanation', document.getElementById('dev-explanation').value);
+                }
+            }
+
+            // Pricing Strategy
+            const selectedPriceSuitability = document.querySelector('input[name="price-suitability"]:checked');
+            if (selectedPriceSuitability) {
+                addOutputItem('Price Suitability', selectedPriceSuitability.id.replace('price-', ''));
+            }
+            
+            const selectedPriceComparison = document.querySelector('input[name="price-comparison"]:checked');
+            if (selectedPriceComparison) {
+                let comparisonText = selectedPriceComparison.id.replace('price-', '');
+                if (selectedPriceComparison.value === 'cheaper' && document.getElementById('cheaper-percentage').value) {
+                    comparisonText += ' by ' + document.getElementById('cheaper-percentage').value + '%';
+                } else if (selectedPriceComparison.value === 'higher' && document.getElementById('higher-percentage').value) {
+                    comparisonText += ' by ' + document.getElementById('higher-percentage').value + '%';
+                }
+                addOutputItem('Price Comparison', comparisonText);
+                addOutputItem('Price Reason', document.getElementById('price-reason').value);
+            }
+            
+            const selectedPricingStrategies = [];
+            document.querySelectorAll('input[name="pricing-strategy"]:checked').forEach(strategy => {
+                selectedPricingStrategies.push(strategy.id.replace('strategy-', ''));
+            });
+            if (selectedPricingStrategies.length > 0) {
+                addOutputItem('Pricing Strategies', selectedPricingStrategies.join(', '));
+                if (document.getElementById('strategy-other').checked) {
+                    addOutputItem('Other Pricing Strategy', document.getElementById('other-pricing').value);
+                }
+            }
+            
+            addOutputItem('Strategy Explanation', document.getElementById('strategy-explanation').value);
+
+            // Marketing and Distribution Channels
+            const selectedChannels = [];
+            document.querySelectorAll('input[name="marketing-channels"]:checked, input[name="distribution-channels"]:checked').forEach(channel => {
+                selectedChannels.push(channel.id.replace('channel-', ''));
+            });
+            if (selectedChannels.length > 0) {
+                addOutputItem('Marketing/Distribution Channels', selectedChannels.join(', '));
+                if (document.getElementById('channel-other').checked) {
+                    addOutputItem('Other Channel', document.getElementById('other-channel').value);
+                }
+            }
+            
+            addOutputItem('Channel Details', document.getElementById('channel-details').value);
+            addOutputItem('Marketing Messages', document.getElementById('marketing-messages').value);
+            
+            const selectedCosts = document.querySelector('input[name="channel-costs"]:checked');
+            if (selectedCosts) {
+                addOutputItem('Channel Costs', selectedCosts.id.replace('costs-', ''));
+                if (selectedCosts.value === 'yes') {
+                    addOutputItem('Costs Explanation', document.getElementById('costs-explanation').value);
+                }
+            }
+
+            // SWOT Analysis
+            addOutputItem('Strengths', document.getElementById('strengths').value);
+            addOutputItem('Weaknesses', document.getElementById('weaknesses').value);
+            addOutputItem('Opportunities', document.getElementById('opportunities').value);
+            addOutputItem('Threats', document.getElementById('threats').value);
+
+            // Marketing Plan
+            const customerGoal = document.getElementById('customer-goal').value;
+            const awarenessGoal = document.getElementById('awareness-goal').value;
+            if (customerGoal || awarenessGoal) {
+                addOutputItem('Short-term Goals', (customerGoal ? customerGoal + ' customers, ' : '') + (awarenessGoal ? awarenessGoal + '% awareness' : ''));
+            }
+            
+            addOutputItem('Long-term Goals', document.getElementById('long-term-goals').value);
+            addOutputItem('Segment Focus', document.getElementById('segment-focus').value);
+            
+            const selectedKPIs = [];
+            document.querySelectorAll('input[name="kpis"]:checked').forEach(kpi => {
+                selectedKPIs.push(kpi.id.replace('kpi-', ''));
+            });
+            if (selectedKPIs.length > 0) {
+                addOutputItem('KPIs', selectedKPIs.join(', '));
+                if (document.getElementById('kpi-other').checked) {
+                    addOutputItem('Other KPI', document.getElementById('other-kpi').value);
+                }
+            }
+            
+            const selectedTools = [];
+            document.querySelectorAll('input[name="measurement-tools"]:checked').forEach(tool => {
+                selectedTools.push(tool.id.replace('tool-', ''));
+            });
+            if (selectedTools.length > 0) {
+                addOutputItem('Measurement Tools', selectedTools.join(', '));
+                if (document.getElementById('tool-other').checked) {
+                    addOutputItem('Other Tool', document.getElementById('other-tool').value);
+                }
+            }
+            
+            addOutputItem('General Notes', document.getElementById('general-notes').value);
+
+            // Update the output div
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            outputDiv.innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>

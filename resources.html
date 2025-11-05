@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources | PhoenixRizze</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 8px 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-size: 0.9em;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .cta {
+            background-color: var(--secondary-color);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        #languageSwitcher {
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/Thumbnail 3.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
+        
+        .coming-soon {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+        
+        .content-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+        
+        .section-title {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .resource-list {
+            margin: 30px 0;
+        }
+        
+        .resource-list ul {
+            padding-left: 20px;
+        }
+        
+        .resource-list li {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        /* New style for justified paragraphs */
+        .content-section p {
+            text-align: justify;
+        }
+        
+        /* Exclude titles from justification */
+        .section-title, 
+        .hero h1,
+        .resource-list li strong {
+            text-align: left;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 5%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .comment-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="images/LOGO PH.png" alt="Phoenix Rizze Logo"></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="why.html">Why MySim?</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="resources.html" class="active">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li>
+                    <select id="languageSwitcher">
+                        <option value="en" selected>English</option>
+                        <option value="ar">العربية</option>
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                        <option value="zh">简体中文</option>
+                    </select>
+                </li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="dashboard.html" style="background: #2196F3; color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold;">START NOW</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>We're developing a comprehensive resource center featuring interactive guides, ready-to-use templates, case studies, smart tools, and educational videos — all designed to support your project's success.</h1>
+            <div class="coming-soon">The website is launching soon — stay tuned!</div>
+        </section>
+        
+        <section class="content-section">
+            <h2 class="section-title">Resources</h2>
+            <p>Welcome to our Resources Hub - your centralized destination for valuable tools, insights, and guides designed to help you make informed decisions and maximize the success of your projects.</p>
+            
+            <p>Here, you will find a curated collection of:</p>
+            
+            <div class="resource-list">
+                <ul>
+                    <li><strong>Comprehensive Guides and Tutorials:</strong> Step-by-step instructions to deepen your understanding of feasibility studies and project planning.</li>
+                    <li><strong>Downloadable Templates:</strong> Ready-to-use documents and checklists to streamline your feasibility analysis process.</li>
+                    <li><strong>Case Studies and Reports:</strong> Real-world examples showcasing successful project evaluations and outcomes.</li>
+                    <li><strong>Video Tutorials and Webinars:</strong> Expert-led sessions to walk you through key concepts and best practices.</li>
+                    <li><strong>FAQs and Glossaries:</strong> Quick answers to common questions and clear explanations of technical terms.</li>
+                    <li><strong>Interactive Tools:</strong> Simulators and calculators to help you assess project viability with ease.</li>
+                </ul>
+            </div>
+            
+            <p>Our Resources page is designed to empower you with knowledge and practical tools, whether you are an entrepreneur, investor, or project manager. Explore these materials to enhance your understanding, reduce risks, and drive your projects toward success.</p>
+            
+            <p><strong>Ready to take your project to the next level?</strong><br>
+            Dive into our resources and start leveraging expert insights and tools today. If you need personalized support, our team is here to help you transform your ideas into actionable, data-driven plans.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="why.html">Why MySim?</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: <a href="mailto:phx@phoenixrizze.com">phx@phoenixrizze.com</a></li>
+                    <li>Phone: 000 000 0000</li>
+                    <li>Address: Jordan, Aqaba, Aqaba 77110</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Leave a Comment</h3>
+                <div class="comment-form">
+                    <textarea placeholder="Your message..."></textarea>
+                    <button type="submit">Send</button>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 PhoenixRizze. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Language switcher functionality
+        document.getElementById('languageSwitcher').addEventListener('change', function() {
+            alert('Language changed to: ' + this.value);
+        });
+        
+        // Highlight active navigation link based on current page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'resources.html';
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (currentPage === linkPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

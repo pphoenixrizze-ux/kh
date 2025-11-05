@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Feasibility Study - Real Estate and Construction Sector</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .dynamic-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dynamic-field input {
+            flex: 1;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en" selected>English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Pre-Feasibility Questionnaire for Real Estate/Construction Project</h1>
+            <p>This form is designed to provide a preliminary and comprehensive assessment of the feasibility of your real estate or construction project. Please fill in the data accurately based on the best estimates and information currently available to you. The goal is to determine whether the project is worth investing in and moving forward with detailed and specialized studies.</p>
+
+            <div class="section-title">Project Idea Description</div>
+            <div class="form-group">
+                <label for="main-activity">What is the main real estate/construction activity of your project? (Required)</label>
+                <input type="text" id="main-activity" placeholder="e.g., Residential complex development, commercial units construction, general contracting, property management, building materials supply">
+            </div>
+
+            <div class="form-group">
+                <label for="problem-solved">What is the main problem this project solves for target customers? (Required)</label>
+                <input type="text" id="problem-solved" placeholder="e.g., Lack of affordable housing units, need for reliable contractors, absence of professional property management, shortage of specific building materials">
+            </div>
+
+            <div class="form-group">
+                <label for="business-model">How does the project plan to make profits (business model)? (Required)</label>
+                <select id="business-model">
+                    <option value="">Select an option</option>
+                    <option value="direct-sales">Direct sales of real estate units</option>
+                    <option value="construction-contracts">Construction contracts</option>
+                    <option value="management-fees">Management fees</option>
+                    <option value="rental-income">Rental income</option>
+                    <option value="materials-sales">Building materials sales</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="distribution-channels">What are the main sales or promotion channels that will be used to deliver the project to the customer? (Optional)</label>
+                <select id="distribution-channels">
+                    <option value="">Select an option</option>
+                    <option value="sales-offices">Sales offices</option>
+                    <option value="real-estate-exhibitions">Real estate exhibitions</option>
+                    <option value="digital-platforms">Digital platforms</option>
+                    <option value="real-estate-agents">Real estate agents</option>
+                </select>
+            </div>
+
+            <div class="section-title">Market Data</div>
+            <div class="form-group">
+                <label for="market-size">What is the size of your target market? (Required)</label>
+                <p>Approximate annual financial value of the market:</p>
+                <input type="number" id="market-size" placeholder="Enter estimated value" required aria-required="true" min="0" step="any">
+                
+                <p>Approximate number of potential customers (individuals/companies) in the target area:</p>
+                <input type="number" id="customer-count" placeholder="Enter estimated number">
+            </div>
+
+            <div class="form-group">
+                <label for="growth-rate">What is the approximate annual growth rate of this market? (Required)</label>
+                <input type="number" id="growth-rate" placeholder="Enter growth rate percentage"> %
+                
+                <label for="growth-factors">What are the main factors driving this growth or decline?</label>
+                <textarea id="growth-factors"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="competitors">Who are the main competitors in this market? (Required)</label>
+                <input type="number" id="competitors" placeholder="Enter number of main competitors">
+            </div>
+
+            <div class="form-group">
+                <label>Is there a clear market gap (unmet demand) that can be exploited? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="gap-yes" name="market-gap" value="yes">
+                    <label for="gap-yes">Yes</label>
+                    
+                    <input type="radio" id="gap-no" name="market-gap" value="no">
+                    <label for="gap-no">No</label>
+                    
+                    <input type="radio" id="gap-unsure" name="market-gap" value="unsure">
+                    <label for="gap-unsure">Not sure</label>
+                </div>
+                <div id="gap-explanation-container" style="display: none;">
+                    <label for="gap-explanation">If yes, please explain briefly:</label>
+                    <textarea id="gap-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is there sufficient demand and market feasibility for your project in this market?</label>
+                <div class="radio-group">
+                    <input type="radio" id="demand-yes" name="market-demand" value="yes">
+                    <label for="demand-yes">Yes, sufficient demand</label>
+                    
+                    <input type="radio" id="demand-no" name="market-demand" value="no">
+                    <label for="demand-no">No, market is saturated</label>
+                    
+                    <input type="radio" id="demand-need" name="market-demand" value="need">
+                    <label for="demand-need">Needs deeper study</label>
+                </div>
+                <label for="demand-notes">Notes:</label>
+                <textarea id="demand-notes"></textarea>
+            </div>
+
+            <div class="section-title">Marketing Data</div>
+            <div class="form-group">
+                <label for="target-audience">Who is the main target audience for your project? (Required)</label>
+                <input type="text" id="target-audience" placeholder="e.g., Real estate investors, middle-income families, small businesses, other developers">
+                
+                <label for="marketing-channels">What are the expected marketing channels to reach customers? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="channel1" name="marketing-channels" value="real-estate-exhibitions">
+                    <label for="channel1">Real estate exhibitions</label>
+                    
+                    <input type="checkbox" id="channel2" name="marketing-channels" value="print-media">
+                    <label for="channel2">Print media in specialized magazines</label>
+                    
+                    <input type="checkbox" id="channel3" name="marketing-channels" value="digital-marketing">
+                    <label for="channel3">Digital marketing</label>
+                    
+                    <input type="checkbox" id="channel4" name="marketing-channels" value="public-relations">
+                    <label for="channel4">Public relations</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="marketing-cost">What is the estimated initial monthly marketing cost? (Required)</label>
+                <input type="number" id="marketing-cost" placeholder="Enter estimated value">
+            </div>
+
+            <div class="form-group">
+                <label for="competitive-advantage">What is the main competitive advantage of your project compared to competitors? (Required)</label>
+                <textarea id="competitive-advantage" placeholder="e.g., High construction quality, competitive pricing, unique design, strategic location, excellent after-sales service"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Can target customers be reached efficiently and profitably using the proposed channels and advantage?</label>
+                <div class="radio-group">
+                    <input type="radio" id="reach-yes" name="customer-reach" value="yes">
+                    <label for="reach-yes">Yes, possible</label>
+                    
+                    <input type="radio" id="reach-challenges" name="customer-reach" value="challenges">
+                    <label for="reach-challenges">Major challenges</label>
+                    
+                    <input type="radio" id="reach-unclear" name="customer-reach" value="unclear">
+                    <label for="reach-unclear">Unclear</label>
+                </div>
+                <label for="reach-notes">Notes:</label>
+                <textarea id="reach-notes"></textarea>
+            </div>
+
+            <div class="section-title">Technical and Operational Data</div>
+            <div class="form-group">
+                <label>What is the proposed location for the project? (Required)</label>
+                <p>Proximity to services and infrastructure:</p>
+                <div class="radio-group">
+                    <input type="radio" id="proximity-high" name="proximity" value="high">
+                    <label for="proximity-high">High</label>
+                    
+                    <input type="radio" id="proximity-medium" name="proximity" value="medium">
+                    <label for="proximity-medium">Medium</label>
+                    
+                    <input type="radio" id="proximity-low" name="proximity" value="low">
+                    <label for="proximity-low">Low</label>
+                </div>
+                
+                <p>Availability of workforce:</p>
+                <div class="radio-group">
+                    <input type="radio" id="workforce-easy" name="workforce" value="easy">
+                    <label for="workforce-easy">Easily available</label>
+                    
+                    <input type="radio" id="workforce-limited" name="workforce" value="limited">
+                    <label for="workforce-limited">Limited</label>
+                    
+                    <input type="radio" id="workforce-none" name="workforce" value="none">
+                    <label for="workforce-none">Not available</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="required-area">What is the required area for the project (in square meters or hectares)? (Required)</label>
+                <input type="number" id="required-area" placeholder="e.g., 5000m²">
+                
+                <label>Will it be rented or owned?</label>
+                <div class="radio-group">
+                    <input type="radio" id="property-rented" name="property" value="rented">
+                    <label for="property-rented">Rented</label>
+                    
+                    <input type="radio" id="property-owned" name="property" value="owned">
+                    <label for="property-owned">Owned</label>
+                </div>
+                <label for="property-cost">Rent/Property price:</label>
+                <input type="number" id="property-cost" placeholder="Enter value">
+            </div>
+
+            <div class="form-group">
+                <label>List of basic equipment and machinery required for the project (Required)</label>
+                <div id="equipment-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Equipment name (e.g., Excavator)" class="equipment-name">
+                        <input type="number" placeholder="Value" class="equipment-value">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addEquipmentField()">+ Add Equipment</button>
+            </div>
+
+            <div class="form-group">
+                <label>Raw material requirements (Required)</label>
+                <div id="materials-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Material name (e.g., Cement)" class="material-name">
+                        <input type="number" placeholder="Monthly quantity" class="material-quantity">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addMaterialField()">+ Add Material</button>
+                <label for="materials-notes">Notes:</label>
+                <textarea id="materials-notes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Can the project be implemented technically with the required capabilities?</label>
+                <div class="radio-group">
+                    <input type="radio" id="tech-yes" name="tech-feasibility" value="yes">
+                    <label for="tech-yes">Yes, possible</label>
+                    
+                    <input type="radio" id="tech-challenges" name="tech-feasibility" value="challenges">
+                    <label for="tech-challenges">Technical challenges</label>
+                    
+                    <input type="radio" id="tech-unclear" name="tech-feasibility" value="unclear">
+                    <label for="tech-unclear">Unclear</label>
+                </div>
+                <label for="tech-notes">Notes:</label>
+                <textarea id="tech-notes"></textarea>
+            </div>
+
+            <div class="section-title">Technological Data</div>
+            <div class="form-group">
+                <label>What is the main type of technology used in the project? (Required)</label>
+                <div id="technology-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Technology type (e.g., BIM software)" class="technology-type">
+                        <input type="number" placeholder="Value" class="technology-value">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTechnologyField()">+ Add Technology</button>
+            </div>
+
+            <div class="form-group">
+                <label>Is this technology modern and up to date with current requirements? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="tech-modern-yes" name="tech-modern" value="yes">
+                    <label for="tech-modern-yes">Yes</label>
+                    
+                    <input type="radio" id="tech-modern-no" name="tech-modern" value="no">
+                    <label for="tech-modern-no">No</label>
+                    
+                    <input type="radio" id="tech-modern-partial" name="tech-modern" value="partial">
+                    <label for="tech-modern-partial">Partially</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there expected difficulties in maintenance or technical support for this technology? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="maintenance-yes" name="maintenance" value="yes">
+                    <label for="maintenance-yes">Yes</label>
+                    
+                    <input type="radio" id="maintenance-no" name="maintenance" value="no">
+                    <label for="maintenance-no">No</label>
+                    
+                    <input type="radio" id="maintenance-unsure" name="maintenance" value="unsure">
+                    <label for="maintenance-unsure">Not sure</label>
+                </div>
+                <div id="maintenance-explanation-container" style="display: none;">
+                    <label for="maintenance-explanation">If yes, please explain briefly:</label>
+                    <textarea id="maintenance-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How dependent is the project on external suppliers to provide or maintain this technology? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="dependency-full" name="dependency" value="full">
+                    <label for="dependency-full">Full dependence</label>
+                    
+                    <input type="radio" id="dependency-partial" name="dependency" value="partial">
+                    <label for="dependency-partial">Partial dependence</label>
+                    
+                    <input type="radio" id="dependency-none" name="dependency" value="none">
+                    <label for="dependency-none">No dependence</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the proposed technology safe, sustainable, and effectively meets project needs?</label>
+                <div class="radio-group">
+                    <input type="radio" id="tech-safe-yes" name="tech-safety" value="yes">
+                    <label for="tech-safe-yes">Yes, sustainable</label>
+                    
+                    <input type="radio" id="tech-safe-risk" name="tech-safety" value="risk">
+                    <label for="tech-safe-risk">Technical risks</label>
+                    
+                    <input type="radio" id="tech-safe-need" name="tech-safety" value="need">
+                    <label for="tech-safe-need">Needs evaluation</label>
+                </div>
+                <label for="tech-safe-notes">Notes:</label>
+                <textarea id="tech-safe-notes"></textarea>
+            </div>
+
+            <div class="section-title">Operational Data</div>
+            <div class="form-group">
+                <label>What is the total number of employees required to operate the project? (Required)</label>
+                <div id="employees-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Job title (e.g., Project manager)" class="employee-title">
+                        <input type="number" placeholder="Number" class="employee-count">
+                        <input type="number" placeholder="Salary" class="employee-salary">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addEmployeeField()">+ Add Employee</button>
+            </div>
+
+            <div class="form-group">
+                <label for="daily-operations">What are the main daily operations that the project will perform? (Required)</label>
+                <textarea id="daily-operations" placeholder="e.g., Site planning, contract management, construction supervision, sales follow-up"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Can the project operate efficiently and continuously based on initial plans?</label>
+                <div class="radio-group">
+                    <input type="radio" id="operations-yes" name="operations" value="yes">
+                    <label for="operations-yes">Yes, possible</label>
+                    
+                    <input type="radio" id="operations-challenges" name="operations" value="challenges">
+                    <label for="operations-challenges">Potential challenges</label>
+                    
+                    <input type="radio" id="operations-unclear" name="operations" value="unclear">
+                    <label for="operations-unclear">Unclear</label>
+                </div>
+                <label for="operations-notes">Notes:</label>
+                <textarea id="operations-notes"></textarea>
+            </div>
+
+            <div class="section-title">Organizational Data</div>
+            <div class="form-group">
+                <label>What is the proposed administrative structure for the project? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="structure1" name="structure" value="owner-developer">
+                    <label for="structure1">Owner/Lead developer</label>
+                    
+                    <input type="checkbox" id="structure2" name="structure" value="engineering-team">
+                    <label for="structure2">Engineering team</label>
+                    
+                    <input type="checkbox" id="structure3" name="structure" value="sales-team">
+                    <label for="structure3">Sales team</label>
+                    
+                    <input type="checkbox" id="structure4" name="structure" value="marketing-team">
+                    <label for="structure4">Marketing team</label>
+                    
+                    <input type="checkbox" id="structure5" name="structure" value="accounting">
+                    <label for="structure5">Accounting department</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What is the main decision-making mechanism in the project? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="decision-central" name="decision" value="central">
+                    <label for="decision-central">Central decisions from owner</label>
+                    
+                    <input type="radio" id="decision-delegated" name="decision" value="delegated">
+                    <label for="decision-delegated">Delegated to project manager</label>
+                    
+                    <input type="radio" id="decision-team" name="decision" value="team">
+                    <label for="decision-team">Team-based decisions</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there specific governance requirements (e.g., periodic meetings, performance reports) that will be applied? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="governance-yes" name="governance" value="yes">
+                    <label for="governance-yes">Yes</label>
+                    
+                    <input type="radio" id="governance-no" name="governance" value="no">
+                    <label for="governance-no">No</label>
+                    
+                    <input type="radio" id="governance-unsure" name="governance" value="unsure">
+                    <label for="governance-unsure">Not sure</label>
+                </div>
+                <div id="governance-explanation-container" style="display: none;">
+                    <label for="governance-explanation">If yes, please explain briefly:</label>
+                    <textarea id="governance-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project effectively and appropriately organized administratively for its initial size?</label>
+                <div class="radio-group">
+                    <input type="radio" id="organized-yes" name="organized" value="yes">
+                    <label for="organized-yes">Yes, effective</label>
+                    
+                    <input type="radio" id="organized-improve" name="organized" value="improve">
+                    <label for="organized-improve">Needs improvement</label>
+                    
+                    <input type="radio" id="organized-unclear" name="organized" value="unclear">
+                    <label for="organized-unclear">Unclear</label>
+                </div>
+                <label for="organized-notes">Notes:</label>
+                <textarea id="organized-notes"></textarea>
+            </div>
+
+            <div class="section-title">Legal Data</div>
+            <div class="form-group">
+                <label>Is the project legal in the concerned country? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="legal-yes" name="legal" value="yes">
+                    <label for="legal-yes">Yes</label>
+                    
+                    <input type="radio" id="legal-no" name="legal" value="no">
+                    <label for="legal-no">No</label>
+                    
+                    <input type="radio" id="legal-unsure" name="legal" value="unsure">
+                    <label for="legal-unsure">Not sure</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What are the basic licenses and permits needed for the project to start work? (Required)</label>
+                <div id="licenses-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="License type (e.g., Construction permit)" class="license-type">
+                        <input type="number" placeholder="Value" class="license-value">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addLicenseField()">+ Add License</button>
+            </div>
+
+            <div class="form-group">
+                <label>Are there any potential legal risks that the project may face? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="risks-yes" name="risks" value="yes">
+                    <label for="risks-yes">Yes</label>
+                    
+                    <input type="radio" id="risks-no" name="risks" value="no">
+                    <label for="risks-no">No</label>
+                </div>
+                <div id="risks-explanation-container" style="display: none;">
+                    <label for="risks-explanation">If yes, please explain briefly:</label>
+                    <textarea id="risks-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there any real legal obstacles or major challenges to implementing the project?</label>
+                <div class="radio-group">
+                    <input type="radio" id="obstacles-none" name="obstacles" value="none">
+                    <label for="obstacles-none">No obstacles</label>
+                    
+                    <input type="radio" id="obstacles-overcome" name="obstacles" value="overcome">
+                    <label for="obstacles-overcome">Obstacles can be overcome</label>
+                    
+                    <input type="radio" id="obstacles-major" name="obstacles" value="major">
+                    <label for="obstacles-major">Major obstacles</label>
+                </div>
+                <label for="obstacles-notes">Notes:</label>
+                <textarea id="obstacles-notes"></textarea>
+            </div>
+
+            <div class="section-title">Environmental Data</div>
+            <div class="form-group">
+                <label>Does the project directly or indirectly affect the environment? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="environment-yes" name="environment" value="yes">
+                    <label for="environment-yes">Yes</label>
+                    
+                    <input type="radio" id="environment-no" name="environment" value="no">
+                    <label for="environment-no">No</label>
+                    
+                    <input type="radio" id="environment-unsure" name="environment" value="unsure">
+                    <label for="environment-unsure">Not sure</label>
+                </div>
+                <div id="environment-explanation-container" style="display: none;">
+                    <label for="environment-explanation">If yes, please explain briefly (e.g., construction waste management, energy consumption, carbon emissions):</label>
+                    <textarea id="environment-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Does the project need an environmental impact assessment or special environmental approvals? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="assessment-yes" name="assessment" value="yes">
+                    <label for="assessment-yes">Yes</label>
+                    
+                    <input type="radio" id="assessment-no" name="assessment" value="no">
+                    <label for="assessment-no">No</label>
+                    
+                    <input type="radio" id="assessment-unsure" name="assessment" value="unsure">
+                    <label for="assessment-unsure">Not sure</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project generally environmentally friendly or does it need to address important environmental issues?</label>
+                <div class="radio-group">
+                    <input type="radio" id="friendly-yes" name="friendly" value="yes">
+                    <label for="friendly-yes">Environmentally friendly</label>
+                    
+                    <input type="radio" id="friendly-needs" name="friendly" value="needs">
+                    <label for="friendly-needs">Needs treatment</label>
+                    
+                    <input type="radio" id="friendly-negative" name="friendly" value="negative">
+                    <label for="friendly-negative">Significant negative impact</label>
+                </div>
+                <label for="friendly-notes">Notes:</label>
+                <textarea id="friendly-notes"></textarea>
+            </div>
+
+            <div class="section-title">Social Data</div>
+            <div class="form-group">
+                <label for="social-impact">What is the expected impact of the project on the surrounding community? (Required)</label>
+                <textarea id="social-impact" placeholder="e.g., Providing job opportunities, meeting community housing needs, revitalizing local economy"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="job-opportunities">How many estimated job opportunities will the project generate in its initial phase? (Required)</label>
+                <input type="number" id="job-opportunities" placeholder="Enter number of jobs">
+            </div>
+
+            <div class="form-group">
+                <label>Does the project have a general positive social impact that aligns with community development goals?</label>
+                <div class="radio-group">
+                    <input type="radio" id="impact-high" name="impact" value="high">
+                    <label for="impact-high">Significant positive impact</label>
+                    
+                    <input type="radio" id="impact-limited" name="impact" value="limited">
+                    <label for="impact-limited">Limited positive impact</label>
+                    
+                    <input type="radio" id="impact-unclear" name="impact" value="unclear">
+                    <label for="impact-unclear">Unclear</label>
+                </div>
+                <label for="impact-notes">Notes:</label>
+                <textarea id="impact-notes"></textarea>
+            </div>
+
+            <div class="section-title">Cultural Data</div>
+            <div class="form-group">
+                <label>Does the product (real estate) or its implementation method align with the local culture and values of the target community? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="culture-yes" name="culture" value="yes">
+                    <label for="culture-yes">Yes</label>
+                    
+                    <input type="radio" id="culture-no" name="culture" value="no">
+                    <label for="culture-no">No</label>
+                    
+                    <input type="radio" id="culture-partial" name="culture" value="partial">
+                    <label for="culture-partial">Partially</label>
+                </div>
+                <label for="culture-explanation">Please explain briefly:</label>
+                <textarea id="culture-explanation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Is there a possibility of community or cultural rejection of the idea or project? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="rejection-yes" name="rejection" value="yes">
+                    <label for="rejection-yes">Yes</label>
+                    
+                    <input type="radio" id="rejection-no" name="rejection" value="no">
+                    <label for="rejection-no">No</label>
+                    
+                    <input type="radio" id="rejection-unexpected" name="rejection" value="unexpected">
+                    <label for="rejection-unexpected">Not expected</label>
+                </div>
+                <div id="rejection-explanation-container" style="display: none;">
+                    <label for="rejection-explanation">If yes, what is the likely reason?</label>
+                    <textarea id="rejection-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project culturally acceptable in the target implementation environment?</label>
+                <div class="radio-group">
+                    <input type="radio" id="acceptable-high" name="acceptable" value="high">
+                    <label for="acceptable-high">Highly acceptable</label>
+                    
+                    <input type="radio" id="acceptable-challenges" name="acceptable" value="challenges">
+                    <label for="acceptable-challenges">Acceptable with challenges</label>
+                    
+                    <input type="radio" id="acceptable-not" name="acceptable" value="not">
+                    <label for="acceptable-not">Not acceptable</label>
+                </div>
+                <label for="acceptable-notes">Notes:</label>
+                <textarea id="acceptable-notes"></textarea>
+            </div>
+
+            <div class="section-title">Behavioral Data</div>
+            <div class="form-group">
+                <label>Does the proposed real estate product align with current purchasing behaviors and housing habits of target customers? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="behavior-yes" name="behavior" value="yes">
+                    <label for="behavior-yes">Yes</label>
+                    
+                    <input type="radio" id="behavior-no" name="behavior" value="no">
+                    <label for="behavior-no">No</label>
+                    
+                    <input type="radio" id="behavior-partial" name="behavior" value="partial">
+                    <label for="behavior-partial">Partially</label>
+                </div>
+                <label for="behavior-explanation">Please explain briefly:</label>
+                <textarea id="behavior-explanation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Is there expected behavioral resistance to change or adoption of the new project? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="resistance-yes" name="resistance" value="yes">
+                    <label for="resistance-yes">Yes</label>
+                    
+                    <input type="radio" id="resistance-no" name="resistance" value="no">
+                    <label for="resistance-no">No</label>
+                    
+                    <input type="radio" id="resistance-unexpected" name="resistance" value="unexpected">
+                    <label for="resistance-unexpected">Not expected</label>
+                </div>
+                <div id="resistance-explanation-container" style="display: none;">
+                    <label for="resistance-explanation">If yes, what is the likely reason?</label>
+                    <textarea id="resistance-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Does the general behavior of target customers support the project idea and ensure easy adoption?</label>
+                <div class="radio-group">
+                    <input type="radio" id="support-strong" name="support" value="strong">
+                    <label for="support-strong">Strongly supports</label>
+                    
+                    <input type="radio" id="support-effort" name="support" value="effort">
+                    <label for="support-effort">Needs effort</label>
+                    
+                    <input type="radio" id="support-high" name="support" value="high">
+                    <label for="support-high">High resistance</label>
+                </div>
+                <label for="support-notes">Notes:</label>
+                <textarea id="support-notes"></textarea>
+            </div>
+
+            <div class="section-title">Political Data</div>
+            <div class="form-group">
+                <label>Is there sufficient political stability in the target region/country to ensure project continuity? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="stability-yes" name="stability" value="yes">
+                    <label for="stability-yes">Yes</label>
+                    
+                    <input type="radio" id="stability-no" name="stability" value="no">
+                    <label for="stability-no">No</label>
+                    
+                    <input type="radio" id="stability-partial" name="stability" value="partial">
+                    <label for="stability-partial">Partially</label>
+                </div>
+                <label for="stability-explanation">Please explain briefly:</label>
+                <textarea id="stability-explanation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project exposed to potential changes in regulations, laws, or government policies that may negatively affect it? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="changes-yes" name="changes" value="yes">
+                    <label for="changes-yes">Yes</label>
+                    
+                    <input type="radio" id="changes-no" name="changes" value="no">
+                    <label for="changes-no">No</label>
+                    
+                    <input type="radio" id="changes-unexpected" name="changes" value="unexpected">
+                    <label for="changes-unexpected">Not expected</label>
+                </div>
+                <div id="changes-explanation-container" style="display: none;">
+                    <label for="changes-explanation">If yes, please mention the most prominent of these potential changes:</label>
+                    <textarea id="changes-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is there a major political risk to the sustainability of the project?</label>
+                <div class="radio-group">
+                    <input type="radio" id="risk-low" name="risk" value="low">
+                    <label for="risk-low">Low risk</label>
+                    
+                    <input type="radio" id="risk-medium" name="risk" value="medium">
+                    <label for="risk-medium">Medium risk</label>
+                    
+                    <input type="radio" id="risk-high" name="risk" value="high">
+                    <label for="risk-high">High risk</label>
+                </div>
+                <label for="risk-notes">Notes:</label>
+                <textarea id="risk-notes"></textarea>
+            </div>
+
+            <div class="section-title">Time Data</div>
+            <div class="form-group">
+                <label>Is the proposed timeframe appropriate to exploit the current market opportunity? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="timeframe-yes" name="timeframe" value="yes">
+                    <label for="timeframe-yes">Yes, appropriate</label>
+                    
+                    <input type="radio" id="timeframe-late" name="timeframe" value="late">
+                    <label for="timeframe-late">May be late</label>
+                    
+                    <input type="radio" id="timeframe-no" name="timeframe" value="no">
+                    <label for="timeframe-no">No effect</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the proposed timing for project implementation appropriate for its success?</label>
+                <div class="radio-group">
+                    <input type="radio" id="timing-appropriate" name="timing" value="appropriate">
+                    <label for="timing-appropriate">Very appropriate</label>
+                    
+                    <input type="radio" id="timing-accelerate" name="timing" value="accelerate">
+                    <label for="timing-accelerate">Needs acceleration</label>
+                    
+                    <input type="radio" id="timing-not" name="timing" value="not">
+                    <label for="timing-not">Not appropriate</label>
+                </div>
+                <label for="timing-notes">Notes:</label>
+                <textarea id="timing-notes"></textarea>
+            </div>
+
+            <div class="section-title">Risk Data</div>
+            <div class="form-group">
+                <label>What are the main risks (other than those mentioned in previous sections) that the project may face? (Required)</label>
+                <div id="risks-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Risk (e.g., Fluctuations in building material prices)" class="risk-name">
+                        <input type="number" placeholder="Probability (1-5)" min="1" max="5" class="risk-probability">
+                        <input type="number" placeholder="Impact (1-5)" min="1" max="5" class="risk-impact">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addRiskField()">+ Add Risk</button>
+                <p>Probability/Impact scale: 1=Very low, 5=Very high</p>
+            </div>
+
+            <div class="form-group">
+                <label>Is there a preliminary contingency plan to face these risks? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="contingency-yes" name="contingency" value="yes">
+                    <label for="contingency-yes">Yes</label>
+                    
+                    <input type="radio" id="contingency-no" name="contingency" value="no">
+                    <label for="contingency-no">No</label>
+                    
+                    <input type="radio" id="contingency-partial" name="contingency" value="partial">
+                    <label for="contingency-partial">Partially</label>
+                </div>
+                <div id="contingency-explanation-container" style="display: none;">
+                    <label for="contingency-explanation">If yes, please explain briefly:</label>
+                    <textarea id="contingency-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Can the main risks be controlled or mitigated effectively?</label>
+                <div class="radio-group">
+                    <input type="radio" id="control-yes" name="control" value="yes">
+                    <label for="control-yes">Yes, can be controlled</label>
+                    
+                    <input type="radio" id="control-challenges" name="control" value="challenges">
+                    <label for="control-challenges">Major challenges</label>
+                    
+                    <input type="radio" id="control-high" name="control" value="high">
+                    <label for="control-high">Very high risk</label>
+                </div>
+                <label for="control-notes">Notes:</label>
+                <textarea id="control-notes"></textarea>
+            </div>
+
+            <div class="section-title">Economic Data</div>
+            <div class="form-group">
+                <label for="economic-value">What is the expected added value of the project to the economy and society as a whole? (Required)</label>
+                <textarea id="economic-value" placeholder="e.g., Contribution to economic growth, job creation, increasing real estate supply, stimulating interconnected sectors"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project expected to positively affect GDP or exports/imports? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="gdp-yes" name="gdp" value="yes">
+                    <label for="gdp-yes">Yes</label>
+                    
+                    <input type="radio" id="gdp-no" name="gdp" value="no">
+                    <label for="gdp-no">No</label>
+                    
+                    <input type="radio" id="gdp-limited" name="gdp" value="limited">
+                    <label for="gdp-limited">Limited effect</label>
+                </div>
+                <label for="gdp-explanation">Please explain briefly:</label>
+                <textarea id="gdp-explanation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Does the project have general economic feasibility that contributes to development?</label>
+                <div class="radio-group">
+                    <input type="radio" id="feasibility-high" name="feasibility" value="high">
+                    <label for="feasibility-high">High economic feasibility</label>
+                    
+                    <input type="radio" id="feasibility-medium" name="feasibility" value="medium">
+                    <label for="feasibility-medium">Medium economic feasibility</label>
+                    
+                    <input type="radio" id="feasibility-limited" name="feasibility" value="limited">
+                    <label for="feasibility-limited">Limited economic feasibility</label>
+                </div>
+                <label for="feasibility-notes">Notes:</label>
+                <textarea id="feasibility-notes"></textarea>
+            </div>
+
+            <div class="section-title">Financial Data</div>
+            <div class="form-group">
+                <label>Is the total capital required to start and operate the project in its initial phases sufficiently excellent? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="capital-yes" name="capital" value="yes">
+                    <label for="capital-yes">Yes</label>
+                    
+                    <input type="radio" id="capital-no" name="capital" value="no">
+                    <label for="capital-no">No</label>
+                    
+                    <input type="radio" id="capital-minimum" name="capital" value="minimum">
+                    <label for="capital-minimum">At minimum required</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are the expected monthly operational costs appropriate? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="costs-yes" name="costs" value="yes">
+                    <label for="costs-yes">Yes</label>
+                    
+                    <input type="radio" id="costs-no" name="costs" value="no">
+                    <label for="costs-no">No</label>
+                    
+                    <input type="radio" id="costs-minimum" name="costs" value="minimum">
+                    <label for="costs-minimum">At minimum required</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the estimated payback period for invested capital feasible? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="payback-yes" name="payback" value="yes">
+                    <label for="payback-yes">Yes</label>
+                    
+                    <input type="radio" id="payback-no" name="payback" value="no">
+                    <label for="payback-no">No</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Do you expect the project to achieve a return on investment (ROI) or internal rate of return (IRR) that is initially feasible? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="roi-yes" name="roi" value="yes">
+                    <label for="roi-yes">Yes</label>
+                    
+                    <input type="radio" id="roi-no" name="roi" value="no">
+                    <label for="roi-no">No</label>
+                    
+                    <input type="radio" id="roi-unsure" name="roi" value="unsure">
+                    <label for="roi-unsure">Not sure</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project financially feasible and capable of achieving the required profits?</label>
+                <div class="radio-group">
+                    <input type="radio" id="financial-high" name="financial" value="high">
+                    <label for="financial-high">Highly feasible</label>
+                    
+                    <input type="radio" id="financial-challenges" name="financial" value="challenges">
+                    <label for="financial-challenges">Feasible with some challenges</label>
+                    
+                    <input type="radio" id="financial-not" name="financial" value="not">
+                    <label for="financial-not">Not financially feasible</label>
+                </div>
+                <label for="financial-notes">Notes:</label>
+                <textarea id="financial-notes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Will the project rely on any additional investments? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="investments-yes" name="investments" value="yes">
+                    <label for="investments-yes">Yes</label>
+                    
+                    <input type="radio" id="investments-no" name="investments" value="no">
+                    <label for="investments-no">No</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Do you want to compare the project with other investments? (Optional)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="compare1" name="compare" value="cryptocurrencies">
+                    <label for="compare1">Cryptocurrencies</label>
+                    
+                    <input type="checkbox" id="compare2" name="compare" value="stocks">
+                    <label for="compare2">Company stocks</label>
+                    
+                    <input type="checkbox" id="compare3" name="compare" value="metals">
+                    <label for="compare3">Metals</label>
+                    
+                    <input type="checkbox" id="compare4" name="compare" value="bonds">
+                    <label for="compare4">Bank bonds</label>
+                    
+                    <input type="checkbox" id="compare5" name="compare" value="deposits">
+                    <label for="compare5">Deposits</label>
+                </div>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../pre-feasibility/Pre-feasibility Study.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <!-- This will be populated dynamically with JavaScript -->
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            const gapRadios = document.querySelectorAll('input[name="market-gap"]');
+            const gapExplanationContainer = document.getElementById('gap-explanation-container');
+            
+            gapRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    gapExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const maintenanceRadios = document.querySelectorAll('input[name="maintenance"]');
+            const maintenanceExplanationContainer = document.getElementById('maintenance-explanation-container');
+            
+            maintenanceRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    maintenanceExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const governanceRadios = document.querySelectorAll('input[name="governance"]');
+            const governanceExplanationContainer = document.getElementById('governance-explanation-container');
+            
+            governanceRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    governanceExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const risksRadios = document.querySelectorAll('input[name="risks"]');
+            const risksExplanationContainer = document.getElementById('risks-explanation-container');
+            
+            risksRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    risksExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const environmentRadios = document.querySelectorAll('input[name="environment"]');
+            const environmentExplanationContainer = document.getElementById('environment-explanation-container');
+            
+            environmentRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    environmentExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const rejectionRadios = document.querySelectorAll('input[name="rejection"]');
+            const rejectionExplanationContainer = document.getElementById('rejection-explanation-container');
+            
+            rejectionRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    rejectionExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const resistanceRadios = document.querySelectorAll('input[name="resistance"]');
+            const resistanceExplanationContainer = document.getElementById('resistance-explanation-container');
+            
+            resistanceRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    resistanceExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const changesRadios = document.querySelectorAll('input[name="changes"]');
+            const changesExplanationContainer = document.getElementById('changes-explanation-container');
+            
+            changesRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    changesExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const contingencyRadios = document.querySelectorAll('input[name="contingency"]');
+            const contingencyExplanationContainer = document.getElementById('contingency-explanation-container');
+            
+            contingencyRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    contingencyExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Dynamic field functions
+        function addEquipmentField() {
+            const equipmentList = document.getElementById('equipment-list');
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Equipment name (e.g., Excavator)" class="equipment-name">
+                <input type="number" placeholder="Value" class="equipment-value">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            equipmentList.appendChild(newField);
+        }
+
+        function addMaterialField() {
+            const materialsList = document.getElementById('materials-list');
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Material name (e.g., Cement)" class="material-name">
+                <input type="number" placeholder="Monthly quantity" class="material-quantity">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            materialsList.appendChild(newField);
+        }
+
+        function addTechnologyField() {
+            const technologyList = document.getElementById('technology-list');
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Technology type (e.g., BIM software)" class="technology-type">
+                <input type="number" placeholder="Value" class="technology-value">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            technologyList.appendChild(newField);
+        }
+
+        function addEmployeeField() {
+            const employeesList = document.getElementById('employees-list');
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Job title (e.g., Project manager)" class="employee-title">
+                <input type="number" placeholder="Number" class="employee-count">
+                <input type="number" placeholder="Salary" class="employee-salary">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            employeesList.appendChild(newField);
+        }
+
+        function addLicenseField() {
+            const licensesList = document.getElementById('licenses-list');
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="License type (e.g., Construction permit)" class="license-type">
+                <input type="number" placeholder="Value" class="license-value">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            licensesList.appendChild(newField);
+        }
+
+        function addRiskField() {
+            const risksList = document.getElementById('risks-list');
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Risk (e.g., Fluctuations in building material prices)" class="risk-name">
+                <input type="number" placeholder="Probability (1-5)" min="1" max="5" class="risk-probability">
+                <input type="number" placeholder="Impact (1-5)" min="1" max="5" class="risk-impact">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            risksList.appendChild(newField);
+        }
+
+        function removeField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Project Idea Description
+            addOutputItem('Main Activity', document.getElementById('main-activity').value);
+            addOutputItem('Problem Solved', document.getElementById('problem-solved').value);
+            
+            const businessModel = document.getElementById('business-model');
+            addOutputItem('Business Model', businessModel.options[businessModel.selectedIndex].text);
+            
+            const distributionChannels = document.getElementById('distribution-channels');
+            addOutputItem('Distribution Channels', distributionChannels.options[distributionChannels.selectedIndex].text);
+
+            // Market Data
+            addOutputItem('Market Size', document.getElementById('market-size').value ? document.getElementById('market-size').value + ' (annual value)' : '');
+            addOutputItem('Customer Count', document.getElementById('customer-count').value);
+            addOutputItem('Growth Rate', document.getElementById('growth-rate').value ? document.getElementById('growth-rate').value + '%' : '');
+            addOutputItem('Growth Factors', document.getElementById('growth-factors').value);
+            addOutputItem('Competitors', document.getElementById('competitors').value);
+            
+            const selectedGap = document.querySelector('input[name="market-gap"]:checked');
+            if (selectedGap) {
+                addOutputItem('Market Gap', selectedGap.id.replace('gap-', ''));
+                if (selectedGap.value === 'yes') {
+                    addOutputItem('Gap Explanation', document.getElementById('gap-explanation').value);
+                }
+            }
+
+            const selectedDemand = document.querySelector('input[name="market-demand"]:checked');
+            if (selectedDemand) {
+                addOutputItem('Market Demand', selectedDemand.id.replace('demand-', ''));
+                addOutputItem('Demand Notes', document.getElementById('demand-notes').value);
+            }
+
+            // Marketing Data
+            addOutputItem('Target Audience', document.getElementById('target-audience').value);
+            
+            const selectedChannels = [];
+            document.querySelectorAll('input[name="marketing-channels"]:checked').forEach(channel => {
+                selectedChannels.push(channel.id.replace('channel', 'Channel '));
+            });
+            if (selectedChannels.length > 0) {
+                addOutputItem('Marketing Channels', selectedChannels.join(', '));
+            }
+            
+            const marketingCost = document.getElementById('marketing-cost').value;
+            addOutputItem('Marketing Cost', marketingCost ? marketingCost + ' (monthly)' : '');
+            
+            addOutputItem('Competitive Advantage', document.getElementById('competitive-advantage').value);
+            
+            const selectedReach = document.querySelector('input[name="customer-reach"]:checked');
+            if (selectedReach) {
+                addOutputItem('Customer Reach', selectedReach.id.replace('reach-', ''));
+                addOutputItem('Reach Notes', document.getElementById('reach-notes').value);
+            }
+
+            // Technical and Operational Data
+            const selectedProximity = document.querySelector('input[name="proximity"]:checked');
+            if (selectedProximity) {
+                addOutputItem('Proximity to Services', selectedProximity.id.replace('proximity-', ''));
+            }
+            
+            const selectedWorkforce = document.querySelector('input[name="workforce"]:checked');
+            if (selectedWorkforce) {
+                addOutputItem('Workforce Availability', selectedWorkforce.id.replace('workforce-', ''));
+            }
+            
+            addOutputItem('Required Area', document.getElementById('required-area').value ? document.getElementById('required-area').value + 'm²' : '');
+            
+            const selectedProperty = document.querySelector('input[name="property"]:checked');
+            if (selectedProperty) {
+                addOutputItem('Property Type', selectedProperty.id.replace('property-', ''));
+                addOutputItem('Property Cost', document.getElementById('property-cost').value);
+            }
+            
+            const selectedTechFeasibility = document.querySelector('input[name="tech-feasibility"]:checked');
+            if (selectedTechFeasibility) {
+                addOutputItem('Technical Feasibility', selectedTechFeasibility.id.replace('tech-', ''));
+                addOutputItem('Tech Notes', document.getElementById('tech-notes').value);
+            }
+
+            // Equipment List
+            const equipmentNames = document.querySelectorAll('.equipment-name');
+            const equipmentValues = document.querySelectorAll('.equipment-value');
+            if (equipmentNames.length > 0 && equipmentNames[0].value) {
+                let equipmentHTML = '';
+                for (let i = 0; i < equipmentNames.length; i++) {
+                    if (equipmentNames[i].value) {
+                        equipmentHTML += `<li>${equipmentNames[i].value}: ${equipmentValues[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (equipmentHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Equipment List:</h4>
+                            <ul>${equipmentHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            // Materials List
+            const materialNames = document.querySelectorAll('.material-name');
+            const materialQuantities = document.querySelectorAll('.material-quantity');
+            if (materialNames.length > 0 && materialNames[0].value) {
+                let materialsHTML = '';
+                for (let i = 0; i < materialNames.length; i++) {
+                    if (materialNames[i].value) {
+                        materialsHTML += `<li>${materialNames[i].value}: ${materialQuantities[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (materialsHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Materials List:</h4>
+                            <ul>${materialsHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            addOutputItem('Materials Notes', document.getElementById('materials-notes').value);
+
+            // Technology Data
+            const selectedTechModern = document.querySelector('input[name="tech-modern"]:checked');
+            if (selectedTechModern) {
+                addOutputItem('Technology Modern', selectedTechModern.id.replace('tech-modern-', ''));
+            }
+            
+            const selectedMaintenance = document.querySelector('input[name="maintenance"]:checked');
+            if (selectedMaintenance) {
+                addOutputItem('Maintenance Difficulties', selectedMaintenance.id.replace('maintenance-', ''));
+                if (selectedMaintenance.value === 'yes') {
+                    addOutputItem('Maintenance Explanation', document.getElementById('maintenance-explanation').value);
+                }
+            }
+            
+            const selectedDependency = document.querySelector('input[name="dependency"]:checked');
+            if (selectedDependency) {
+                addOutputItem('Supplier Dependency', selectedDependency.id.replace('dependency-', ''));
+            }
+            
+            const selectedTechSafety = document.querySelector('input[name="tech-safety"]:checked');
+            if (selectedTechSafety) {
+                addOutputItem('Technology Safety', selectedTechSafety.id.replace('tech-safe-', ''));
+                addOutputItem('Safety Notes', document.getElementById('tech-safe-notes').value);
+            }
+
+            // Technology List
+            const techTypes = document.querySelectorAll('.technology-type');
+            const techValues = document.querySelectorAll('.technology-value');
+            if (techTypes.length > 0 && techTypes[0].value) {
+                let techHTML = '';
+                for (let i = 0; i < techTypes.length; i++) {
+                    if (techTypes[i].value) {
+                        techHTML += `<li>${techTypes[i].value}: ${techValues[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (techHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Technology List:</h4>
+                            <ul>${techHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            // Operational Data
+            addOutputItem('Daily Operations', document.getElementById('daily-operations').value);
+            
+            const selectedOperations = document.querySelector('input[name="operations"]:checked');
+            if (selectedOperations) {
+                addOutputItem('Operations Feasibility', selectedOperations.id.replace('operations-', ''));
+                addOutputItem('Operations Notes', document.getElementById('operations-notes').value);
+            }
+
+            // Employees List
+            const employeeTitles = document.querySelectorAll('.employee-title');
+            const employeeCounts = document.querySelectorAll('.employee-count');
+            const employeeSalaries = document.querySelectorAll('.employee-salary');
+            if (employeeTitles.length > 0 && employeeTitles[0].value) {
+                let employeesHTML = '';
+                for (let i = 0; i < employeeTitles.length; i++) {
+                    if (employeeTitles[i].value) {
+                        employeesHTML += `<li>${employeeTitles[i].value}: ${employeeCounts[i].value || 'N/A'} employees, Salary: ${employeeSalaries[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (employeesHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Employees List:</h4>
+                            <ul>${employeesHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            // Organizational Data
+            const selectedStructure = [];
+            document.querySelectorAll('input[name="structure"]:checked').forEach(structure => {
+                selectedStructure.push(structure.id.replace('structure', 'Structure '));
+            });
+            if (selectedStructure.length > 0) {
+                addOutputItem('Administrative Structure', selectedStructure.join(', '));
+            }
+            
+            const selectedDecision = document.querySelector('input[name="decision"]:checked');
+            if (selectedDecision) {
+                addOutputItem('Decision Making', selectedDecision.id.replace('decision-', ''));
+            }
+            
+            const selectedGovernance = document.querySelector('input[name="governance"]:checked');
+            if (selectedGovernance) {
+                addOutputItem('Governance Requirements', selectedGovernance.id.replace('governance-', ''));
+                if (selectedGovernance.value === 'yes') {
+                    addOutputItem('Governance Explanation', document.getElementById('governance-explanation').value);
+                }
+            }
+            
+            const selectedOrganized = document.querySelector('input[name="organized"]:checked');
+            if (selectedOrganized) {
+                addOutputItem('Organizational Effectiveness', selectedOrganized.id.replace('organized-', ''));
+                addOutputItem('Organization Notes', document.getElementById('organized-notes').value);
+            }
+
+            // Legal Data
+            const selectedLegal = document.querySelector('input[name="legal"]:checked');
+            if (selectedLegal) {
+                addOutputItem('Project Legality', selectedLegal.id.replace('legal-', ''));
+            }
+
+            // Licenses List
+            const licenseTypes = document.querySelectorAll('.license-type');
+            const licenseValues = document.querySelectorAll('.license-value');
+            if (licenseTypes.length > 0 && licenseTypes[0].value) {
+                let licensesHTML = '';
+                for (let i = 0; i < licenseTypes.length; i++) {
+                    if (licenseTypes[i].value) {
+                        licensesHTML += `<li>${licenseTypes[i].value}: ${licenseValues[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (licensesHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Licenses List:</h4>
+                            <ul>${licensesHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            const selectedRisks = document.querySelector('input[name="risks"]:checked');
+            if (selectedRisks) {
+                addOutputItem('Legal Risks', selectedRisks.id.replace('risks-', ''));
+                if (selectedRisks.value === 'yes') {
+                    addOutputItem('Risks Explanation', document.getElementById('risks-explanation').value);
+                }
+            }
+            
+                        const selectedObstacles = document.querySelector('input[name="obstacles"]:checked');
+            if (selectedObstacles) {
+                addOutputItem('Legal Obstacles', selectedObstacles.id.replace('obstacles-', ''));
+                addOutputItem('Obstacles Notes', document.getElementById('obstacles-notes').value);
+            }
+
+            // Environmental Data
+            const selectedEnvironment = document.querySelector('input[name="environment"]:checked');
+            if (selectedEnvironment) {
+                addOutputItem('Environmental Impact', selectedEnvironment.id.replace('environment-', ''));
+                if (selectedEnvironment.value === 'yes') {
+                    addOutputItem('Impact Explanation', document.getElementById('environment-explanation').value);
+                }
+            }
+            
+            const selectedAssessment = document.querySelector('input[name="assessment"]:checked');
+            if (selectedAssessment) {
+                addOutputItem('Environmental Assessment Needed', selectedAssessment.id.replace('assessment-', ''));
+            }
+            
+            const selectedFriendly = document.querySelector('input[name="friendly"]:checked');
+            if (selectedFriendly) {
+                addOutputItem('Environmental Friendliness', selectedFriendly.id.replace('friendly-', ''));
+                addOutputItem('Environmental Notes', document.getElementById('friendly-notes').value);
+            }
+
+            // Social Data
+            addOutputItem('Social Impact', document.getElementById('social-impact').value);
+            addOutputItem('Job Opportunities', document.getElementById('job-opportunities').value);
+            
+            const selectedImpact = document.querySelector('input[name="impact"]:checked');
+            if (selectedImpact) {
+                addOutputItem('Social Impact Level', selectedImpact.id.replace('impact-', ''));
+                addOutputItem('Impact Notes', document.getElementById('impact-notes').value);
+            }
+
+            // Cultural Data
+            const selectedCulture = document.querySelector('input[name="culture"]:checked');
+            if (selectedCulture) {
+                addOutputItem('Cultural Alignment', selectedCulture.id.replace('culture-', ''));
+                addOutputItem('Culture Explanation', document.getElementById('culture-explanation').value);
+            }
+            
+            const selectedRejection = document.querySelector('input[name="rejection"]:checked');
+            if (selectedRejection) {
+                addOutputItem('Cultural Rejection Risk', selectedRejection.id.replace('rejection-', ''));
+                if (selectedRejection.value === 'yes') {
+                    addOutputItem('Rejection Reason', document.getElementById('rejection-explanation').value);
+                }
+            }
+            
+            const selectedAcceptable = document.querySelector('input[name="acceptable"]:checked');
+            if (selectedAcceptable) {
+                addOutputItem('Cultural Acceptability', selectedAcceptable.id.replace('acceptable-', ''));
+                addOutputItem('Acceptability Notes', document.getElementById('acceptable-notes').value);
+            }
+
+            // Behavioral Data
+            const selectedBehavior = document.querySelector('input[name="behavior"]:checked');
+            if (selectedBehavior) {
+                addOutputItem('Behavioral Alignment', selectedBehavior.id.replace('behavior-', ''));
+                addOutputItem('Behavior Explanation', document.getElementById('behavior-explanation').value);
+            }
+            
+            const selectedResistance = document.querySelector('input[name="resistance"]:checked');
+            if (selectedResistance) {
+                addOutputItem('Behavioral Resistance', selectedResistance.id.replace('resistance-', ''));
+                if (selectedResistance.value === 'yes') {
+                    addOutputItem('Resistance Reason', document.getElementById('resistance-explanation').value);
+                }
+            }
+            
+            const selectedSupport = document.querySelector('input[name="support"]:checked');
+            if (selectedSupport) {
+                addOutputItem('Customer Support', selectedSupport.id.replace('support-', ''));
+                addOutputItem('Support Notes', document.getElementById('support-notes').value);
+            }
+
+            // Political Data
+            const selectedStability = document.querySelector('input[name="stability"]:checked');
+            if (selectedStability) {
+                addOutputItem('Political Stability', selectedStability.id.replace('stability-', ''));
+                addOutputItem('Stability Explanation', document.getElementById('stability-explanation').value);
+            }
+            
+            const selectedChanges = document.querySelector('input[name="changes"]:checked');
+            if (selectedChanges) {
+                addOutputItem('Regulatory Changes Risk', selectedChanges.id.replace('changes-', ''));
+                if (selectedChanges.value === 'yes') {
+                    addOutputItem('Potential Changes', document.getElementById('changes-explanation').value);
+                }
+            }
+            
+            const selectedRisk = document.querySelector('input[name="risk"]:checked');
+            if (selectedRisk) {
+                addOutputItem('Political Risk Level', selectedRisk.id.replace('risk-', ''));
+                addOutputItem('Risk Notes', document.getElementById('risk-notes').value);
+            }
+
+            // Time Data
+            const selectedTimeframe = document.querySelector('input[name="timeframe"]:checked');
+            if (selectedTimeframe) {
+                addOutputItem('Timeframe Appropriateness', selectedTimeframe.id.replace('timeframe-', ''));
+            }
+            
+            const selectedTiming = document.querySelector('input[name="timing"]:checked');
+            if (selectedTiming) {
+                addOutputItem('Implementation Timing', selectedTiming.id.replace('timing-', ''));
+                addOutputItem('Timing Notes', document.getElementById('timing-notes').value);
+            }
+
+            // Risk Data
+            const selectedContingency = document.querySelector('input[name="contingency"]:checked');
+            if (selectedContingency) {
+                addOutputItem('Contingency Plan', selectedContingency.id.replace('contingency-', ''));
+                if (selectedContingency.value === 'yes') {
+                    addOutputItem('Contingency Explanation', document.getElementById('contingency-explanation').value);
+                }
+            }
+            
+            const selectedControl = document.querySelector('input[name="control"]:checked');
+            if (selectedControl) {
+                addOutputItem('Risk Control', selectedControl.id.replace('control-', ''));
+                addOutputItem('Control Notes', document.getElementById('control-notes').value);
+            }
+
+            // Risks List
+            const riskNames = document.querySelectorAll('.risk-name');
+            const riskProbabilities = document.querySelectorAll('.risk-probability');
+            const riskImpacts = document.querySelectorAll('.risk-impact');
+            if (riskNames.length > 0 && riskNames[0].value) {
+                let risksHTML = '';
+                for (let i = 0; i < riskNames.length; i++) {
+                    if (riskNames[i].value) {
+                        risksHTML += `<li>${riskNames[i].value}: Probability ${riskProbabilities[i].value || 'N/A'}, Impact ${riskImpacts[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (risksHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Risk List:</h4>
+                            <ul>${risksHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            // Economic Data
+            addOutputItem('Economic Value Added', document.getElementById('economic-value').value);
+            
+            const selectedGDP = document.querySelector('input[name="gdp"]:checked');
+            if (selectedGDP) {
+                addOutputItem('GDP Impact', selectedGDP.id.replace('gdp-', ''));
+                addOutputItem('GDP Explanation', document.getElementById('gdp-explanation').value);
+            }
+            
+            const selectedFeasibility = document.querySelector('input[name="feasibility"]:checked');
+            if (selectedFeasibility) {
+                addOutputItem('Economic Feasibility', selectedFeasibility.id.replace('feasibility-', ''));
+                addOutputItem('Feasibility Notes', document.getElementById('feasibility-notes').value);
+            }
+
+            // Financial Data
+            const selectedCapital = document.querySelector('input[name="capital"]:checked');
+            if (selectedCapital) {
+                addOutputItem('Capital Sufficiency', selectedCapital.id.replace('capital-', ''));
+            }
+            
+            const selectedCosts = document.querySelector('input[name="costs"]:checked');
+            if (selectedCosts) {
+                addOutputItem('Operational Costs', selectedCosts.id.replace('costs-', ''));
+            }
+            
+            const selectedPayback = document.querySelector('input[name="payback"]:checked');
+            if (selectedPayback) {
+                addOutputItem('Payback Period Feasibility', selectedPayback.id.replace('payback-', ''));
+            }
+            
+            const selectedROI = document.querySelector('input[name="roi"]:checked');
+            if (selectedROI) {
+                addOutputItem('ROI/IRR Feasibility', selectedROI.id.replace('roi-', ''));
+            }
+            
+            const selectedFinancial = document.querySelector('input[name="financial"]:checked');
+            if (selectedFinancial) {
+                addOutputItem('Financial Feasibility', selectedFinancial.id.replace('financial-', ''));
+                addOutputItem('Financial Notes', document.getElementById('financial-notes').value);
+            }
+            
+            const selectedInvestments = document.querySelector('input[name="investments"]:checked');
+            if (selectedInvestments) {
+                addOutputItem('Additional Investments Needed', selectedInvestments.id.replace('investments-', ''));
+            }
+
+            const selectedCompare = [];
+            document.querySelectorAll('input[name="compare"]:checked').forEach(compare => {
+                selectedCompare.push(compare.id.replace('compare', 'Compare '));
+            });
+            if (selectedCompare.length > 0) {
+                addOutputItem('Investment Comparison', selectedCompare.join(', '));
+            }
+
+            // Update the output section
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            outputDiv.innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - PhoenixRizze</title>
+    <style>
+        :root {
+            --primary-color: #37352f;
+            --secondary-color: #5f5e57;
+            --accent-color: #2eaadc;
+            --bg-color: #ffffff;
+            --sidebar-width: 240px;
+            --header-height: 60px;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--primary-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #f7f6f3;
+            border-right: 1px solid #e1e1e1;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+.sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #e1e1e1;
+    
+}
+
+.sidebar-header .logo {
+    max-width: 150px; 
+    height: auto;    
+    display: block;  
+    margin: 0 auto;  
+    padding-bottom: 20px; 
+}
+
+
+.sidebar-nav {
+    padding: 20px;
+}
+
+        .nav-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 6px 0;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background-color: #ebebea;
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px 60px;
+            max-width: 900px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-top: 10px;
+            border-top: 1px solid #e1e1e1;
+            padding-top: 30px;
+        }
+
+        .section-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .section-list {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-list li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background-color: #f7f6f3;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e1e1;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e1e1e1;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+<div class="sidebar-header">
+    <img src="images/LOGO PH.png" alt="PhoenixRizze Logo" class="logo">
+</div>
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#introduction" class="nav-link active">1. Introduction</a>
+            </div>
+            <div class="nav-item">
+                <a href="#definitions" class="nav-link">2. Definitions</a>
+            </div>
+            <div class="nav-item">
+                <a href="#registration" class="nav-link">3. Registration</a>
+            </div>
+            <div class="nav-item">
+                <a href="#service-nature" class="nav-link">4. Service Nature</a>
+            </div>
+            <div class="nav-item">
+                <a href="#intellectual-property" class="nav-link">5. Intellectual Property</a>
+            </div>
+            <div class="nav-item">
+                <a href="#data-usage" class="nav-link">6. Data Usage</a>
+            </div>
+            <div class="nav-item">
+                <a href="#payments" class="nav-link">7. Payments</a>
+            </div>
+            <div class="nav-item">
+                <a href="#suspension" class="nav-link">8. Account Suspension</a>
+            </div>
+            <div class="nav-item">
+                <a href="#amendments" class="nav-link">9. Amendments</a>
+            </div>
+            <div class="nav-item">
+                <a href="#liability" class="nav-link">10. Liability</a>
+            </div>
+            <div class="nav-item">
+                <a href="#governing-law" class="nav-link">11. Governing Law</a>
+            </div>
+            <div class="nav-item">
+                <a href="#contact" class="nav-link">12. Contact</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Terms of Service</h1>
+            <p class="last-updated">Last Updated: June 1, 2025</p>
+        </header>
+
+        <section id="introduction" class="content-section">
+            <h2 class="section-title">1. Introduction</h2>
+            <p class="section-text">
+                Please read these Terms of Service carefully before using the PhoenixRizze platform. By using the website, you agree to be bound by these terms and conditions.
+            </p>
+            <div class="highlight">
+                If you do not agree to all of these terms, you must not access or use the platform.
+            </div>
+        </section>
+
+        <section id="definitions" class="content-section">
+            <h2 class="section-title">2. Definitions</h2>
+            <ul class="section-list">
+                <li><strong>Website:</strong> Refers to the PhoenixRizze online platform and all associated services.</li>
+                <li><strong>User:</strong> Any individual who registers for or uses the platform's services.</li>
+                <li><strong>Service:</strong> All interactive tools provided by the platform for generating feasibility studies and related analytical outputs.</li>
+            </ul>
+        </section>
+
+        <section id="registration" class="content-section">
+            <h2 class="section-title">3. Registration and Usage Conditions</h2>
+            <p class="section-text">
+                To create an account, the User must be:
+            </p>
+            <ul class="section-list">
+                <li>18 years of age or older, or</li>
+                <li>The age of legal majority in their jurisdiction</li>
+            </ul>
+            <p class="section-text">
+                The User agrees to:
+            </p>
+            <ul class="section-list">
+                <li>Provide accurate information during registration</li>
+                <li>Not use the account for any unlawful purposes</li>
+                <li>Maintain the confidentiality of login credentials</li>
+            </ul>
+            <p class="section-text">
+                Prohibited activities include:
+            </p>
+            <ul class="section-list">
+                <li>Sharing accounts with other parties</li>
+                <li>Attempting to compromise platform security</li>
+                <li>Creating multiple accounts for abusive purposes</li>
+            </ul>
+        </section>
+
+        <section id="service-nature" class="content-section">
+            <h2 class="section-title">4. Nature of the Service</h2>
+            <p class="section-text">
+                The platform provides an AI-powered tool to generate preliminary feasibility studies.
+            </p>
+            <div class="highlight">
+                Important: The generated reports are not to be considered binding legal, financial, or professional advice. They should be treated as supportive tools for decision-making.
+            </div>
+            <p class="section-text">
+                PhoenixRizze reserves the right to:
+            </p>
+            <ul class="section-list">
+                <li>Modify system components</li>
+                <li>Change the generation methodology</li>
+                <li>Update features as part of continuous development</li>
+            </ul>
+        </section>
+
+        <section id="intellectual-property" class="content-section">
+            <h2 class="section-title">5. Intellectual Property</h2>
+            <p class="section-text">
+                All intellectual property rights related to:
+            </p>
+            <ul class="section-list">
+                <li>Platform design and architecture</li>
+                <li>Source code and algorithms</li>
+                <li>AI models and training methodologies</li>
+                <li>Documentation and content</li>
+            </ul>
+            <p class="section-text">
+                are exclusively owned by PhoenixRizze.
+            </p>
+            <p class="section-text">
+                <strong>User-generated content:</strong>
+            </p>
+            <ul class="section-list">
+                <li>You may use outputs for personal/professional purposes</li>
+                <li>You may not resell or redistribute outputs as standalone products</li>
+                <li>You may not claim authorship of the underlying methodology</li>
+            </ul>
+        </section>
+
+        <section id="data-usage" class="content-section">
+            <h2 class="section-title">6. Data Usage</h2>
+            <p class="section-text">
+                By using the service, you agree that certain aggregated data may be used for:
+            </p>
+            <ul class="section-list">
+                <li>Improving system performance via machine learning</li>
+                <li>Scientific and academic research</li>
+                <li>Platform analytics and development</li>
+            </ul>
+            <p class="section-text">
+                All data usage complies with our <a href="/privacy">Privacy Policy</a> and:
+            </p>
+            <ul class="section-list">
+                <li>Never includes directly identifiable information</li>
+                <li>Is anonymized and aggregated</li>
+                <li>Supports platform improvement</li>
+            </ul>
+        </section>
+
+        <section id="payments" class="content-section">
+            <h2 class="section-title">7. Subscriptions and Payments</h2>
+            <p class="section-text">
+                <strong>Current status:</strong> Free trial period
+            </p>
+            <ul class="section-list">
+                <li>No payment required during trial</li>
+                <li>All features currently available</li>
+            </ul>
+            <p class="section-text">
+                <strong>Future paid plans:</strong>
+            </p>
+            <ul class="section-list">
+                <li>Will be announced with 30 days notice</li>
+                <li>Clear pricing and feature breakdown</li>
+                <li>Secure payment processing via PCI-compliant gateways</li>
+            </ul>
+            <p class="section-text">
+                All financial data is encrypted and never stored on our servers.
+            </p>
+        </section>
+
+        <section id="suspension" class="content-section">
+            <h2 class="section-title">8. Account or Service Suspension</h2>
+            <p class="section-text">
+                PhoenixRizze may suspend or terminate accounts for:
+            </p>
+            <ul class="section-list">
+                <li>Terms of Service violations</li>
+                <li>Unlawful system use attempts</li>
+                <li>Platform misuse or abuse</li>
+                <li>Fraudulent activity</li>
+            </ul>
+            <p class="section-text">
+                We reserve the right to:
+            </p>
+            <ul class="section-list">
+                <li>Investigate suspicious activity</li>
+                <li>Temporarily restrict access during investigations</li>
+                <li>Permanently ban repeat offenders</li>
+            </ul>
+        </section>
+
+        <section id="amendments" class="content-section">
+            <h2 class="section-title">9. Amendments to the Terms</h2>
+            <p class="section-text">
+                We may update these Terms to:
+            </p>
+            <ul class="section-list">
+                <li>Reflect new features</li>
+                <li>Comply with legal requirements</li>
+                <li>Improve clarity</li>
+            </ul>
+            <p class="section-text">
+                Notification methods:
+            </p>
+            <ul class="section-list">
+                <li>Email to registered users</li>
+                <li>In-platform notifications</li>
+                <li>Updated "Last Modified" date</li>
+            </ul>
+            <div class="highlight">
+                Continued use after updates constitutes acceptance of the revised Terms.
+            </div>
+        </section>
+
+        <section id="liability" class="content-section">
+            <h2 class="section-title">10. Limitation of Liability</h2>
+            <p class="section-text">
+                Important disclaimers:
+            </p>
+            <ul class="section-list">
+                <li>We don't guarantee 100% accuracy in generated outputs</li>
+                <li>Results should be verified by professionals</li>
+                <li>You assume all risk for decisions based on our tools</li>
+            </ul>
+            <p class="section-text">
+                The Service is provided:
+            </p>
+            <ul class="section-list">
+                <li>"As is" and "as available"</li>
+                <li>Without warranties of any kind</li>
+                <li>To the fullest extent permissible by law</li>
+            </ul>
+            <p class="section-text">
+                PhoenixRizze shall not be liable for:
+            </p>
+            <ul class="section-list">
+                <li>Business losses</li>
+                <li>Lost data or opportunities</li>
+                <li>Consequential damages</li>
+            </ul>
+        </section>
+
+        <section id="governing-law" class="content-section">
+            <h2 class="section-title">11. Governing Law</h2>
+            <p class="section-text">
+                These Terms shall be:
+            </p>
+            <ul class="section-list">
+                <li>Governed by the laws of [Your Country/Jurisdiction]</li>
+                <li>Interpreted without regard to conflict of law principles</li>
+            </ul>
+            <p class="section-text">
+                Legal disputes will be resolved:
+            </p>
+            <ul class="section-list">
+                <li>First through good faith negotiations</li>
+                <li>Then through binding arbitration if needed</li>
+                <li>In the jurisdiction of [Your Country/Jurisdiction]</li>
+            </ul>
+        </section>
+
+        <section id="contact" class="content-section">
+            <h2 class="section-title">12. Contact Us</h2>
+            <p class="section-text">
+                For questions about these Terms:
+            </p>
+            <div class="contact-info">
+                <p>Email: <a href="mailto:phx@phoenixrizze.com">phx@phoenixrizze.com</a></p>
+                <p>Legal inquiries only</p>
+                <p>Response time: 5-7 business days</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Update active link in sidebar
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Update active link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.content-section');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= (sectionTop - 100)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Data Debug</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: #0d2235;
+      color: #f3f6f9;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.95);
+      color: #0d2235;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    header h1 {
+      font-size: 1.1rem;
+      margin: 0;
+      font-weight: 700;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .row > .card { min-height: 320px; }
+    .section-title {
+      margin: 0 0 8px 0;
+      font-size: 1rem;
+      color: #d9ecff;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #c8d6e5;
+      margin-bottom: 8px;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #0b1c2a;
+      color: #e8f1f8;
+      padding: 12px;
+      border-radius: 8px;
+      overflow: auto;
+      max-height: 600px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .toolbar { display: flex; gap: 8px; align-items: center; }
+    .btn {
+      background: linear-gradient(to right, #3498db, #2980b9);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn.secondary {
+      background: rgba(255,255,255,0.12);
+      color: #e7f3ff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .legend { font-size: 0.9rem; color: #bcd4e5; margin: 8px 0 0; }
+    @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI Data Debug</h1>
+    <div class="toolbar">
+      <button class="btn" id="refresh">Refresh from Storage</button>
+      <button class="btn secondary" id="clear">Clear Debug Cache</button>
+    </div>
+  </header>
+  <main>
+    <div class="card">
+      <div class="meta" id="updatedMeta">Last updated: —</div>
+      <div class="legend">This page shows what was most recently prepared and/or sent to the AI model. Keep this tab open and click "Refresh from Storage" after generating a report.</div>
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <h2 class="section-title">Prompt (lastPrompt)</h2>
+        <pre id="promptOut">Loading…</pre>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Chat Payload (messages)</h2>
+        <pre id="payloadOut">Loading…</pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <h2 class="section-title">Raw Data Object (lastData)</h2>
+        <pre id="dataOut">Loading…</pre>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Sanitized Data Used (lastCleanData)</h2>
+        <pre id="cleanDataOut">Loading…</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Extra Context Lines (lastExtraLines)</h2>
+      <pre id="extraOut">Loading…</pre>
+    </div>
+  </main>
+
+  <!-- Dexie + FeasibilityDB to read persisted debug keys -->
+  <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+  <script src="./feasibility-db.js"></script>
+  <script>
+    (function(){
+      const $ = (id) => document.getElementById(id);
+      const pretty = (v) => {
+        try { return JSON.stringify(v, null, 2); } catch(_) { return String(v); }
+      };
+      const setText = (id, v) => { const el = $(id); if (el) el.textContent = v; };
+
+      async function readJSON(key, fallback) {
+        try {
+          if (window.FeasibilityDB) {
+            const val = await window.FeasibilityDB.getJSON(key, fallback);
+            return val == null ? fallback : val;
+          }
+        } catch(_) {}
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch(_) { return fallback; }
+      }
+      async function readString(key, fallback) {
+        try {
+          if (window.FeasibilityDB) {
+            const val = await window.FeasibilityDB.getString(key, fallback);
+            return (val == null ? fallback : String(val));
+          }
+        } catch(_) {}
+        try {
+          const raw = localStorage.getItem(key);
+          return (raw == null ? fallback : String(raw));
+        } catch(_) { return fallback; }
+      }
+
+      async function loadAll() {
+        // Prefer live window vars if present in this tab (e.g., if opened as a popup from the same context)
+        const livePrompt = window.lastPrompt;
+        const liveData = window.lastData;
+        const liveClean = window.lastCleanData;
+        const liveExtra = window.lastExtraLines;
+        const livePayload = window.lastPayload;
+
+        const prompt = (typeof livePrompt === 'string') ? livePrompt : await readString('debug.lastPrompt', '—');
+        const data = (liveData !== undefined) ? liveData : await readJSON('debug.lastData', {});
+        const cleanData = (liveClean !== undefined) ? liveClean : await readJSON('debug.lastCleanData', {});
+        const extra = (liveExtra !== undefined) ? liveExtra : await readJSON('debug.lastExtraLines', []);
+        const payload = (livePayload !== undefined) ? livePayload : await readJSON('debug.lastPayload', {});
+
+        setText('promptOut', String(prompt || '—'));
+        setText('dataOut', pretty(data));
+        setText('cleanDataOut', pretty(cleanData));
+        setText('extraOut', pretty(extra));
+
+        // From payload, show only messages if present
+        let payloadDisplay = payload && payload.messages ? { model: payload.model, temperature: payload.temperature, messages: payload.messages } : payload;
+        setText('payloadOut', pretty(payloadDisplay));
+
+        try {
+          const ts = new Date().toLocaleString();
+          setText('updatedMeta', 'Last updated: ' + ts);
+        } catch(_) {}
+      }
+
+      async function clearAll() {
+        try {
+          if (window.FeasibilityDB && typeof window.FeasibilityDB.setJSON === 'function') {
+            await window.FeasibilityDB.setJSON('debug.lastData', null);
+            await window.FeasibilityDB.setJSON('debug.lastCleanData', null);
+            await window.FeasibilityDB.setString('debug.lastPrompt', '');
+            await window.FeasibilityDB.setJSON('debug.lastExtraLines', null);
+            await window.FeasibilityDB.setJSON('debug.lastPayload', null);
+          }
+        } catch(_) {}
+        try {
+          localStorage.removeItem('debug.lastData');
+          localStorage.removeItem('debug.lastCleanData');
+          localStorage.removeItem('debug.lastPrompt');
+          localStorage.removeItem('debug.lastExtraLines');
+          localStorage.removeItem('debug.lastPayload');
+        } catch(_) {}
+        window.lastPrompt = undefined;
+        window.lastData = undefined;
+        window.lastCleanData = undefined;
+        window.lastExtraLines = undefined;
+        window.lastPayload = undefined;
+        loadAll();
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){
+        $('refresh').addEventListener('click', loadAll);
+        $('clear').addEventListener('click', clearAll);
+        loadAll();
+      });
+    })();
+  </script>
+</body>
+</html>

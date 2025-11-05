@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Feasibility Analysis</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .dynamic-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dynamic-field input {
+            flex: 1;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+        .license-field {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .challenge-field {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Legal Feasibility Analysis</h1>
+            <p>This questionnaire aims to assess the legal aspects of your business project, analyzing its readiness in terms of legal structure, licenses, tax obligations, data protection, and intellectual property. The information you provide will help identify potential legal risks and develop strategies to address them, ensuring proper establishment and operation of the project.</p>
+
+            <div class="section-title">Legal Structure and Registration</div>
+            
+            <div class="form-group">
+                <label>What is the proposed legal form for the project? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="radio" id="legal-form1" name="legal-form" value="sole">
+                    <label for="legal-form1">Sole Proprietorship</label><br>
+                    <input type="radio" id="legal-form2" name="legal-form" value="llc">
+                    <label for="legal-form2">Limited Liability Company (LLC)</label><br>
+                    <input type="radio" id="legal-form3" name="legal-form" value="corporation">
+                    <label for="legal-form3">Corporation (Public/Private)</label><br>
+                    <input type="radio" id="legal-form4" name="legal-form" value="partnership">
+                    <label for="legal-form4">Partnership</label><br>
+                    <input type="radio" id="legal-form5" name="legal-form" value="franchise">
+                    <label for="legal-form5">Franchise</label><br>
+                    <input type="radio" id="legal-form6" name="legal-form" value="other">
+                    <label for="legal-form6">Other</label>
+                </div>
+                <div id="other-legal-form-container" class="hidden">
+                    <label for="other-legal-form">Please specify other legal form:</label>
+                    <textarea id="other-legal-form"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="legal-reasons">Please clarify the main reasons for choosing this legal form:</label>
+                <textarea id="legal-reasons"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Has the project been officially registered? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="registered-yes" name="registration-status" value="yes">
+                    <label for="registered-yes">Yes, already registered</label>
+                    <input type="radio" id="registered-plan" name="registration-status" value="plan">
+                    <label for="registered-plan">No, but there is a clear registration plan</label>
+                    <input type="radio" id="registered-no" name="registration-status" value="no">
+                    <label for="registered-no">No, and no plan has been developed yet</label>
+                </div>
+                <div id="registration-authority-container" class="hidden">
+                    <label for="registration-authority">Please mention the legal authority with which it is registered or planned to be registered:</label>
+                    <textarea id="registration-authority"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="registration-challenges">If not registered yet, what are the potential challenges or obstacles that might affect the registration process?</label>
+                <textarea id="registration-challenges"></textarea>
+            </div>
+
+            <div class="section-title">Requirements and Regulatory Environment</div>
+            
+            <div class="form-group">
+                <label>What are the essential licenses or permits required to start and operate the business? (Required - multiple choices allowed)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="license1" name="licenses" value="trade">
+                    <label for="license1">Professional license / Commercial register</label><br>
+                    <input type="checkbox" id="license2" name="licenses" value="environmental">
+                    <label for="license2">Environmental license</label><br>
+                    <input type="checkbox" id="license3" name="licenses" value="health">
+                    <label for="license3">Health license</label><br>
+                    <input type="checkbox" id="license4" name="licenses" value="civil-defense">
+                    <label for="license4">Civil Defense approval</label><br>
+                    <input type="checkbox" id="license5" name="licenses" value="import-export">
+                    <label for="license5">Import/export licenses</label><br>
+                    <input type="checkbox" id="license6" name="licenses" value="other-license">
+                    <label for="license6">Other</label>
+                </div>
+                <div id="other-license-container" class="hidden">
+                    <label for="other-license">Please specify other licenses:</label>
+                    <textarea id="other-license"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Apart from direct costs mentioned in other sections, what are the expected procedural challenges in obtaining these licenses? (e.g., long duration, complex procedures, multiple authorities) And what are the main government authorities concerned?</label>
+                <div id="license-challenges-list">
+                    <div class="license-field">
+                        <input type="text" placeholder="License" class="license-type">
+                        <input type="text" placeholder="Concerned Authority" class="license-authority">
+                        <input type="text" placeholder="Procedural Challenge" class="license-challenge">
+                        <button class="remove-btn" onclick="removeLicenseField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addLicenseField()">+ Add License</button>
+            </div>
+
+            <div class="form-group">
+                <label>Are there any specific laws or regulatory provisions that directly affect the sector in which your project operates? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="regulations-yes" name="sector-regulations" value="yes">
+                    <label for="regulations-yes">Yes</label>
+                    <input type="radio" id="regulations-no" name="sector-regulations" value="no">
+                    <label for="regulations-no">No</label>
+                </div>
+                <div id="regulations-examples-container" class="hidden">
+                    <label for="regulations-examples">Please provide examples and their potential impact on operations:</label>
+                    <textarea id="regulations-examples"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Operational and Ongoing Legal Obligations</div>
+            
+            <div class="form-group">
+                <label>What type of workforce will the project primarily rely on, and will local labor laws be complied with (e.g., minimum wage, social insurance)? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="workforce-local" name="workforce-type" value="local">
+                    <label for="workforce-local">Local only</label>
+                    <input type="radio" id="workforce-foreign" name="workforce-type" value="foreign">
+                    <label for="workforce-foreign">Foreign only</label>
+                    <input type="radio" id="workforce-mixed" name="workforce-type" value="mixed">
+                    <label for="workforce-mixed">Mix of both</label>
+                </div>
+                
+                <label>Compliance with laws:</label>
+                <div class="radio-group">
+                    <input type="radio" id="compliance-yes" name="law-compliance" value="yes">
+                    <label for="compliance-yes">Yes, fully</label>
+                    <input type="radio" id="compliance-no" name="law-compliance" value="no">
+                    <label for="compliance-no">No (with some exceptions)</label>
+                </div>
+                <div id="compliance-exceptions-container" class="hidden">
+                    <label for="compliance-exceptions">Please specify the exceptions:</label>
+                    <textarea id="compliance-exceptions"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What are the main types of taxes the project is likely to be subject to, and what are the required periodic accounting and tax obligations? (Required - multiple choices allowed)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="tax1" name="taxes" value="income">
+                    <label for="tax1">Income tax</label><br>
+                    <input type="checkbox" id="tax2" name="taxes" value="sales">
+                    <label for="tax2">Sales tax / Value Added Tax</label><br>
+                    <input type="checkbox" id="tax3" name="taxes" value="customs">
+                    <label for="tax3">Customs</label><br>
+                    <input type="checkbox" id="tax4" name="taxes" value="social-security">
+                    <label for="tax4">Social security deductions</label><br>
+                    <input type="checkbox" id="tax5" name="taxes" value="other-tax">
+                    <label for="tax5">Other taxes</label>
+                </div>
+                <div id="other-tax-container" class="hidden">
+                    <label for="other-tax">Please specify other taxes:</label>
+                    <textarea id="other-tax"></textarea>
+                </div>
+                <label for="periodic-obligations">Periodic obligations (e.g., submitting quarterly tax returns):</label>
+                <textarea id="periodic-obligations"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What are the main contracts or agreements the project needs to draft to ensure its rights and legal obligations? (multiple choices allowed)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="contract1" name="contracts" value="employment">
+                    <label for="contract1">Employment contracts</label><br>
+                    <input type="checkbox" id="contract2" name="contracts" value="supply">
+                    <label for="contract2">Supply/partnership contracts</label><br>
+                    <input type="checkbox" id="contract3" name="contracts" value="service">
+                    <label for="contract3">Service/customer contracts</label><br>
+                    <input type="checkbox" id="contract4" name="contracts" value="nda">
+                    <label for="contract4">Confidentiality agreements</label><br>
+                    <input type="checkbox" id="contract5" name="contracts" value="other-contract">
+                    <label for="contract5">Other</label>
+                </div>
+                <div id="other-contract-container" class="hidden">
+                    <label for="other-contract">Please specify other contracts:</label>
+                    <textarea id="other-contract"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How clear are the legal responsibilities of the owner or partners within the chosen legal structure?</label>
+                <div class="radio-group">
+                    <input type="radio" id="responsibilities-clear" name="responsibilities" value="clear">
+                    <label for="responsibilities-clear">Clear and specific</label>
+                    <input type="radio" id="responsibilities-unclear" name="responsibilities" value="unclear">
+                    <label for="responsibilities-unclear">Unclear and needs review</label>
+                </div>
+            </div>
+
+            <div class="section-title">Data Protection and Intellectual Property</div>
+            
+            <div class="form-group">
+                <label>Are there any elements within the project that need legal protection for intellectual property?</label>
+                <div class="radio-group">
+                    <input type="radio" id="ip-yes" name="ip-protection" value="yes">
+                    <label for="ip-yes">Yes</label>
+                    <input type="radio" id="ip-no" name="ip-protection" value="no">
+                    <label for="ip-no">No</label>
+                </div>
+                <div id="ip-elements-container" class="hidden">
+                    <label>If yes, please specify:</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ip1" name="ip-elements" value="trademark">
+                        <label for="ip1">Trademark (name and logo)</label><br>
+                        <input type="checkbox" id="ip2" name="ip-elements" value="patent">
+                        <label for="ip2">Patent</label><br>
+                        <input type="checkbox" id="ip3" name="ip-elements" value="copyright">
+                        <label for="ip3">Copyright</label><br>
+                        <input type="checkbox" id="ip4" name="ip-elements" value="design">
+                        <label for="ip4">Industrial design</label><br>
+                        <input type="checkbox" id="ip5" name="ip-elements" value="trade-secret">
+                        <label for="ip5">Trade secrets</label><br>
+                        <input type="checkbox" id="ip6" name="ip-elements" value="other-ip">
+                        <label for="ip6">Other</label>
+                    </div>
+                    <div id="other-ip-container" class="hidden">
+                        <label for="other-ip">Please specify other IP elements:</label>
+                        <textarea id="other-ip"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="ip-plan-container">
+                <label>What is the project's plan to protect these elements? (Required if IP elements exist)</label>
+                <div class="radio-group">
+                    <input type="radio" id="ip-plan1" name="ip-plan" value="registration">
+                    <label for="ip-plan1">Official registration with concerned authorities (Authority: </label>
+                    <input type="text" id="ip-authority" placeholder="Authority name" style="display: inline; width: auto;">
+                    <label for="ip-plan1">)</label><br>
+                    <input type="radio" id="ip-plan2" name="ip-plan" value="no-plan">
+                    <label for="ip-plan2">No current plan</label><br>
+                    <input type="radio" id="ip-plan3" name="ip-plan" value="other-plan">
+                    <label for="ip-plan3">Other</label>
+                </div>
+                <div id="other-ip-plan-container" class="hidden">
+                    <label for="other-ip-plan">Please specify other protection plan:</label>
+                    <textarea id="other-ip-plan"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What is the project's plan for compliance with personal data protection laws (such as GDPR or local laws)? (multiple choices allowed)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="data1" name="data-protection" value="privacy-policy">
+                    <label for="data1">Written privacy policy</label><br>
+                    <input type="checkbox" id="data2" name="data-protection" value="consent">
+                    <label for="data2">Customer consent for data collection</label><br>
+                    <input type="checkbox" id="data3" name="data-protection" value="security">
+                    <label for="data3">Electronic security procedures</label><br>
+                    <input type="checkbox" id="data4" name="data-protection" value="no-data-plan">
+                    <label for="data4">No current plan</label>
+                </div>
+            </div>
+
+            <div class="section-title">Legal Challenges</div>
+            
+            <div class="form-group">
+                <label>What are the most important legal points that you believe will pose the greatest challenge to the project, and why? (Required)</label>
+                <div id="legal-challenges-list">
+                    <div class="challenge-field">
+                        <input type="text" placeholder="Legal Challenge" class="challenge-type">
+                        <input type="text" placeholder="Reason" class="challenge-reason">
+                        <button class="remove-btn" onclick="removeChallengeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addChallengeField()">+ Add Challenge</button>
+            </div>
+
+            <div class="form-group">
+                <label>What is your initial strategy for dealing with these risks and reducing them? (Optional - multiple choices allowed)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="strategy1" name="risk-strategies" value="consultant">
+                    <label for="strategy1">Hiring a specialized legal consultant</label><br>
+                    <input type="checkbox" id="strategy2" name="risk-strategies" value="contracts">
+                    <label for="strategy2">Drafting clear and detailed contracts</label><br>
+                    <input type="checkbox" id="strategy3" name="risk-strategies" value="insurance">
+                    <label for="strategy3">Obtaining legal insurance</label><br>
+                    <input type="checkbox" id="strategy4" name="risk-strategies" value="policies">
+                    <label for="strategy4">Establishing internal compliance policies</label><br>
+                    <input type="checkbox" id="strategy5" name="risk-strategies" value="other-strategy">
+                    <label for="strategy5">Other</label>
+                </div>
+                <div id="other-strategy-container" class="hidden">
+                    <label for="other-strategy">Please specify other strategy:</label>
+                    <textarea id="other-strategy"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Based on available information, do you expect the project to be compliant with local laws and regulations during establishment and operation phases? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="compliance-full" name="future-compliance" value="full">
+                    <label for="compliance-full">Yes, full compliance expected</label>
+                    <input type="radio" id="compliance-challenges" name="future-compliance" value="challenges">
+                    <label for="compliance-challenges">Yes, with some manageable challenges</label>
+                    <input type="radio" id="compliance-major" name="future-compliance" value="major">
+                    <label for="compliance-major">No, there are major legal challenges that may hinder the project</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="timeline">What is the proposed timeline (roadmap) for completing legal requirements (such as registration and obtaining licenses) before starting operations?</label>
+                <textarea id="timeline"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="additional-notes">Any other matters you would like to mention or any additions?</label>
+                <textarea id="additional-notes"></textarea>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../Comprehensive-feasibility/Environmental Feasibility.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            const legalFormOther = document.getElementById('legal-form6');
+            const legalFormContainer = document.getElementById('other-legal-form-container');
+            
+            legalFormOther.addEventListener('change', function() {
+                legalFormContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const registrationRadios = document.querySelectorAll('input[name="registration-status"]');
+            const registrationContainer = document.getElementById('registration-authority-container');
+            
+            registrationRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    registrationContainer.style.display = (this.value === 'yes' || this.value === 'plan') ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const licenseOther = document.getElementById('license6');
+            const licenseContainer = document.getElementById('other-license-container');
+            
+            licenseOther.addEventListener('change', function() {
+                licenseContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const regulationsRadios = document.querySelectorAll('input[name="sector-regulations"]');
+            const regulationsContainer = document.getElementById('regulations-examples-container');
+            
+            regulationsRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    regulationsContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const complianceRadios = document.querySelectorAll('input[name="law-compliance"]');
+            const complianceContainer = document.getElementById('compliance-exceptions-container');
+            
+            complianceRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    complianceContainer.style.display = this.value === 'no' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const taxOther = document.getElementById('tax5');
+            const taxContainer = document.getElementById('other-tax-container');
+            
+            taxOther.addEventListener('change', function() {
+                taxContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const contractOther = document.getElementById('contract5');
+            const contractContainer = document.getElementById('other-contract-container');
+            
+            contractOther.addEventListener('change', function() {
+                contractContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const ipRadios = document.querySelectorAll('input[name="ip-protection"]');
+            const ipContainer = document.getElementById('ip-elements-container');
+            const ipPlanContainer = document.getElementById('ip-plan-container');
+            
+            ipRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    ipContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    ipPlanContainer.classList.toggle('disabled', this.value !== 'yes');
+                    updateOutput();
+                });
+            });
+
+            const ipOther = document.getElementById('ip6');
+            const ipOtherContainer = document.getElementById('other-ip-container');
+            
+            ipOther.addEventListener('change', function() {
+                ipOtherContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const ipPlanOther = document.getElementById('ip-plan3');
+            const ipPlanOtherContainer = document.getElementById('other-ip-plan-container');
+            
+            ipPlanOther.addEventListener('change', function() {
+                ipPlanOtherContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const strategyOther = document.getElementById('strategy5');
+            const strategyContainer = document.getElementById('other-strategy-container');
+            
+            strategyOther.addEventListener('change', function() {
+                strategyContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Dynamic field functions for licenses
+        function addLicenseField() {
+            const licensesList = document.getElementById('license-challenges-list');
+            const licenseCount = document.querySelectorAll('.license-field').length;
+            
+            if (licenseCount >= 20) {
+                alert('You can add up to 20 licenses only.');
+                return;
+            }
+            
+            const newField = document.createElement('div');
+            newField.className = 'license-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="License ${licenseCount + 1}" class="license-type">
+                <input type="text" placeholder="Concerned Authority" class="license-authority">
+                <input type="text" placeholder="Procedural Challenge" class="license-challenge">
+                <button class="remove-btn" onclick="removeLicenseField(this)">×</button>
+            `;
+            licensesList.appendChild(newField);
+        }
+
+        function removeLicenseField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Dynamic field functions for challenges
+        function addChallengeField() {
+            const challengesList = document.getElementById('legal-challenges-list');
+            const challengeCount = document.querySelectorAll('.challenge-field').length;
+            
+            if (challengeCount >= 20) {
+                alert('You can add up to 20 challenges only.');
+                return;
+            }
+            
+            const newField = document.createElement('div');
+            newField.className = 'challenge-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Legal Challenge ${challengeCount + 1}" class="challenge-type">
+                <input type="text" placeholder="Reason" class="challenge-reason">
+                <button class="remove-btn" onclick="removeChallengeField(this)">×</button>
+            `;
+            challengesList.appendChild(newField);
+        }
+
+        function removeChallengeField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Legal Structure and Registration
+            const selectedLegalForm = document.querySelector('input[name="legal-form"]:checked');
+            if (selectedLegalForm) {
+                addOutputItem('Legal Form', selectedLegalForm.id.replace('legal-form', '').replace('sole', 'Sole Proprietorship').replace('llc', 'LLC').replace('corporation', 'Corporation').replace('partnership', 'Partnership').replace('franchise', 'Franchise').replace('other', 'Other'));
+                if (selectedLegalForm.value === 'other') {
+                    addOutputItem('Other Legal Form', document.getElementById('other-legal-form').value);
+                }
+            }
+            
+            addOutputItem('Reasons for Legal Form Choice', document.getElementById('legal-reasons').value);
+            
+            const selectedRegistration = document.querySelector('input[name="registration-status"]:checked');
+            if (selectedRegistration) {
+                let statusText = '';
+                switch(selectedRegistration.value) {
+                    case 'yes': statusText = 'Already registered'; break;
+                    case 'plan': statusText = 'Not registered but has plan'; break;
+                    case 'no': statusText = 'Not registered and no plan'; break;
+                }
+                addOutputItem('Registration Status', statusText);
+                
+                if (selectedRegistration.value === 'yes' || selectedRegistration.value === 'plan') {
+                    addOutputItem('Registration Authority', document.getElementById('registration-authority').value);
+                }
+            }
+            
+            addOutputItem('Registration Challenges', document.getElementById('registration-challenges').value);
+
+            // Requirements and Regulatory Environment
+            const selectedLicenses = [];
+            document.querySelectorAll('input[name="licenses"]:checked').forEach(license => {
+                selectedLicenses.push(license.id.replace('license', 'License ').replace('trade', 'Trade License').replace('environmental', 'Environmental').replace('health', 'Health').replace('civil-defense', 'Civil Defense').replace('import-export', 'Import/Export').replace('other-license', 'Other'));
+            });
+            if (selectedLicenses.length > 0) {
+                addOutputItem('Required Licenses', selectedLicenses.join(', '));
+                if (document.getElementById('license6').checked) {
+                    addOutputItem('Other Licenses', document.getElementById('other-license').value);
+                }
+            }
+            
+            // License challenges
+            const licenseTypes = document.querySelectorAll('.license-type');
+            const licenseAuthorities = document.querySelectorAll('.license-authority');
+            const licenseChallenges = document.querySelectorAll('.license-challenge');
+            
+            if (licenseTypes.length > 0 && licenseTypes[0].value) {
+                let licensesHTML = '';
+                for (let i = 0; i < licenseTypes.length; i++) {
+                    if (licenseTypes[i].value) {
+                        licensesHTML += `<li>${licenseTypes[i].value}: ${licenseAuthorities[i].value || 'N/A'} - ${licenseChallenges[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (licensesHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>License Challenges:</h4>
+                            <ul>${licensesHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            const selectedRegulations = document.querySelector('input[name="sector-regulations"]:checked');
+            if (selectedRegulations) {
+                addOutputItem('Sector Regulations', selectedRegulations.value === 'yes' ? 'Yes' : 'No');
+                if (selectedRegulations.value === 'yes') {
+                    addOutputItem('Regulation Examples', document.getElementById('regulations-examples').value);
+                }
+            }
+
+            // Operational and Ongoing Legal Obligations
+            const selectedWorkforce = document.querySelector('input[name="workforce-type"]:checked');
+            if (selectedWorkforce) {
+                let workforceText = '';
+                switch(selectedWorkforce.value) {
+                    case 'local': workforceText = 'Local only'; break;
+                    case 'foreign': workforceText = 'Foreign only'; break;
+                    case 'mixed': workforceText = 'Mix of both'; break;
+                }
+                addOutputItem('Workforce Type', workforceText);
+            }
+            
+            const selectedCompliance = document.querySelector('input[name="law-compliance"]:checked');
+            if (selectedCompliance) {
+                addOutputItem('Law Compliance', selectedCompliance.value === 'yes' ? 'Yes, fully' : 'No, with exceptions');
+                if (selectedCompliance.value === 'no') {
+                    addOutputItem('Compliance Exceptions', document.getElementById('compliance-exceptions').value);
+                }
+            }
+            
+            const selectedTaxes = [];
+            document.querySelectorAll('input[name="taxes"]:checked').forEach(tax => {
+                selectedTaxes.push(tax.id.replace('tax', 'Tax ').replace('income', 'Income').replace('sales', 'Sales/VAT').replace('customs', 'Customs').replace('social-security', 'Social Security').replace('other-tax', 'Other'));
+            });
+            if (selectedTaxes.length > 0) {
+                addOutputItem('Tax Types', selectedTaxes.join(', '));
+                if (document.getElementById('tax5').checked) {
+                    addOutputItem('Other Taxes', document.getElementById('other-tax').value);
+                }
+            }
+            
+            addOutputItem('Periodic Obligations', document.getElementById('periodic-obligations').value);
+            
+            const selectedContracts = [];
+            document.querySelectorAll('input[name="contracts"]:checked').forEach(contract => {
+                selectedContracts.push(contract.id.replace('contract', 'Contract ').replace('employment', 'Employment').replace('supply', 'Supply/Partnership').replace('service', 'Service/Customer').replace('nda', 'Confidentiality').replace('other-contract', 'Other'));
+            });
+            if (selectedContracts.length > 0) {
+                addOutputItem('Required Contracts', selectedContracts.join(', '));
+                if (document.getElementById('contract5').checked) {
+                    addOutputItem('Other Contracts', document.getElementById('other-contract').value);
+                }
+            }
+            
+            const selectedResponsibilities = document.querySelector('input[name="responsibilities"]:checked');
+            if (selectedResponsibilities) {
+                addOutputItem('Responsibilities Clarity', selectedResponsibilities.value === 'clear' ? 'Clear and specific' : 'Unclear and needs review');
+            }
+
+            // Data Protection and Intellectual Property
+            const selectedIP = document.querySelector('input[name="ip-protection"]:checked');
+            if (selectedIP) {
+                addOutputItem('IP Protection Needed', selectedIP.value === 'yes' ? 'Yes' : 'No');
+                
+                if (selectedIP.value === 'yes') {
+                    const selectedIPElements = [];
+                    document.querySelectorAll('input[name="ip-elements"]:checked').forEach(element => {
+                        selectedIPElements.push(element.id.replace('ip', 'IP ').replace('trademark', 'Trademark').replace('patent', 'Patent').replace('copyright', 'Copyright').replace('design', 'Industrial Design').replace('trade-secret', 'Trade Secrets').replace('other-ip', 'Other'));
+                    });
+                    if (selectedIPElements.length > 0) {
+                        addOutputItem('IP Elements', selectedIPElements.join(', '));
+                        if (document.getElementById('ip6').checked) {
+                            addOutputItem('Other IP Elements', document.getElementById('other-ip').value);
+                        }
+                    }
+                    
+                    const selectedIPPlan = document.querySelector('input[name="ip-plan"]:checked');
+                    if (selectedIPPlan) {
+                        let planText = '';
+                        switch(selectedIPPlan.value) {
+                            case 'registration': 
+                                planText = 'Official registration with ' + (document.getElementById('ip-authority').value || 'N/A'); 
+                                break;
+                            case 'no-plan': planText = 'No current plan'; break;
+                            case 'other-plan': planText = 'Other plan'; break;
+                        }
+                        addOutputItem('IP Protection Plan', planText);
+                        
+                        if (selectedIPPlan.value === 'other-plan') {
+                            addOutputItem('Other IP Plan Details', document.getElementById('other-ip-plan').value);
+                        }
+                    }
+                }
+            }
+            
+            const selectedDataProtection = [];
+            document.querySelectorAll('input[name="data-protection"]:checked').forEach(data => {
+                selectedDataProtection.push(data.id.replace('data', 'Data ').replace('privacy-policy', 'Privacy Policy').replace('consent', 'Customer Consent').replace('security', 'Security Procedures').replace('no-data-plan', 'No Plan'));
+            });
+            if (selectedDataProtection.length > 0) {
+                addOutputItem('Data Protection Plan', selectedDataProtection.join(', '));
+            }
+
+            // Legal Challenges
+            const challengeTypes = document.querySelectorAll('.challenge-type');
+            const challengeReasons = document.querySelectorAll('.challenge-reason');
+            
+            if (challengeTypes.length > 0 && challengeTypes[0].value) {
+                let challengesHTML = '';
+                for (let i = 0; i < challengeTypes.length; i++) {
+                    if (challengeTypes[i].value) {
+                        challengesHTML += `<li>${challengeTypes[i].value}: ${challengeReasons[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (challengesHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Legal Challenges:</h4>
+                            <ul>${challengesHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            const selectedStrategies = [];
+            document.querySelectorAll('input[name="risk-strategies"]:checked').forEach(strategy => {
+                selectedStrategies.push(strategy.id.replace('strategy', 'Strategy ').replace('consultant', 'Legal Consultant').replace('contracts', 'Clear Contracts').replace('insurance', 'Legal Insurance').replace('policies', 'Compliance Policies').replace('other-strategy', 'Other'));
+            });
+            if (selectedStrategies.length > 0) {
+                addOutputItem('Risk Strategies', selectedStrategies.join(', '));
+                if (document.getElementById('strategy5').checked) {
+                    addOutputItem('Other Strategy', document.getElementById('other-strategy').value);
+                }
+            }
+            
+            const selectedFutureCompliance = document.querySelector('input[name="future-compliance"]:checked');
+            if (selectedFutureCompliance) {
+                let complianceText = '';
+                switch(selectedFutureCompliance.value) {
+                    case 'full': complianceText = 'Full compliance expected'; break;
+                    case 'challenges': complianceText = 'Compliance with manageable challenges'; break;
+                    case 'major': complianceText = 'Major challenges may hinder project'; break;
+                }
+                addOutputItem('Future Compliance Expectation', complianceText);
+            }
+            
+            addOutputItem('Timeline for Legal Requirements', document.getElementById('timeline').value);
+            addOutputItem('Additional Notes', document.getElementById('additional-notes').value);
+
+            // Update the output div
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            outputDiv.innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>

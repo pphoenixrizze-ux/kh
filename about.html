@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | PhoenixRizze</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 8px 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-size: 0.9em;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .cta {
+            background-color: var(--secondary-color);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        #languageSwitcher {
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .content-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+        
+        .about-box {
+            background-color: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .section-title {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .highlight {
+            font-weight: bold;
+        }
+        
+        .why-choose-us {
+            margin-top: 40px;
+        }
+        
+        .why-choose-us ul {
+            padding-left: 20px;
+        }
+        
+        .why-choose-us li {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+        
+        .thesis-info {
+            margin-top: 40px;
+            font-style: italic;
+        }
+        
+        /* New styles for justified text */
+        .about-box p {
+            text-align: justify;
+        }
+        
+        /* Exclude specific elements from justification */
+        .thesis-info p,
+        .section-title,
+        .highlight {
+            text-align: left;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 5%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .comment-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="images/LOGO PH.png" alt="Phoenix Rizze Logo"></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="why.html">Why MySim?</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li>
+                    <select id="languageSwitcher">
+                        <option value="en" selected>English</option>
+                        <option value="ar">العربية</option>
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                        <option value="zh">简体中文</option>
+                    </select>
+                </li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="dashboard.html" style="background: #2196F3; color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold;">START NOW</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="content-section">
+            <div class="about-box">
+                <h1 class="section-title">About Us</h1>
+                <p>At PhoenixRizze, we believe that sound investment decisions begin with a deep and comprehensive understanding of all aspects of a project. <span class="highlight">The platform was developed as part of an in-depth academic research project, constituting a Master's thesis in Business Intelligence, presented by a graduate student in the Kingdom of Jordan.</span></p>
+                
+                <p>The platform aims to deliver an innovative experience in feasibility study simulation, through smart tools and auto-generated reports that help you confidently assess the success potential of your projects, without the need for complex technical expertise or costly consultations.</p>
+                
+                <p>This journey began with the goal of empowering entrepreneurs, investors, and project managers to access advanced and comprehensive analyses covering marketing, technical, financial, legal, environmental, and social aspects, using the latest technologies and reliable data.</p>
+                
+                <p>What sets PhoenixRizze apart is our commitment to accuracy, quality, and ease of use, allowing you to generate detailed reports within minutes, saving you time and effort while enhancing your investment decisions.</p>
+                
+                <p>We are continuously working to develop the platform and improve our services in response to evolving market needs, with a steadfast mission to be your smart partner at every stage of your project.</p>
+                
+                <div class="why-choose-us">
+                    <h2 class="section-title">Why Choose Us?</h2>
+                    <ul>
+                        <li>Accurate and professional feasibility analysis</li>
+                        <li>Reliable and fast auto-generated reports</li>
+                        <li>Guidance from experienced experts</li>
+                        <li>A user-friendly interface suitable for all levels</li>
+                    </ul>
+                </div>
+                
+                <div class="thesis-info">
+                    <p><span class="highlight">This platform was developed as part of a Master's thesis</span></p>
+                    <p>Name: Khaled Falah Anabousi</p>
+                    <p>Email: Khaledanabousi@gmail.com</p>
+                    <p><span class="highlight">Kingdom of Jordan</span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="why.html">Why MySim?</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: <a href="mailto:phx@phoenixrizze.com">phx@phoenixrizze.com</a></li>
+                    <li>Phone: 000 000 0000</li>
+                    <li>Address: Jordan, Aqaba, Aqaba 77110</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Leave a Comment</h3>
+                <div class="comment-form">
+                    <textarea placeholder="Your message..."></textarea>
+                    <button type="submit">Send</button>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 PhoenixRizze. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Language switcher functionality
+        document.getElementById('languageSwitcher').addEventListener('change', function() {
+            alert('Language changed to: ' + this.value);
+        });
+        
+        // Highlight active navigation link based on current page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'about.html';
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (currentPage === linkPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

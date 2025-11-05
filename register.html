@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix Rizze - Create Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- reCAPTCHA API -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places" async defer></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        
+        .registration-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+        
+        .registration-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 30px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 3px 0;
+        }
+        
+        .registration-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .registration-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .registration-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .registration-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        /* التعديل الرئيسي: صف الاسم والجنس */
+        .name-gender-row {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .registration-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .name-gender-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .password-input-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+        
+        .toggle-password:hover {
+            color: var(--secondary-color);
+        }
+        
+        .password-strength {
+            height: 4px;
+            background-color: #eee;
+            margin-top: 5px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s, background-color 0.3s;
+        }
+        
+        .strength-weak {
+            background-color: var(--danger-color);
+            width: 25%;
+        }
+        
+        .strength-medium {
+            background-color: var(--warning-color);
+            width: 50%;
+        }
+        
+        .strength-good {
+            background-color: #27ae60;
+            width: 75%;
+        }
+        
+        .strength-strong {
+            background-color: var(--success-color);
+            width: 100%;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success-message {
+            color: var(--success-color);
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .terms-container {
+            grid-column: span 2;
+            margin: 20px 0;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .terms-checkbox input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .terms-text {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .terms-text a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .terms-text a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .btn-disabled:hover {
+            background-color: #95a5a6;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .verification-section {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: #f5f9ff;
+            border-radius: 8px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .verification-code {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .verification-code input {
+            width: 45px;
+            height: 55px;
+            text-align: center;
+            font-size: 22px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .verification-code input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .resend-code {
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .resend-code a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .resend-code a:hover {
+            text-decoration: underline;
+        }
+        
+        .dob-fields {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .dob-fields select {
+            flex: 1;
+        }
+        
+        .g-recaptcha {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .location-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+        
+        .location-link:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        .location-link i {
+            margin-right: 5px;
+        }
+        
+        .location-details {
+            display: none;
+            grid-column: span 2;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .location-details p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        
+        /* تخصيص مظهر قائمة الجنس */
+        #gender {
+            padding: 12px 15px;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1em;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <main>
+        <div class="registration-container">
+            <div class="registration-card">
+                <div class="logo">
+                    <img src="images/LOGO PH.png" alt="Phoenix Rizze Logo">
+                </div>
+                
+                <div class="registration-header">
+                    <h1>Create Your Account</h1>
+                    <p>Join PhoenixRizze to access comprehensive feasibility study simulation tools</p>
+                </div>
+                
+                <form id="registrationForm" class="registration-form" action="your-server-side-script.php" method="POST">
+                    <!-- Name and Gender Row - الصف الجديد للاسم والجنس -->
+                    <div class="name-gender-row">
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control" required>
+                            <div class="error-message" id="name-error">Please enter your full name</div>
+                        </div>
+                        
+                        <!-- Gender Field - حقل الجنس بجانب الاسم -->
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" class="form-control" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <div class="error-message" id="gender-error">Please select your gender</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
+                        <div class="success-message" id="email-success">Email is valid</div>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="password" name="password" class="form-control" required minlength="8">
+                            <i class="toggle-password fas fa-eye" data-target="password"></i>
+                        </div>
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="password-strength-bar"></div>
+                        </div>
+                        <div class="error-message" id="password-error">Password must be at least 8 characters with uppercase, lowercase, number, and special character</div>
+                    </div>
+                    
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                            <i class="toggle-password fas fa-eye" data-target="confirmPassword"></i>
+                        </div>
+                        <div class="error-message" id="confirm-error">Passwords do not match</div>
+                    </div>
+                    
+                    <!-- Location Section -->
+                    <div class="location-details" id="locationDetails">
+                        <p><strong>Detected Location:</strong></p>
+                        <p id="detectedCountry">Country: Not detected</p>
+                        <p id="detectedCity">City: Not detected</p>
+                        <p id="detectedRegion">Region: Not detected</p>
+                    </div>
+                    
+                    <!-- Country -->
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country" name="country" class="form-control" required>
+                            <option value="">Select Country</option>
+                            <!-- Countries will be populated via JavaScript -->
+                        </select>
+                        <div class="error-message" id="country-error">Please select your country</div>
+                    </div>
+                    
+                    <!-- City -->
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" class="form-control" required>
+                        <div class="error-message" id="city-error">Please enter your city</div>
+                        <a href="#" class="location-link" id="findLocation">
+                            <i class="fas fa-map-marker-alt"></i> Detect my location automatically
+                        </a>
+                    </div>
+                    
+                    <!-- Region -->
+                    <div class="form-group">
+                        <label for="region">Region/State</label>
+                        <input type="text" id="region" name="region" class="form-control">
+                    </div>
+                    
+                    <!-- User Type -->
+                    <div class="form-group">
+                        <label for="userType">User Type</label>
+                        <select id="userType" name="userType" class="form-control" required>
+                            <option value="">Select User Type</option>
+                            <option value="entrepreneur">Entrepreneur</option>
+                            <option value="investor">Investor</option>
+                            <option value="student">Student</option>
+                            <option value="researcher">Researcher</option>
+                            <option value="business_owner">Business Owner</option>
+                            <option value="consultant">Consultant</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error-message" id="userType-error">Please select user type</div>
+                    </div>
+                    
+                    <!-- Occupation -->
+                    <div class="form-group">
+                        <label for="occupation">Occupation</label>
+                        <input type="text" id="occupation" name="occupation" class="form-control" required>
+                        <div class="error-message" id="occupation-error">Please enter your occupation</div>
+                    </div>
+                    
+                    <!-- Date of Birth -->
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <div class="dob-fields">
+                            <select id="dob-day" name="dob-day" class="form-control" required>
+                                <option value="">Day</option>
+                                <!-- Days will be populated via JavaScript -->
+                            </select>
+                            <select id="dob-month" name="dob-month" class="form-control" required>
+                                <option value="">Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            <select id="dob-year" name="dob-year" class="form-control" required>
+                                <option value="">Year</option>
+                                <!-- Years will be populated via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="error-message" id="dob-error">Please select your date of birth</div>
+                    </div>
+                    
+                    <!-- Phone (Optional) -->
+                    <div class="form-group">
+                        <label for="phone">Phone Number (Optional)</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="e.g. +966501234567">
+                        <div class="error-message" id="phone-error">Please enter a valid phone number (e.g. +966501234567)</div>
+                    </div>
+                    
+                    <!-- Experience (Optional) -->
+                    <div class="form-group">
+                        <label for="experience">Do you have previous experience? (Optional)</label>
+                        <select id="experience" name="experience" class="form-control">
+                            <option value="">Select an option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="some">Some experience</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Education (Optional) -->
+                    <div class="form-group">
+                        <label for="education">Education Level (Optional)</label>
+                        <select id="education" name="education" class="form-control">
+                            <option value="">Select education level</option>
+                            <option value="high_school">High School</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="bachelor">Bachelor's Degree</option>
+                            <option value="master">Master's Degree</option>
+                            <option value="phd">PhD</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <!-- reCAPTCHA -->
+                    <div class="form-group full-width">
+                        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                        <div class="error-message" id="recaptcha-error">Please verify you're not a robot</div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="terms-container">
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <label for="agreeTerms" class="terms-text">
+                                I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a> and
+                                <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <div class="error-message" id="terms-error">You must agree to the terms and conditions</div>
+                    </div>
+                    
+                    <!-- Register Button -->
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn btn-block" id="submitBtn">Create Account</button>
+                    </div>
+                </form>
+                
+                <!-- Verification Section -->
+                <div id="verificationSection" class="verification-section">
+                    <h3>Email Verification</h3>
+                    <p>We've sent a 6-digit verification code to <span id="verificationEmail" style="font-weight: bold;"></span>. Please enter it below:</p>
+                    
+                    <div class="verification-code">
+                        <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off">
+                    </div>
+                    
+                    <button type="button" id="verifyBtn" class="btn">Verify Email</button>
+                    
+                    <div class="resend-code">
+                        Didn't receive the code? <a href="#" id="resendCode">Resend Code</a>
+                        <span id="countdown">(10:00)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID",
+            measurementId: "YOUR_FIREBASE_MEASUREMENT_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Countries list (extended)
+        const countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", 
+            "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", 
+            "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", 
+            "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", 
+            "Burundi", "Côte d'Ivoire", "Cabo Verde", "Cambodia", "Cameroon", "Canada", 
+            "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", 
+            "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia", 
+            "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", 
+            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", 
+            "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", 
+            "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", 
+            "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", 
+            "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", 
+            "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", 
+            "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", 
+            "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", 
+            "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", 
+            "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", 
+            "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", 
+            "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", 
+            "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", 
+            "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", 
+            "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", 
+            "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", 
+            "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", 
+            "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", 
+            "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", 
+            "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", 
+            "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", 
+            "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", 
+            "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+        ];
+
+        // Global variables
+        let verificationCode = '';
+        let countdownInterval;
+        let userLocation = {
+            country: '',
+            city: '',
+            region: ''
+        };
+
+        // Initialize Google Places Autocomplete
+        function initAutocomplete() {
+            const cityInput = document.getElementById('city');
+            const autocomplete = new google.maps.places.Autocomplete(cityInput, {
+                types: ['(cities)'],
+                fields: ['address_components', 'geometry']
+            });
+            
+            autocomplete.addListener('place_changed', function() {
+                const place = autocomplete.getPlace();
+                if (!place.address_components) return;
+                
+                // Extract address components
+                const addressComponents = place.address_components;
+                let country = '';
+                let region = '';
+                let city = '';
+                
+                for (const component of addressComponents) {
+                    const componentType = component.types[0];
+                    
+                    if (componentType === 'country') {
+                        country = component.long_name;
+                    } else if (componentType === 'administrative_area_level_1') {
+                        region = component.long_name;
+                    } else if (componentType === 'locality') {
+                        city = component.long_name;
+                    } else if (componentType === 'administrative_area_level_2' && !city) {
+                        city = component.long_name;
+                    }
+                }
+                
+                // Update form fields
+                if (country) {
+                    document.getElementById('country').value = country;
+                    userLocation.country = country;
+                }
+                
+                if (city) {
+                    document.getElementById('city').value = city;
+                    userLocation.city = city;
+                }
+                
+                if (region) {
+                    document.getElementById('region').value = region;
+                    userLocation.region = region;
+                }
+                
+                // Update location details
+                updateLocationDetails();
+            });
+        }
+
+        // Update location details display
+        function updateLocationDetails() {
+            const detailsElement = document.getElementById('locationDetails');
+            const countryElement = document.getElementById('detectedCountry');
+            const cityElement = document.getElementById('detectedCity');
+            const regionElement = document.getElementById('detectedRegion');
+            
+            if (userLocation.country || userLocation.city || userLocation.region) {
+                detailsElement.style.display = 'block';
+                countryElement.textContent = `Country: ${userLocation.country || 'Not detected'}`;
+                cityElement.textContent = `City: ${userLocation.city || 'Not detected'}`;
+                regionElement.textContent = `Region: ${userLocation.region || 'Not detected'}`;
+            } else {
+                detailsElement.style.display = 'none';
+            }
+        }
+
+        // Detect user's location
+        function detectLocation() {
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser');
+                return;
+            }
+            
+            showLoading(true);
+            
+            navigator.geolocation.getCurrentPosition(
+                async function(position) {
+                    try {
+                        const { latitude, longitude } = position.coords;
+                        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_GOOGLE_MAPS_API_KEY`);
+                        const data = await response.json();
+                        
+                        if (data.results && data.results.length > 0) {
+                            const addressComponents = data.results[0].address_components;
+                            let country = '';
+                            let region = '';
+                            let city = '';
+                            
+                            for (const component of addressComponents) {
+                                const componentType = component.types[0];
+                                
+                                if (componentType === 'country') {
+                                    country = component.long_name;
+                                } else if (componentType === 'administrative_area_level_1') {
+                                    region = component.long_name;
+                                } else if (componentType === 'locality') {
+                                    city = component.long_name;
+                                } else if (componentType === 'administrative_area_level_2' && !city) {
+                                    city = component.long_name;
+                                }
+                            }
+                            
+                            // Update form fields
+                            if (country) {
+                                document.getElementById('country').value = country;
+                                userLocation.country = country;
+                            }
+                            
+                            if (city) {
+                                document.getElementById('city').value = city;
+                                userLocation.city = city;
+                            }
+                            
+                            if (region) {
+                                document.getElementById('region').value = region;
+                                userLocation.region = region;
+                            }
+                            
+                            updateLocationDetails();
+                        }
+                    } catch (error) {
+                        console.error('Error fetching location data:', error);
+                        alert('Could not retrieve location details. Please enter manually.');
+                    } finally {
+                        showLoading(false);
+                    }
+                },
+                function(error) {
+                    showLoading(false);
+                    alert('Unable to retrieve your location. Please enable location services or enter manually.');
+                    console.error('Geolocation error:', error);
+                }
+            );
+        }
+
+        // Show loading overlay
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        // Generate a random 6-digit verification code
+        function generateVerificationCode() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        // Simulate sending verification email (in a real app, this would be a server-side call)
+        function sendVerificationEmail(email) {
+            return new Promise((resolve) => {
+                // Simulate network delay
+                setTimeout(() => {
+                    const code = generateVerificationCode();
+                    console.log(`Verification code for ${email}: ${code}`); // For demo purposes
+                    resolve(code);
+                }, 1500);
+            });
+        }
+
+        // Start countdown timer
+        function startCountdown() {
+            let minutes = 10;
+            let seconds = 0;
+            const countdownElement = document.getElementById('countdown');
+            const resendLink = document.getElementById('resendCode');
+            
+            // Clear any existing interval
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = '0.5';
+            
+            countdownInterval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(countdownInterval);
+                        resendLink.style.pointerEvents = 'auto';
+                        resendLink.style.opacity = '1';
+                        countdownElement.textContent = '';
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                
+                const formattedMinutes = minutes.toString().padStart(2, '0');
+                const formattedSeconds = seconds.toString().padStart(2, '0');
+                countdownElement.textContent = `(${formattedMinutes}:${formattedSeconds})`;
+            }, 1000);
+        }
+
+        // Validate email format
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Validate phone number format
+        function validatePhoneNumber(phone) {
+            if (!phone) return true; // optional field
+            const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+            return regex.test(phone);
+        }
+
+        // Validate password strength
+        function validatePassword(password) {
+            // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return regex.test(password);
+        }
+
+        // Validate date of birth
+        function validateDOB(day, month, year) {
+            if (!day || !month || !year) return false;
+            
+            const dob = new Date(year, month - 1, day);
+            const today = new Date();
+            const minAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+            
+            return dob <= minAgeDate;
+        }
+
+        // Populate form fields on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Google Places Autocomplete
+            if (typeof google !== 'undefined') {
+                initAutocomplete();
+            }
+
+            // Populate countries dropdown
+            const countrySelect = document.getElementById('country');
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+
+            // Populate days dropdown (1-31)
+            const daySelect = document.getElementById('dob-day');
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+
+            // Populate years dropdown (current year - 100 to current year - 18)
+            const yearSelect = document.getElementById('dob-year');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear - 18; i >= currentYear - 100; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+
+            // Toggle password visibility
+            document.querySelectorAll('.toggle-password').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const passwordInput = document.getElementById(targetId);
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.classList.toggle('fa-eye');
+                    this.classList.toggle('fa-eye-slash');
+                });
+            });
+
+            // Password strength indicator
+            document.getElementById('password').addEventListener('input', function() {
+                const password = this.value;
+                const strengthBar = document.getElementById('password-strength-bar');
+                const errorElement = document.getElementById('password-error');
+                
+                strengthBar.className = 'password-strength-bar';
+                errorElement.style.display = 'none';
+                
+                if (password.length === 0) return;
+                
+                let strength = 0;
+                
+                // Length checks
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                
+                // Character diversity
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
+                if (/\d/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Update strength bar
+                if (strength <= 2) {
+                    strengthBar.classList.add('strength-weak');
+                } else if (strength === 3) {
+                    strengthBar.classList.add('strength-medium');
+                } else if (strength === 4) {
+                    strengthBar.classList.add('strength-good');
+                } else {
+                    strengthBar.classList.add('strength-strong');
+                }
+            });
+
+            // Confirm password match
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = this.value;
+                const errorElement = document.getElementById('confirm-error');
+                
+                if (confirmPassword && password !== confirmPassword) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+
+            // Email validation
+            document.getElementById('email').addEventListener('blur', function() {
+                const email = this.value;
+                const errorElement = document.getElementById('email-error');
+                const successElement = document.getElementById('email-success');
+                
+                if (!email) {
+                    errorElement.style.display = 'none';
+                    successElement.style.display = 'none';
+                    return;
+                }
+                
+                if (validateEmail(email)) {
+                    errorElement.style.display = 'none';
+                    successElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'block';
+                    successElement.style.display = 'none';
+                }
+            });
+
+            // Phone number validation
+            document.getElementById('phone').addEventListener('blur', function() {
+                const phone = this.value;
+                const errorElement = document.getElementById('phone-error');
+                
+                if (!phone) {
+                    errorElement.style.display = 'none';
+                    return;
+                }
+                
+                if (!validatePhoneNumber(phone)) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+
+            // Verification code input management
+            const verificationInputs = document.querySelectorAll('.verification-code input');
+            verificationInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < verificationInputs.length - 1) {
+                        verificationInputs[index + 1].focus();
+                    }
+                    
+                    // Auto verify if all fields are filled
+                    const allFilled = Array.from(verificationInputs).every(input => input.value.length === 1);
+                    if (allFilled) {
+                        document.getElementById('verifyBtn').click();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                        verificationInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // Location finder button
+            document.getElementById('findLocation').addEventListener('click', function(e) {
+                e.preventDefault();
+                detectLocation();
+            });
+        });
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            let isValid = true;
+            
+            // Validate full name
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName) {
+                document.getElementById('name-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate gender
+            const gender = document.getElementById('gender').value;
+            if (!gender) {
+                document.getElementById('gender-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value;
+            if (!email) {
+                document.getElementById('email-error').textContent = 'Please enter your email address';
+                document.getElementById('email-error').style.display = 'block';
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                document.getElementById('email-error').textContent = 'Please enter a valid email address';
+                document.getElementById('email-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate password
+            const password = document.getElementById('password').value;
+            if (!password) {
+                document.getElementById('password-error').textContent = 'Please enter a password';
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            } else if (password.length < 8) {
+                document.getElementById('password-error').textContent = 'Password must be at least 8 characters';
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            } else if (!validatePassword(password)) {
+                document.getElementById('password-error').textContent = 'Password must contain uppercase, lowercase, number, and special character';
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate password match
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate country
+            const country = document.getElementById('country').value;
+            if (!country) {
+                document.getElementById('country-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate city
+            const city = document.getElementById('city').value.trim();
+            if (!city) {
+                document.getElementById('city-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate user type
+            const userType = document.getElementById('userType').value;
+            if (!userType) {
+                document.getElementById('userType-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate occupation
+            const occupation = document.getElementById('occupation').value.trim();
+            if (!occupation) {
+                document.getElementById('occupation-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate date of birth
+            const dobDay = document.getElementById('dob-day').value;
+            const dobMonth = document.getElementById('dob-month').value;
+            const dobYear = document.getElementById('dob-year').value;
+            if (!dobDay || !dobMonth || !dobYear) {
+                document.getElementById('dob-error').textContent = 'Please select your date of birth';
+                document.getElementById('dob-error').style.display = 'block';
+                isValid = false;
+            } else if (!validateDOB(dobDay, dobMonth, dobYear)) {
+                document.getElementById('dob-error').textContent = 'You must be at least 18 years old';
+                document.getElementById('dob-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate phone number (optional)
+            const phone = document.getElementById('phone').value;
+            if (phone && !validatePhoneNumber(phone)) {
+                document.getElementById('phone-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate reCAPTCHA
+            if (typeof grecaptcha === 'undefined' || grecaptcha.getResponse().length === 0) {
+                document.getElementById('recaptcha-error').style.display = 'block';
+                isValid = false;
+                document.querySelector('.g-recaptcha').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+            
+            // Validate terms agreement
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                document.getElementById('terms-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                showLoading(true);
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').classList.add('btn-disabled');
+                
+                try {
+                    // Collect all form data
+                    const formData = {
+                        fullName: document.getElementById('fullName').value.trim(),
+                        gender: document.getElementById('gender').value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        country: document.getElementById('country').value,
+                        city: document.getElementById('city').value.trim(),
+                        region: document.getElementById('region').value.trim(),
+                        userType: document.getElementById('userType').value,
+                        occupation: document.getElementById('occupation').value.trim(),
+                        dobDay: document.getElementById('dob-day').value,
+                        dobMonth: document.getElementById('dob-month').value,
+                        dobYear: document.getElementById('dob-year').value,
+                        phone: document.getElementById('phone').value || null,
+                        experience: document.getElementById('experience').value || null,
+                        education: document.getElementById('education').value || null,
+                        recaptchaToken: grecaptcha.getResponse()
+                    };
+                    
+                    // Register user with Firebase Authentication
+                    const userCredential = await auth.createUserWithEmailAndPassword(formData.email, formData.password);
+                    const user = userCredential.user;
+                    
+                    // Save additional user data to Cloud SQL via Cloud Run
+                    const response = await fetch('YOUR_CLOUD_RUN_ENDPOINT/save-user-data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${await user.getIdToken()}`
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to save user data');
+                    }
+                    
+                    // Generate and send verification code
+                    verificationCode = await sendVerificationEmail(formData.email);
+                    
+                    // Show verification section
+                    document.getElementById('registrationForm').style.display = 'none';
+                    document.getElementById('verificationSection').style.display = 'block';
+                    document.getElementById('verificationEmail').textContent = formData.email;
+                    startCountdown();
+                    
+                    // Focus first verification input
+                    document.querySelector('.verification-code input').focus();
+                    
+                } catch (error) {
+                    console.error('Error during registration:', error);
+                    
+                    // Display appropriate error message
+                    let errorMessage = 'An error occurred. Please try again.';
+                    
+                    if (error.code) {
+                        switch (error.code) {
+                            case 'auth/email-already-in-use':
+                                errorMessage = 'This email is already registered.';
+                                break;
+                            case 'auth/invalid-email':
+                                errorMessage = 'Please enter a valid email address.';
+                                break;
+                            case 'auth/weak-password':
+                                errorMessage = 'Password should be at least 6 characters.';
+                                break;
+                            default:
+                                errorMessage = error.message || errorMessage;
+                        }
+                    }
+                    
+                    alert(errorMessage);
+                } finally {
+                    showLoading(false);
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('submitBtn').classList.remove('btn-disabled');
+                }
+            }
+        });
+
+        // Verify button
+        document.getElementById('verifyBtn').addEventListener('click', function() {
+            const verificationInputs = document.querySelectorAll('.verification-code input');
+            let enteredCode = '';
+            
+            verificationInputs.forEach(input => {
+                enteredCode += input.value;
+            });
+            
+            if (enteredCode.length !== 6) {
+                alert('Please enter the complete 6-digit verification code');
+                return;
+            }
+            
+            if (enteredCode === verificationCode) {
+                showLoading(true);
+                
+                // Simulate server verification
+                setTimeout(() => {
+                    showLoading(false);
+                    alert('Verification successful! Redirecting to your dashboard.');
+                    // In a real implementation, you would redirect to the dashboard
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                alert('Invalid verification code. Please try again.');
+                verificationInputs[0].focus();
+            }
+        });
+
+        // Resend code
+        document.getElementById('resendCode').addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            if (!email) return;
+            
+            showLoading(true);
+            try {
+                verificationCode = await sendVerificationEmail(email);
+                alert('A new verification code has been sent to your email.');
+                startCountdown();
+            } catch (error) {
+                console.error('Error resending code:', error);
+                alert('Failed to resend verification code. Please try again.');
+            } finally {
+                showLoading(false);
+            }
+        });
+    </script>
+</body>
+</html>

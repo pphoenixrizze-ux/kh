@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | PhoenixRizze</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 8px 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-size: 0.9em;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .cta {
+            background-color: var(--secondary-color);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        #languageSwitcher {
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        /* Dropdown Menu Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--white);
+            min-width: 250px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            color: var(--primary-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--light-gray);
+            color: var(--secondary-color);
+        }
+        
+        .dropdown-submenu {
+            position: relative;
+        }
+        
+        .dropdown-submenu .dropdown-submenu-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: var(--white);
+            min-width: 250px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0 4px 4px 4px;
+        }
+        
+        .dropdown-submenu:hover .dropdown-submenu-content {
+            display: block;
+        }
+        
+        .dropdown-submenu > a:after {
+            content: "▸";
+            float: right;
+            margin-left: 10px;
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/Background Image 1.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .content-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+        
+        .services-intro {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .service-box {
+            display: flex;
+            gap: 30px;
+            margin: 50px 0;
+            background-color: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .service-box img {
+            width: 40%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            width: 60%;
+        }
+        
+        .service-title {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-weight: 700;
+        }
+        
+        .service-category {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 60px 0 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .start-now-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .start-now-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .conclusion-text {
+            text-align: center;
+            margin: 60px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .standards-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .standards-section img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 5%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .comment-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* New style for justified paragraphs */
+        .service-content p,
+        .standards-section p:not(:first-child),
+        .services-intro p:not(:first-of-type) {
+            text-align: justify;
+        }
+        
+        /* Exception for the specific paragraph */
+        .services-intro p:first-of-type {
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .service-box {
+                flex-direction: column;
+            }
+            
+            .service-box img,
+            .service-content {
+                width: 100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            /* Mobile dropdown adjustments */
+            .dropdown-content {
+                position: static;
+                min-width: 100%;
+            }
+            
+            .dropdown-submenu .dropdown-submenu-content {
+                position: static;
+                min-width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="images/LOGO PH.png" alt="Phoenix Rizze Logo"></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="why.html" class="nav-link">Why MySim?</a></li>
+                <li class="dropdown">
+                    <a href="services.html" class="nav-link active">Services</a>
+                    <div class="dropdown-content">
+                        <div class="dropdown-submenu">
+                            <a href="#preliminary-feasibility-study">Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#preliminary-feasibility-study">Preliminary Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#market-feasibility-study">Market and Marketing Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#market-feasibility-study">Market Feasibility Study</a>
+                                <a href="#marketing-feasibility-study">Marketing Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#technical-feasibility-study">Technical and Operational Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#technical-feasibility-study">Technical Feasibility Study</a>
+                                <a href="#technological-feasibility-study">Technological Feasibility Study</a>
+                                <a href="#operational-feasibility-study">Operational Feasibility Study</a>
+                                <a href="#organisational-feasibility-study">Organisational Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#legal-feasibility-study">Legal Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#legal-feasibility-study">Legal Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#environmental-feasibility-study">Environmental and Social Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#environmental-feasibility-study">Environmental Feasibility Study</a>
+                                <a href="#social-feasibility-study">Social Feasibility Study</a>
+                                <a href="#cultural-feasibility-study">Cultural Feasibility Study</a>
+                                <a href="#behavioural-feasibility-study">Behavioural Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#political-feasibility-study">Political Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#political-feasibility-study">Political Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#schedule-feasibility-study">Implementation Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#schedule-feasibility-study">Schedule Feasibility Study</a>
+                                <a href="#risk-feasibility-study">Risk Feasibility Study</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu">
+                            <a href="#economic-feasibility-study">Economic and Financial Feasibility Study</a>
+                            <div class="dropdown-submenu-content">
+                                <a href="#economic-feasibility-study">Economic Feasibility Study</a>
+                                <a href="#financial-feasibility-study">Financial Feasibility Study</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="resources.html" class="nav-link">Resources</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+                <li>
+                    <select id="languageSwitcher">
+                        <option value="en" selected>English</option>
+                        <option value="ar">العربية</option>
+                        <option value="fr">Français</option>
+                        <option value="es">Español</option>
+                        <option value="zh">简体中文</option>
+                    </select>
+                </li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="dashboard.html" style="background: #2196F3; color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold;">START NOW</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Our Services in Feasibility Study, Simulation, and Automated Report Generation</h1>
+        </section>
+        
+        <section class="content-section">
+            <div class="services-intro">
+                <p>At PhoenixRizze, we redefine how feasibility studies are conducted. Our platform harnesses the power of intelligent simulation, data analytics, and automated reporting to deliver fast, accurate, and comprehensive project evaluations. Whether you're launching a startup, assessing investment opportunities, or advising clients, our tailored services are designed to support confident, data-driven decisions across diverse industries.</p>
+            </div>
+            
+            <h2 class="service-category" id="pre-feasibility-study">Pre-feasibility Study</h2>
+            
+            <!-- Preliminary Feasibility Study -->
+            <div class="service-box" id="preliminary-feasibility-study">
+                <img src="images/Preliminary-1.jpeg" alt="Preliminary Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Preliminary Feasibility Study</h2>
+                    <p>The preliminary feasibility study serves as the starting point for any investment project, aiming to provide a quick and initial assessment of the project idea before delving into its financial and technical details. This study helps entrepreneurs verify the feasibility of the idea in terms of the target market, initial costs, and potential returns, contributing to the early elimination of unviable ideas. Through this preliminary step, investors can reduce risks and achieve higher efficiency in decision-making. On the PhoenixRizze platform, we provide intelligent simulation tools that allow you to conduct an interactive and accurate preliminary feasibility study, based on updated economic data and flexible analysis models. We help you build a realistic vision of the project within minutes, providing you with a solid foundation for making a successful investment decision.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="market-and-marketing-feasibility-study">Market and Marketing Feasibility Study</h2>
+            
+            <!-- Market Feasibility Study -->
+            <div class="service-box" id="market-feasibility-study">
+                <img src="images/Market Feasibility Study-1.jpeg" alt="Market Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Market Feasibility Study</h2>
+                    <p>The detailed market study focuses on understanding the external environment surrounding the project through an in-depth analysis of the target market and its characteristics. This study aims to determine the nature of demand, consumer behaviour, market size, and available gaps, in addition to assessing the level of competition and market strength. Through this analysis, the investor can build an effective marketing strategy that aligns with the real needs of the market. Our PhoenixRizze platform allows you to benefit from advanced simulations based on accurate databases and dynamic analysis models, enabling you to test several marketing scenarios and accurately estimate the project's opportunities. This study is a necessary strategic tool to ensure your project aligns with current trends and achieves success in an ever-changing market.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Marketing Feasibility Study -->
+            <div class="service-box" id="marketing-feasibility-study">
+                <img src="images/Marketing-3.jpeg" alt="Marketing Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Marketing Feasibility Study</h2>
+                    <p>The advanced marketing feasibility study is a necessary step to develop a strategic marketing plan based on advanced analyses of consumer behaviour and market trends. This study includes analysing target customer segments, identifying effective marketing channels, and estimating opportunities for response to marketing offers. The study is not limited to quantitative data only, but delves into understanding the psychological and cultural factors that influence the purchasing decision. Through the PhoenixRizze platform, we provide you with smart models supported by artificial intelligence capable of processing large amounts of data to generate accurate and actionable marketing reports. This study contributes to reducing marketing waste and increasing campaign effectiveness, which supports the process of market penetration and enhances the competitive advantage of your project.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="technical-and-operational-feasibility-study">Technical and Operational Feasibility Study</h2>
+            
+            <!-- Technical Feasibility Study -->
+            <div class="service-box" id="technical-feasibility-study">
+                <img src="images/Technical Feasibility Study-1.jpeg" alt="Technical Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Technical Feasibility Study</h2>
+                    <p>The technical feasibility study focuses on evaluating the technical capabilities of the project and determining the availability of technical resources, equipment, and infrastructure necessary to efficiently achieve the project's objectives. This study includes an analysis of production processes, selection of appropriate technologies, and identification of operational and maintenance requirements. This stage is crucial to ensure the project's ability to deliver high-quality products or services within specified standards. The PhoenixRizze platform provides accurate technical analysis tools that help you explore the technical aspects of your project from all angles, with visual representations of implementation steps and requirements. Through this study, you can ensure that the project is technically ready and reduce the possibilities of failure resulting from operational or technical problems.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Technological Feasibility Study -->
+            <div class="service-box" id="technological-feasibility-study">
+                <img src="images/Technological-4.jpeg" alt="Technological Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Technological Feasibility Study</h2>
+                    <p>The technological feasibility study is concerned with analysing the compatibility of the technology used in the project with its objectives and the nature of its operations, focusing on the efficiency of technical solutions and their ability to achieve tangible results. The study includes evaluating available innovations, the maturity of technology, and the challenges associated with its application. Through a comprehensive understanding of the project's technical requirements, the investor can make accurate decisions regarding the selection of the most appropriate systems and platforms. At PhoenixRizze, we provide specialised analytical simulations for this type of study, supported by the latest data on innovation and global technologies. We help you verify the feasibility of the proposed technology, estimate its cost, and align it with the long-term goals of the project, which supports performance sustainability and enhances competitive capability.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Operational Feasibility Study -->
+            <div class="service-box" id="operational-feasibility-study">
+                <img src="images/Operational-1.jpeg" alt="Operational Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Operational Feasibility Study</h2>
+                    <p>The operational feasibility study is concerned with assessing the project's implementability from an operational perspective, i.e., its ability to work efficiently within the daily environment of the organisation. The study includes an analysis of internal procedures, human resources, operating systems, and the compatibility of operations with strategic objectives. This study aims to ensure that organisational structures, workflow, and administrative capabilities can support the project without disruption or deviation. Through the PhoenixRizze platform, we provide advanced analysis tools that enable you to test the operational business model and identify strengths and weaknesses in the operational structure. This study contributes to ensuring operational smoothness, reducing waste, and achieving the required productivity at every stage of the project.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Organisational Feasibility Study -->
+            <div class="service-box" id="organisational-feasibility-study">
+                <img src="images/Organizational Feasibility Study-1.jpeg" alt="Organisational Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Organisational Feasibility Study</h2>
+                    <p>The administrative feasibility study focuses on evaluating the efficiency of the proposed organisational and administrative structure for implementing the project and effectively achieving its objectives. The study includes analysing leadership capabilities, distribution of roles and responsibilities, and human resources required to ensure workflow in an organised and effective manner. It also addresses aspects related to work culture, decision-making methods, and control mechanisms. On the PhoenixRizze platform, we provide you with an accurate simulation of the project's administrative structure, with strategic recommendations based on best practices in governance and management. This study contributes to building a flexible organisational system capable of adapting to challenges, which enhances performance efficiency and increases the project's chances of success in the long term.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="legal-feasibility-study">Legal Feasibility Study</h2>
+            
+            <!-- Legal Feasibility Study -->
+            <div class="service-box" id="legal-feasibility-study">
+                <img src="images/Legal Feasibility Study-3.jpeg" alt="Legal Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Legal Feasibility Study</h2>
+                    <p>The legal feasibility study is one of the most important studies that ensures the project's compliance with the prevailing legal and regulatory framework, both locally and internationally. This study aims to examine all laws and regulations that may affect the project, such as licenses, environmental compliance, labour laws, and intellectual property protection. It also includes analysing contracts and agreements related to the project and assessing potential legal risks. Through PhoenixRizze, we provide you with legal simulation reports based on updated databases, enabling you to accurately identify legal requirements and avoid future disputes. This study helps you ensure a sound legal environment for your project, enhances the confidence of partners and investors, and supports the stability of operations in the long term.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="environmental-and-social-feasibility-study">Environmental and Social Feasibility Study</h2>
+            
+            <!-- Environmental Feasibility Study -->
+            <div class="service-box" id="environmental-feasibility-study">
+                <img src="images/Environmental Feasibility Study-2.jpeg" alt="Environmental Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Environmental Feasibility Study</h2>
+                    <p>The environmental feasibility study focuses on assessing the potential environmental impact of the project and its compatibility with sustainability standards and protection of natural resources. The study includes analysis of resource use, emissions, waste, and potential impacts on surrounding ecosystems, in addition to compliance with environmental legislation. This study aims to ensure the reduction of harmful impacts on the environment and the adoption of responsible and sustainable operating practices. At PhoenixRizze, we provide advanced environmental assessment tools that help you analyse all environmental dimensions of your project, while providing solutions to mitigate negative effects. This study enables you to achieve a balance between economic growth and environmental sustainability, which enhances the project's image with the community and regulatory bodies.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Social Feasibility Study -->
+            <div class="service-box" id="social-feasibility-study">
+                <img src="images/Social Feasibility Study-3.jpeg" alt="Social Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Social Feasibility Study</h2>
+                    <p>The social feasibility study addresses the assessment of the project's impact on the local community and beneficiary segments, focusing on social aspects such as job creation, promoting equality, and improving living standards. It also aims to study the community's acceptance of the project and interaction with it, and identify social challenges that may arise during implementation. This study contributes to building positive relationships with local stakeholders and avoiding community opposition. The PhoenixRizze platform provides you with the ability to comprehensively analyse the social dimensions of the project, with strategic recommendations to ensure positive interaction with the public. This study represents a vital tool for enhancing community support and achieving sustainable social impact.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Cultural Feasibility Study -->
+            <div class="service-box" id="cultural-feasibility-study">
+                <img src="images/Cultural-4.jpeg" alt="Cultural Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Cultural Feasibility Study</h2>
+                    <p>The cultural feasibility study focuses on understanding the compatibility of the project with the prevailing customs, traditions, and cultural values in the target community. This study aims to ensure that the nature of the project and its products or services do not conflict with cultural identity and that they meet the expectations of the community respectfully and appropriately. At this stage, local traditions, thinking patterns, and collective behaviours are analysed to ensure cultural acceptance of the project. Through the PhoenixRizze platform, we provide you with specialised cultural analysis models based on field research and in-depth social data. This study helps you design a project capable of interacting positively with the cultural environment, which reduces the chances of community rejection and enhances the chances of success and spread in the target market.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Behavioural Feasibility Study -->
+            <div class="service-box" id="behavioural-feasibility-study">
+                <img src="images/Behavioural-4.jpeg" alt="Behavioural Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Behavioural Feasibility Study</h2>
+                    <p>The behavioural feasibility study aims to understand how individuals interact with the project from a psychological and behavioural perspective, whether they are customers, employees, or other concerned parties. The study includes analysing consumer behaviour, purchase motivations, acceptance of change, and expected reactions to the project. It is also concerned with measuring the level of psychological readiness to adopt the project or deal with it. At PhoenixRizze, we provide behavioural analysis tools supported by real data and modern psychological models, enabling you to build effective communication strategies and positive motivation. This study is necessary to ensure the project's alignment with the aspirations of the target group and increase the likelihood of its acceptance without resistance, which contributes to its success and smooth operation at both internal and external levels.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="political-feasibility-study">Political Feasibility Study</h2>
+            
+            <!-- Political Feasibility Study -->
+            <div class="service-box" id="political-feasibility-study">
+                <img src="images/Political-1.jpeg" alt="Political Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Political Feasibility Study</h2>
+                    <p>The political feasibility study is concerned with analysing the general political environment and its stability, and the impact of government policies and future legislation on the project. This study evaluates political orientations, state foreign relations, geopolitical risks, and potential changes in regulatory frameworks. This type of study is especially necessary in changing environments or those with high political sensitivity, as it helps anticipate challenges and plan effective responses to them. Through PhoenixRizze, we provide accurate political analysis based on official data and indicators, enabling you to make strategic decisions that protect your investment and ensure its continuity. This study enhances the project's ability to adapt to political changes and achieve long-term stability.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="implementation-feasibility-study">Implementation Feasibility Study</h2>
+            
+            <!-- Schedule Feasibility Study -->
+            <div class="service-box" id="schedule-feasibility-study">
+                <img src="images/Schedule Feasibility Study-2.jpeg" alt="Schedule Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Schedule Feasibility Study</h2>
+                    <p>The time feasibility study is concerned with determining the extent to which the project can be implemented within the specified timeframe, focusing on efficiently distributing tasks and phases and scheduling human and material resources. This study aims to reduce the chances of delay and ensure time coordination between the various phases of the project, in line with the general objectives. Critical time factors and potential challenges that may lead to implementation delays or increased costs are analysed. The PhoenixRizze platform provides advanced time planning tools that allow you to simulate project phases and test multiple scenarios to find the best implementation plan. This study enables you to adhere to deadlines and achieve time efficiency, which is a critical factor in the success of projects.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Risk Feasibility Study -->
+            <div class="service-box" id="risk-feasibility-study">
+                <img src="images/Risk-4.jpeg" alt="Risk Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Risk Feasibility Study</h2>
+                    <p>This study is concerned with a comprehensive analysis of potential risks that the project may face, whether financial, operational, technical, legal, or even environmental. It aims to identify types of risks, their probabilities of occurrence, and their potential impacts, in addition to developing preventive plans and strategies to deal with them when they arise. The study relies on analysing strengths, weaknesses, opportunities, and threats (SWOT), and is a vital tool for proactive risk management. Through PhoenixRizze, we provide you with customised simulation models for risk analysis and assessment using accurate and flexible criteria. This study contributes to reducing the likelihood of failure, improving readiness in the face of variables, and enhancing confidence among investors and stakeholders.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <h2 class="service-category" id="economic-and-financial-feasibility-study">Economic and Financial Feasibility Study</h2>
+            
+            <!-- Economic Feasibility Study -->
+            <div class="service-box" id="economic-feasibility-study">
+                <img src="images/Economic Feasibility Study-2.jpeg" alt="Economic Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Economic Feasibility Study</h2>
+                    <p>The economic feasibility study focuses on assessing the overall economic impact of the project, not only in terms of profitability but also in terms of its contribution to the development of the local economy, providing job opportunities, and promoting growth in related sectors. This study includes analysing social and economic costs and benefits, looking at indirect returns to society and the surrounding environment. At PhoenixRizze, we provide accurate economic analysis tools, supported by reliable statistical data and predictive models that help you understand the feasibility of the project from a comprehensive economic perspective. This study enables you to highlight the economic value of your project to investors and supporting entities, which enhances its chances of funding and expanding its developmental impact.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <!-- Financial Feasibility Study -->
+            <div class="service-box" id="financial-feasibility-study">
+                <img src="images/Financial Feasibility Study-4.jpeg" alt="Financial Feasibility Study">
+                <div class="service-content">
+                    <h2 class="service-title">Financial Feasibility Study</h2>
+                    <p>The financial feasibility study is one of the most important types of studies, as it aims to assess the project's ability to achieve rewarding financial returns compared to the invested costs. The study includes analysing Net Present Value (NPV), Internal Rate of Return (IRR), capital recovery period, and breakeven point. These indicators allow investors to assess the profitability of the project and its potential financial risks. Through the PhoenixRizze platform, we provide advanced financial simulation that allows the input of multiple scenarios to analyse the impact of changes in the market or costs. This study enables you to make accurate financial decisions, carefully plan liquidity, which ensures financial stability and sustainable growth for the project.</p>
+                    <a href="dashboard.html" class="start-now-btn">Start Now</a>
+                </div>
+            </div>
+            
+            <div class="standards-section">
+                <img src="images/Designer (1).png" alt="International Standards">
+                <p>At PhoenixRizze, we are committed to delivering comprehensive feasibility studies that adhere to internationally recognised standards. Our study structure and sequencing follow the methodologies established by leading institutions such as the International Bank for Reconstruction and Development (IBRD) – part of the World Bank Group, the United Nations Industrial Development Organisation (UNIDO), and global consulting leaders like Deloitte and PwC.</p>
+                <p>By applying these rigorous and proven frameworks, we ensure that each feasibility study we generate covers all critical dimensions — including economic, financial, technical, market, legal, environmental, social, behavioural, and risk aspects — offering our users a reliable, data-driven foundation for confident and sustainable investment decisions.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="why.html">Why MySim?</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: <a href="mailto:phx@phoenixrizze.com">phx@phoenixrizze.com</a></li>
+                    <li>Phone: 000 000 0000</li>
+                    <li>Address: Jordan, Aqaba, Aqaba 77110</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Leave a Comment</h3>
+                <div class="comment-form">
+                    <textarea placeholder="Your message..."></textarea>
+                    <button type="submit">Send</button>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 PhoenixRizze. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Language switcher functionality
+        document.getElementById('languageSwitcher').addEventListener('change', function() {
+            // This would be replaced with actual language switching logic
+            alert('Language changed to: ' + this.value);
+            // In a real implementation, you would:
+            // 1. Load translations for the selected language
+            // 2. Update all text content on the page
+            // 3. Possibly change text direction for RTL languages like Arabic
+        });
+        
+        // Highlight active navigation link
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

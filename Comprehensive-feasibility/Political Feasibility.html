@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Political Feasibility Analysis</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .risk-matrix-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .conditional-field {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .risk-header {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Political Feasibility Assessment</h1>
+            <p>This questionnaire aims to assess the political factors that may affect your project, such as the stability of the political system, government policies, attitudes toward investments, and regional and international relations. Your answers will help form a clearer picture of the political environment surrounding your project and its impact on its chances of success.</p>
+
+            <div class="section-title">Project Scope and Impact</div>
+            
+            <div class="form-group">
+                <label>Strategic Importance of the Project (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="importance-local" name="project-importance" value="local">
+                    <label for="importance-local">Small Local</label>
+                    <input type="radio" id="importance-regional" name="project-importance" value="regional">
+                    <label for="importance-regional">Medium/Regional</label>
+                    <input type="radio" id="importance-national" name="project-importance" value="national">
+                    <label for="importance-national">Strategic/National Project</label>
+                    <input type="radio" id="importance-undefined" name="project-importance" value="undefined">
+                    <label for="importance-undefined">Undefined</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Expected Impact of the Project on Society or Environment (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="impact-limited" name="project-impact" value="limited">
+                    <label for="impact-limited">Limited</label>
+                    <input type="radio" id="impact-medium" name="project-impact" value="medium">
+                    <label for="impact-medium">Medium</label>
+                    <input type="radio" id="impact-wide" name="project-impact" value="wide">
+                    <label for="impact-wide">Wide Impact</label>
+                </div>
+            </div>
+
+            <div class="section-title">Analysis of the General Political Environment and Market Stability</div>
+            
+            <div class="form-group">
+                <label>What is the level of general political stability in the target country or region? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="stability-very" name="political-stability" value="very-stable">
+                    <label for="stability-very">Very Stable</label>
+                    <input type="radio" id="stability-relatively" name="political-stability" value="relatively-stable">
+                    <label for="stability-relatively">Relatively Stable with Some Challenges</label>
+                    <input type="radio" id="stability-unstable" name="political-stability" value="unstable">
+                    <label for="stability-unstable">Unstable</label>
+                    <input type="radio" id="stability-unknown" name="political-stability" value="unknown">
+                    <label for="stability-unknown">Not Available / Uncertain</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What is the source of the information you are entering? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="source-personal" name="info-source" value="personal">
+                    <label for="source-personal">Personal Experience</label>
+                    <input type="checkbox" id="source-reports" name="info-source" value="reports">
+                    <label for="source-reports">International Reports (WB, IMF, UN, Transparency International)</label>
+                    <input type="checkbox" id="source-consultant" name="info-source" value="consultant">
+                    <label for="source-consultant">Local Consultant</label>
+                    <input type="checkbox" id="source-undefined" name="info-source" value="undefined">
+                    <label for="source-undefined">Undefined</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there any current or potential political disturbances or conflicts that may affect business or supply chain? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="conflicts-yes" name="political-conflicts" value="yes">
+                    <label for="conflicts-yes">Yes</label>
+                    <input type="radio" id="conflicts-no" name="political-conflicts" value="no">
+                    <label for="conflicts-no">No</label>
+                    <input type="radio" id="conflicts-uncertain" name="political-conflicts" value="uncertain">
+                    <label for="conflicts-uncertain">Uncertain</label>
+                </div>
+                <div id="conflicts-explanation-container" class="conditional-field" style="display: none;">
+                    <label for="conflicts-explanation">Please clarify:</label>
+                    <textarea id="conflicts-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How does the political situation affect the target business sector? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="impact-positive" name="sector-impact" value="positive">
+                    <label for="impact-positive">Positive Impact</label>
+                    <input type="radio" id="impact-negative" name="sector-impact" value="negative">
+                    <label for="impact-negative">Negative Impact</label>
+                    <input type="radio" id="impact-none" name="sector-impact" value="none">
+                    <label for="impact-none">No Clear Impact</label>
+                </div>
+                <div id="impact-details-container" class="conditional-field" style="display: none;">
+                    <label for="impact-details">Please explain the impact:</label>
+                    <textarea id="impact-details"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are policies or levels of political stability expected to change in the next (3-5) years?</label>
+                <div class="radio-group">
+                    <input type="radio" id="changes-yes" name="policy-changes" value="yes">
+                    <label for="changes-yes">Yes</label>
+                    <input type="radio" id="changes-no" name="policy-changes" value="no">
+                    <label for="changes-no">No</label>
+                    <input type="radio" id="changes-uncertain" name="policy-changes" value="uncertain">
+                    <label for="changes-uncertain">Uncertain</label>
+                </div>
+                <div id="changes-explanation-container" class="conditional-field" style="display: none;">
+                    <label for="changes-explanation">Please clarify:</label>
+                    <textarea id="changes-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Government Policies and Regulations</div>
+            
+            <div class="form-group">
+                <label>Are there clear government policies that encourage or hinder the project? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="policies-supportive" name="government-policies" value="supportive">
+                    <label for="policies-supportive">Supportive Policies (incentives, exemptions, financial support)</label>
+                    <input type="radio" id="policies-restrictive" name="government-policies" value="restrictive">
+                    <label for="policies-restrictive">Restrictive Policies (high taxes, operational restrictions)</label>
+                    <input type="radio" id="policies-none" name="government-policies" value="none">
+                    <label for="policies-none">No Clear Policies</label>
+                    <input type="radio" id="policies-uncertain" name="government-policies" value="uncertain">
+                    <label for="policies-uncertain">Uncertain</label>
+                </div>
+                <label for="policies-examples">Please provide examples:</label>
+                <textarea id="policies-examples"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Information Source (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="source-legislation" name="policy-source" value="legislation">
+                    <label for="source-legislation">Official Legislation</label>
+                    <input type="radio" id="source-intl-reports" name="policy-source" value="intl-reports">
+                    <label for="source-intl-reports">International Reports</label>
+                    <input type="radio" id="source-legal-consultant" name="policy-source" value="legal-consultant">
+                    <label for="source-legal-consultant">Legal Consultant</label>
+                    <input type="radio" id="source-undefined-policy" name="policy-source" value="undefined">
+                    <label for="source-undefined-policy">Undefined</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What are the most prominent official requirements and regulations affecting the project (licenses, compliance, price controls, employment)? (Required)</label>
+                <textarea id="regulations"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Expected Cost and Time to Obtain Licenses and Approvals (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="cost-low" name="approval-cost" value="low">
+                    <label for="cost-low">Low (less than 3 months)</label>
+                    <input type="radio" id="cost-medium" name="approval-cost" value="medium">
+                    <label for="cost-medium">Medium (3-6 months)</label>
+                    <input type="radio" id="cost-high" name="approval-cost" value="high">
+                    <label for="cost-high">High (>6 months and significant cost)</label>
+                    <input type="radio" id="cost-uncertain" name="approval-cost" value="uncertain">
+                    <label for="cost-uncertain">Uncertain</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there government policies or initiatives in digital transformation, data protection, and information security that may affect the project? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="digital-yes" name="digital-policies" value="yes">
+                    <label for="digital-yes">Yes</label>
+                    <input type="radio" id="digital-no" name="digital-policies" value="no">
+                    <label for="digital-no">No</label>
+                    <input type="radio" id="digital-uncertain" name="digital-policies" value="uncertain">
+                    <label for="digital-uncertain">Uncertain</label>
+                </div>
+                <div id="digital-explanation-container" class="conditional-field" style="display: none;">
+                    <label for="digital-explanation">Please clarify:</label>
+                    <textarea id="digital-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there international/regional trade agreements that may affect the project (such as free trade agreements)? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="agreements-yes" name="trade-agreements" value="yes">
+                    <label for="agreements-yes">Yes</label>
+                    <input type="radio" id="agreements-no" name="trade-agreements" value="no">
+                    <label for="agreements-no">No</label>
+                    <input type="radio" id="agreements-uncertain" name="trade-agreements" value="uncertain">
+                    <label for="agreements-uncertain">Uncertain</label>
+                </div>
+                <div id="agreements-explanation-container" class="conditional-field" style="display: none;">
+                    <label for="agreements-explanation">Please clarify:</label>
+                    <textarea id="agreements-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Relations with Government Entities and Corruption Management</div>
+            
+            <div class="form-group">
+                <label>How easy is it to deal with relevant government entities? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="ease-very" name="government-ease" value="very-easy">
+                    <label for="ease-very">Very Easy (clear, transparent procedures)</label>
+                    <input type="radio" id="ease-medium" name="government-ease" value="medium">
+                    <label for="ease-medium">Medium (requires continuous follow-up)</label>
+                    <input type="radio" id="ease-difficult" name="government-ease" value="difficult">
+                    <label for="ease-difficult">Difficult (complex procedures, slowness, potential for corruption)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Level of corruption or favoritism in obtaining government services (Optional):</label>
+                <div class="radio-group">
+                    <input type="radio" id="corruption-low" name="corruption-level" value="low">
+                    <label for="corruption-low">Very Low / Almost Non-existent</label>
+                    <input type="radio" id="corruption-medium" name="corruption-level" value="medium">
+                    <label for="corruption-medium">Medium</label>
+                    <input type="radio" id="corruption-high" name="corruption-level" value="high">
+                    <label for="corruption-high">High (major obstacle)</label>
+                    <input type="radio" id="corruption-uncertain" name="corruption-level" value="uncertain">
+                    <label for="corruption-uncertain">Uncertain</label>
+                </div>
+                <div id="corruption-plan-container" class="conditional-field" style="display: none;">
+                    <label>Plan to deal with this reality (Required when corruption exists):</label>
+                    <div class="radio-group">
+                        <input type="radio" id="plan-legal" name="corruption-plan" value="legal">
+                        <label for="plan-legal">Relying on official legal channels only</label>
+                        <input type="radio" id="plan-consultant" name="corruption-plan" value="consultant">
+                        <label for="plan-consultant">Contracting with a local consultant with relationships</label>
+                        <input type="radio" id="plan-compliance" name="corruption-plan" value="compliance">
+                        <label for="plan-compliance">Activating a strict internal compliance policy</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What is the impact of professional unions, pressure groups, or civil society organizations on the target sector? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="influence-weak" name="sector-influence" value="weak">
+                    <label for="influence-weak">Weak</label>
+                    <input type="radio" id="influence-medium" name="sector-influence" value="medium">
+                    <label for="influence-medium">Medium</label>
+                    <input type="radio" id="influence-strong" name="sector-influence" value="strong">
+                    <label for="influence-strong">Strong</label>
+                </div>
+                <label for="influence-explanation">Please explain the impact:</label>
+                <textarea id="influence-explanation"></textarea>
+            </div>
+
+            <div class="section-title">Political Risks and Preparedness</div>
+            
+            <div class="form-group">
+                <label>Identify the most prominent political risks threatening the project - Political Risk Assessment Matrix</label>
+                <p>Risk | Probability of Occurrence (1=Very Low, 5=Very High) | Impact (1=Weak, 5=Catastrophic) | Mitigation Plan</p>
+                
+                <div class="risk-matrix-header">
+                    <div class="risk-header">Risk Description</div>
+                    <div class="risk-header">Probability (1-5)</div>
+                    <div class="risk-header">Impact (1-5)</div>
+                    <div class="risk-header">Mitigation Plan</div>
+                    <div></div>
+                </div>
+                
+                <div id="risk-matrix-list">
+                    <div class="risk-matrix">
+                        <input type="text" placeholder="Risk 1" class="risk-name">
+                        <select class="risk-probability">
+                            <option value="">Select</option>
+                            <option value="1">1 (Very Low)</option>
+                            <option value="2">2 (Low)</option>
+                            <option value="3">3 (Medium)</option>
+                            <option value="4">4 (High)</option>
+                            <option value="5">5 (Very High)</option>
+                        </select>
+                        <select class="risk-impact">
+                            <option value="">Select</option>
+                            <option value="1">1 (Weak)</option>
+                            <option value="2">2 (Moderate)</option>
+                            <option value="3">3 (Significant)</option>
+                            <option value="4">4 (Severe)</option>
+                            <option value="5">5 (Catastrophic)</option>
+                        </select>
+                        <input type="text" placeholder="Mitigation Plan" class="risk-mitigation">
+                        <button class="remove-btn" onclick="removeRiskField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addRiskField()">+ Add Risk</button>
+            </div>
+
+            <div class="form-group">
+                <label>What is the potential political impact on your project in case risks or changes occur? (Please select the most appropriate estimate)</label>
+                <div class="radio-group">
+                    <input type="radio" id="impact-1" name="political-impact" value="1">
+                    <label for="impact-1">1 (Weak): Loss of less than 5% of capital or limited impact on operations</label>
+                    <input type="radio" id="impact-3" name="political-impact" value="3">
+                    <label for="impact-3">3 (Medium): Loss between 5-20% or temporary disruption</label>
+                    <input type="radio" id="impact-5" name="political-impact" value="5">
+                    <label for="impact-5">5 (Catastrophic): Loss of more than 20% or complete project shutdown</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>In case the worst scenario materializes (such as a radical change in the system, imposition of international sanctions): What is the emergency plan for the project? (Such as market exit, asset transfer, complete restructuring):</label>
+                <textarea id="emergency-plan"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Do you have previous experience in a similar political environment?</label>
+                <div class="radio-group">
+                    <input type="radio" id="experience-yes" name="previous-experience" value="yes">
+                    <label for="experience-yes">Yes</label>
+                    <input type="radio" id="experience-no" name="previous-experience" value="no">
+                    <label for="experience-no">No</label>
+                </div>
+                <div id="experience-details-container" class="conditional-field" style="display: none;">
+                    <label for="experience-details">What lessons were learned?</label>
+                    <textarea id="experience-details"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Could the project provoke negative reactions from societal segments (environmental groups, unions, human rights movements)?</label>
+                <div class="radio-group">
+                    <input type="radio" id="reactions-yes" name="social-reactions" value="yes">
+                    <label for="reactions-yes">Yes</label>
+                    <input type="radio" id="reactions-no" name="social-reactions" value="no">
+                    <label for="reactions-no">No</label>
+                    <input type="radio" id="reactions-uncertain" name="social-reactions" value="uncertain">
+                    <label for="reactions-uncertain">Uncertain</label>
+                </div>
+                <div id="reactions-details-container" class="conditional-field" style="display: none;">
+                    <label for="reactions-details">Please clarify and provide treatment plans:</label>
+                    <textarea id="reactions-details"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Regional and International Context (Geopolitical Context)</div>
+            
+            <div class="form-group">
+                <label>Are there regional or international tensions that may affect trade (such as port closures, energy price fluctuations, border disputes) even if the target country is not a direct party?</label>
+                <div class="radio-group">
+                    <input type="radio" id="tensions-yes" name="geopolitical-tensions" value="yes">
+                    <label for="tensions-yes">Yes</label>
+                    <input type="radio" id="tensions-no" name="geopolitical-tensions" value="no">
+                    <label for="tensions-no">No</label>
+                    <input type="radio" id="tensions-uncertain" name="geopolitical-tensions" value="uncertain">
+                    <label for="tensions-uncertain">Uncertain</label>
+                </div>
+                <div id="tensions-details-container" class="conditional-field" style="display: none;">
+                    <label for="tensions-details">Please clarify:</label>
+                    <textarea id="tensions-details"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the target country a party to any international disputes (diplomatic or legal) that may affect the reputation or operations of the project?</label>
+                <div class="radio-group">
+                    <input type="radio" id="disputes-yes" name="international-disputes" value="yes">
+                    <label for="disputes-yes">Yes</label>
+                    <input type="radio" id="disputes-no" name="international-disputes" value="no">
+                    <label for="disputes-no">No</label>
+                    <input type="radio" id="disputes-uncertain" name="international-disputes" value="uncertain">
+                    <label for="disputes-uncertain">Uncertain</label>
+                </div>
+                <div id="disputes-details-container" class="conditional-field" style="display: none;">
+                    <label for="disputes-details">Please clarify:</label>
+                    <textarea id="disputes-details"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Assessment of political risks based on all the above answers</label>
+                <div class="radio-group">
+                    <input type="radio" id="risk-low" name="risk-assessment" value="low">
+                    <label for="risk-low">Low - Stable and favorable environment for the project</label>
+                    <input type="radio" id="risk-medium" name="risk-assessment" value="medium">
+                    <label for="risk-medium">Medium - Challenges that can be managed with clear plans</label>
+                    <input type="radio" id="risk-high" name="risk-assessment" value="high">
+                    <label for="risk-high">High - Difficult environment that threatens project success</label>
+                    <input type="radio" id="risk-critical" name="risk-assessment" value="critical">
+                    <label for="risk-critical">Critical - Risks are very high making the project unfeasible</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Any observations or other matters you would like to mention or matters not mentioned:</label>
+                <textarea id="additional-notes"></textarea>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../Comprehensive-feasibility/Schedule Feasibility.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            setupConditionalField('conflicts-yes', 'conflicts-explanation-container');
+            setupConditionalField('impact-positive', 'impact-details-container');
+            setupConditionalField('impact-negative', 'impact-details-container');
+            setupConditionalField('changes-yes', 'changes-explanation-container');
+            setupConditionalField('digital-yes', 'digital-explanation-container');
+            setupConditionalField('agreements-yes', 'agreements-explanation-container');
+            setupConditionalField('corruption-low', 'corruption-plan-container');
+            setupConditionalField('corruption-medium', 'corruption-plan-container');
+            setupConditionalField('corruption-high', 'corruption-plan-container');
+            setupConditionalField('experience-yes', 'experience-details-container');
+            setupConditionalField('reactions-yes', 'reactions-details-container');
+            setupConditionalField('tensions-yes', 'tensions-details-container');
+            setupConditionalField('disputes-yes', 'disputes-details-container');
+
+            function setupConditionalField(triggerId, containerId) {
+                const trigger = document.getElementById(triggerId);
+                const container = document.getElementById(containerId);
+                
+                if (trigger && container) {
+                    trigger.addEventListener('change', function() {
+                        if (this.checked) {
+                            container.style.display = 'block';
+                        } else {
+                            // Check if any other radio button in the group is checked
+                            const groupName = this.getAttribute('name');
+                            const anyChecked = document.querySelector(`input[name="${groupName}"]:checked`);
+                            
+                            if (!anyChecked || !anyChecked.id.startsWith(triggerId.split('-')[0])) {
+                                container.style.display = 'none';
+                            }
+                        }
+                        updateOutput();
+                    });
+                }
+            }
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Dynamic field functions
+        function addRiskField() {
+            const riskList = document.getElementById('risk-matrix-list');
+            const riskCount = document.querySelectorAll('.risk-matrix').length;
+            
+            if (riskCount >= 20) {
+                alert('You can add up to 20 risks only.');
+                return;
+            }
+            
+            const newField = document.createElement('div');
+            newField.className = 'risk-matrix';
+            newField.innerHTML = `
+                <input type="text" placeholder="Risk ${riskCount + 1}" class="risk-name">
+                <select class="risk-probability">
+                    <option value="">Select</option>
+                    <option value="1">1 (Very Low)</option>
+                    <option value="2">2 (Low)</option>
+                    <option value="3">3 (Medium)</option>
+                    <option value="4">4 (High)</option>
+                    <option value="5">5 (Very High)</option>
+                </select>
+                <select class="risk-impact">
+                    <option value="">Select</option>
+                    <option value="1">1 (Weak)</option>
+                    <option value="2">2 (Moderate)</option>
+                    <option value="3">3 (Significant)</option>
+                    <option value="4">4 (Severe)</option>
+                    <option value="5">5 (Catastrophic)</option>
+                </select>
+                <input type="text" placeholder="Mitigation Plan" class="risk-mitigation">
+                <button class="remove-btn" onclick="removeRiskField(this)">×</button>
+            `;
+            riskList.appendChild(newField);
+            
+            // Add event listeners to new inputs
+            const newInputs = newField.querySelectorAll('input, select');
+            newInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+            });
+        }
+
+        function removeRiskField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Project Scope and Impact
+            const selectedImportance = document.querySelector('input[name="project-importance"]:checked');
+            if (selectedImportance) {
+                addOutputItem('Strategic Importance', document.querySelector(`label[for="${selectedImportance.id}"]`).textContent);
+            }
+            
+            const selectedImpact = document.querySelector('input[name="project-impact"]:checked');
+            if (selectedImpact) {
+                addOutputItem('Expected Impact', document.querySelector(`label[for="${selectedImpact.id}"]`).textContent);
+            }
+
+            // Political Environment Analysis
+            const selectedStability = document.querySelector('input[name="political-stability"]:checked');
+            if (selectedStability) {
+                addOutputItem('Political Stability', document.querySelector(`label[for="${selectedStability.id}"]`).textContent);
+            }
+            
+            const selectedSources = [];
+            document.querySelectorAll('input[name="info-source"]:checked').forEach(source => {
+                selectedSources.push(document.querySelector(`label[for="${source.id}"]`).textContent);
+            });
+            if (selectedSources.length > 0) {
+                addOutputItem('Information Sources', selectedSources.join(', '));
+            }
+            
+            const selectedConflicts = document.querySelector('input[name="political-conflicts"]:checked');
+            if (selectedConflicts) {
+                addOutputItem('Political Conflicts', document.querySelector(`label[for="${selectedConflicts.id}"]`).textContent);
+                if (selectedConflicts.value === 'yes') {
+                    addOutputItem('Conflicts Explanation', document.getElementById('conflicts-explanation').value);
+                }
+            }
+            
+            const selectedSectorImpact = document.querySelector('input[name="sector-impact"]:checked');
+            if (selectedSectorImpact) {
+                addOutputItem('Sector Impact', document.querySelector(`label[for="${selectedSectorImpact.id}"]`).textContent);
+                if (selectedSectorImpact.value !== 'none') {
+                    addOutputItem('Impact Details', document.getElementById('impact-details').value);
+                }
+            }
+            
+            const selectedChanges = document.querySelector('input[name="policy-changes"]:checked');
+            if (selectedChanges) {
+                addOutputItem('Expected Policy Changes', document.querySelector(`label[for="${selectedChanges.id}"]`).textContent);
+                if (selectedChanges.value === 'yes') {
+                    addOutputItem('Changes Explanation', document.getElementById('changes-explanation').value);
+                }
+            }
+
+            // Government Policies and Regulations
+            const selectedPolicies = document.querySelector('input[name="government-policies"]:checked');
+            if (selectedPolicies) {
+                addOutputItem('Government Policies', document.querySelector(`label[for="${selectedPolicies.id}"]`).textContent);
+                addOutputItem('Policy Examples', document.getElementById('policies-examples').value);
+            }
+            
+            const selectedPolicySource = document.querySelector('input[name="policy-source"]:checked');
+            if (selectedPolicySource) {
+                addOutputItem('Policy Information Source', document.querySelector(`label[for="${selectedPolicySource.id}"]`).textContent);
+            }
+            
+            addOutputItem('Regulations', document.getElementById('regulations').value);
+            
+            const selectedApprovalCost = document.querySelector('input[name="approval-cost"]:checked');
+            if (selectedApprovalCost) {
+                addOutputItem('Approval Cost and Time', document.querySelector(`label[for="${selectedApprovalCost.id}"]`).textContent);
+            }
+            
+            const selectedDigitalPolicies = document.querySelector('input[name="digital-policies"]:checked');
+            if (selectedDigitalPolicies) {
+                addOutputItem('Digital Policies Impact', document.querySelector(`label[for="${selectedDigitalPolicies.id}"]`).textContent);
+                if (selectedDigitalPolicies.value === 'yes') {
+                    addOutputItem('Digital Policies Explanation', document.getElementById('digital-explanation').value);
+                }
+            }
+            
+            const selectedAgreements = document.querySelector('input[name="trade-agreements"]:checked');
+            if (selectedAgreements) {
+                addOutputItem('Trade Agreements Impact', document.querySelector(`label[for="${selectedAgreements.id}"]`).textContent);
+                if (selectedAgreements.value === 'yes') {
+                    addOutputItem('Agreements Explanation', document.getElementById('agreements-explanation').value);
+                }
+            }
+
+            // Relations with Government Entities
+            const selectedEase = document.querySelector('input[name="government-ease"]:checked');
+            if (selectedEase) {
+                addOutputItem('Government Ease of Dealing', document.querySelector(`label[for="${selectedEase.id}"]`).textContent);
+            }
+            
+            const selectedCorruption = document.querySelector('input[name="corruption-level"]:checked');
+            if (selectedCorruption) {
+                addOutputItem('Corruption Level', document.querySelector(`label[for="${selectedCorruption.id}"]`).textContent);
+                if (selectedCorruption.value !== 'uncertain') {
+                    const selectedPlan = document.querySelector('input[name="corruption-plan"]:checked');
+                    if (selectedPlan) {
+                        addOutputItem('Corruption Plan', document.querySelector(`label[for="${selectedPlan.id}"]`).textContent);
+                    }
+                }
+            }
+            
+            const selectedInfluence = document.querySelector('input[name="sector-influence"]:checked');
+            if (selectedInfluence) {
+                addOutputItem('Sector Influence', document.querySelector(`label[for="${selectedInfluence.id}"]`).textContent);
+                addOutputItem('Influence Explanation', document.getElementById('influence-explanation').value);
+            }
+
+            // Political Risks and Preparedness
+            // Risk Matrix
+            const riskNames = document.querySelectorAll('.risk-name');
+            const riskProbabilities = document.querySelectorAll('.risk-probability');
+            const riskImpacts = document.querySelectorAll('.risk-impact');
+            const riskMitigations = document.querySelectorAll('.risk-mitigation');
+            
+            if (riskNames.length > 0 && riskNames[0].value) {
+                let risksHTML = '';
+                for (let i = 0; i < riskNames.length; i++) {
+                    if (riskNames[i].value) {
+                        const probability = riskProbabilities[i].value;
+                        const impact = riskImpacts[i].value;
+                        
+                        risksHTML += `<li>${riskNames[i].value}: Probability ${probability || 'N/A'}/5, Impact ${impact || 'N/A'}/5, Mitigation: ${riskMitigations[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (risksHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Risk Matrix:</h4>
+                            <ul>${risksHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            const selectedPoliticalImpact = document.querySelector('input[name="political-impact"]:checked');
+            if (selectedPoliticalImpact) {
+                addOutputItem('Potential Political Impact', document.querySelector(`label[for="${selectedPoliticalImpact.id}"]`).textContent);
+            }
+            
+            addOutputItem('Emergency Plan', document.getElementById('emergency-plan').value);
+            
+            const selectedExperience = document.querySelector('input[name="previous-experience"]:checked');
+            if (selectedExperience) {
+                addOutputItem('Previous Experience', document.querySelector(`label[for="${selectedExperience.id}"]`).textContent);
+                if (selectedExperience.value === 'yes') {
+                    addOutputItem('Experience Details', document.getElementById('experience-details').value);
+                }
+            }
+            
+            const selectedReactions = document.querySelector('input[name="social-reactions"]:checked');
+            if (selectedReactions) {
+                addOutputItem('Social Reactions', document.querySelector(`label[for="${selectedReactions.id}"]`).textContent);
+                if (selectedReactions.value === 'yes') {
+                    addOutputItem('Reactions Details', document.getElementById('reactions-details').value);
+                }
+            }
+
+            // Regional and International Context
+            const selectedTensions = document.querySelector('input[name="geopolitical-tensions"]:checked');
+            if (selectedTensions) {
+                addOutputItem('Geopolitical Tensions', document.querySelector(`label[for="${selectedTensions.id}"]`).textContent);
+                if (selectedTensions.value === 'yes') {
+                    addOutputItem('Tensions Details', document.getElementById('tensions-details').value);
+                }
+            }
+            
+            const selectedDisputes = document.querySelector('input[name="international-disputes"]:checked');
+            if (selectedDisputes) {
+                addOutputItem('International Disputes', document.querySelector(`label[for="${selectedDisputes.id}"]`).textContent);
+                if (selectedDisputes.value === 'yes') {
+                    addOutputItem('Disputes Details', document.getElementById('disputes-details').value);
+                }
+            }
+            
+            const selectedRiskAssessment = document.querySelector('input[name="risk-assessment"]:checked');
+            if (selectedRiskAssessment) {
+                addOutputItem('Risk Assessment', document.querySelector(`label[for="${selectedRiskAssessment.id}"]`).textContent);
+            }
+            
+            addOutputItem('Additional Notes', document.getElementById('additional-notes').value);
+
+            // Update the output div
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            outputDiv.innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preliminary Feasibility Study</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20251030">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css?v=20251030" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --primary-hover: #0052a3;
+            --success-color: #28a745;
+            --success-hover: #218838;
+            --text-color: #333;
+            --border-color: #ccc;
+            --light-bg: #f2f4f7;
+            --white: #fff;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            gap: 20px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .language-selector {
+            position: absolute;
+            right: 20px;
+        }
+
+        #language-selector {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .next-button {
+            background-color: var(--success-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            float: right;
+        }
+
+        .next-button:hover {
+            background-color: var(--success-hover);
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .flex-row > div {
+            flex: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 46px;
+            padding: 10px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 44px;
+        }
+
+        #charCount {
+            text-align: left;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .location-text {
+            color: var(--primary-color);
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .location-text:hover {
+            color: var(--primary-hover);
+        }
+
+        @media (max-width: 768px) {
+            .flex-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            header {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .language-selector {
+                position: static;
+            }
+            
+            .container {
+                padding: 20px;
+                margin: 15px;
+            }
+        }
+        /* Accessibility helpers */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 1px, 1px);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img src="images/LOGO PH.png?v=20251030" alt="Company Logo" class="logo">
+    <div class="language-selector">
+        <label for="language-selector" class="sr-only">Select language</label>
+        <select id="language-selector" title="Select language">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="zh">中文</option>
+        </select>
+    </div>
+</header>
+<div class="container">
+    <h2>Project Basic Information</h2>
+    <form id="feasibilityForm">
+
+        <div class="flex-row">
+            <div class="form-group">
+                <label for="studyType">Feasibility Study Type</label>
+                <select id="studyType" name="studyType" required title="Feasibility Study Type">
+                    <option value="">Select Type</option>
+                    <option value="preliminary">Preliminary Feasibility Study</option>
+                    <option value="brief">Brief Feasibility Study</option>
+                    <option value="comprehensive">Comprehensive Feasibility Study</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="sector">Sector</label>
+                <select id="sector" name="sector" required title="Sector">
+                    <option value="">Select Sector</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="service">Service</option>
+                    <option value="agricultural">Agricultural</option>
+                    <option value="technical">Technical/Software</option>
+                    <option value="health">Health/Medical</option>
+                    <option value="realestate">Real Estate/Construction</option>
+                    <option value="tourism">Tourism/Hospitality</option>
+                    <option value="financial">Financial/Investment</option>
+                    <option value="energy">Energy/Renewables</option>
+                    <option value="educational">Educational</option>
+                    <option value="media">Media/Entertainment</option>
+                    <option value="government">Government/Non-profit</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="projectType">Project Type</label>
+                <select id="projectType" name="projectType" required title="Project Type">
+                    <option value="">Select project type</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="otherSectorFields" class="hidden">
+            <div class="flex-row">
+                <div class="form-group">
+                    <label for="otherSector">Specify Sector</label>
+                    <input type="text" id="otherSector" name="otherSector" placeholder="Enter sector name">
+                </div>
+                <div class="form-group">
+                    <label for="otherProjectType">Specify Project Type</label>
+                    <input type="text" id="otherProjectType" name="otherProjectType" placeholder="Enter project type">
+                </div>
+            </div>
+        </div>
+
+        <div id="otherProjectTypeField" class="hidden">
+            <div class="form-group">
+                <label for="specifiedProjectType">Specify Project Type</label>
+                <input type="text" id="specifiedProjectType" name="specifiedProjectType" placeholder="Enter project type">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="projectName">Project Name</label>
+            <input type="text" id="projectName" name="projectName" required placeholder="Enter project name">
+        </div>
+
+        <div class="flex-row">
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" placeholder="Enter country">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="Enter city">
+            </div>
+            <div class="form-group">
+                <label for="area">Area/Region</label>
+                <input type="text" id="area" name="area" placeholder="Enter area/region">
+            </div>
+        </div>
+        
+        <div class="location-text" id="locationText">
+            <i class="fas fa-map-marker-alt"></i> Select project location on map
+        </div>
+
+        <div class="flex-row">
+            <div class="form-group">
+                <label for="fundingMethod">Funding Method</label>
+                <select id="fundingMethod" name="fundingMethod" required title="Funding Method">
+                    <option value="">Select method</option>
+                    <option value="personal">Personal capital only</option>
+                    <option value="loan">Loan only</option>
+                    <option value="mixed">Mixed funding</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="personalContribution">Personal Amount</label>
+                <input type="number" id="personalContribution" name="personalContribution" min="0" placeholder="Amount">
+            </div>
+            <div class="form-group">
+                <label for="loanAmount">Loan Amount</label>
+                <input type="number" id="loanAmount" name="loanAmount" min="0" placeholder="Amount">
+            </div>
+        </div>
+
+        <div class="flex-row">
+            <div class="form-group">
+                <label for="interestValue">Interest Rate (%)</label>
+                <input type="number" id="interestValue" name="interestValue" min="0" step="0.1" max="100" placeholder="Value" disabled>
+            </div>
+            <div class="form-group">
+                <label for="currency">Currency</label>
+                <select id="currency" name="currency" class="currency-select" title="Currency">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="taxRate">Tax Rate (%)</label>
+                <input type="number" id="taxRate" name="taxRate" step="0.1" min="0" max="100">
+            </div>
+            <div class="form-group">
+                <label for="loanMonths">Months to Repay Loan</label>
+                <input type="number" id="loanMonths" name="loanMonths" min="1" placeholder="Months" disabled>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="projectDescription">Brief description of the project idea or objectives</label>
+            <textarea id="projectDescription" name="projectDescription" rows="5" maxlength="500" placeholder="Brief description (max 500 characters)"></textarea>
+            <div id="charCount">500 remaining</div>
+        </div>
+
+        <div class="flex-row">
+            <div class="form-group">
+                <label for="targetAudience">Target Market</label>
+                <select id="targetAudience" name="targetAudience" required title="Target Market">
+                    <option value="">Select target market</option>
+                    <option value="individuals">Individuals</option>
+                    <option value="companies">Companies</option>
+                    <option value="governments">Governments</option>
+                    <option value="local">Local markets</option>
+                    <option value="regional">Regional markets</option>
+                    <option value="international">International markets</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectStatus">Project Status</label>
+                <select id="projectStatus" name="projectStatus" required title="Project Status">
+                    <option value="">Select status</option>
+                    <option value="new">New project</option>
+                    <option value="existing">Expansion of existing</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex-row">
+            <div class="form-group">
+                <label for="duration">Expected Duration</label>
+                <input type="number" id="duration" name="duration" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="durationUnit">Time Unit</label>
+                <select id="durationUnit" name="durationUnit" required title="Time Unit">
+                    <option value="months">Months</option>
+                    <option value="years">Years</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Additional notes or special details</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Any additional information"></textarea>
+        </div>
+
+        <!-- Hidden computed total capital to include in form submission -->
+        <input type="hidden" id="totalCapital" name="totalCapital" />
+
+        <button type="submit" class="next-button">
+            <span>Next</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js?v=20251030"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js?v=20251030"></script>
+<!-- rawAnswersStore.js removed: direct localStorage is used instead -->
+<script>
+    $(document).ready(function() {
+        // rawAnswersStore init removed
+        // Initialize Select2 for select elements
+        $('#language-selector, #studyType, #sector, #projectType, #fundingMethod, #targetAudience, #projectStatus, #durationUnit').select2();
+        
+        // Populate currency dropdown with all world currencies
+        const currencies = [
+            {code: 'USD', name: 'US Dollar'},
+            {code: 'EUR', name: 'Euro'},
+            {code: 'GBP', name: 'British Pound'},
+            {code: 'JPY', name: 'Japanese Yen'},
+            {code: 'AUD', name: 'Australian Dollar'},
+            {code: 'CAD', name: 'Canadian Dollar'},
+            {code: 'CHF', name: 'Swiss Franc'},
+            {code: 'CNY', name: 'Chinese Yuan'},
+            {code: 'SEK', name: 'Swedish Krona'},
+            {code: 'NZD', name: 'New Zealand Dollar'},
+            {code: 'MXN', name: 'Mexican Peso'},
+            {code: 'SGD', name: 'Singapore Dollar'},
+            {code: 'HKD', name: 'Hong Kong Dollar'},
+            {code: 'NOK', name: 'Norwegian Krone'},
+            {code: 'KRW', name: 'South Korean Won'},
+            {code: 'TRY', name: 'Turkish Lira'},
+            {code: 'INR', name: 'Indian Rupee'},
+            {code: 'BRL', name: 'Brazilian Real'},
+            {code: 'ZAR', name: 'South African Rand'},
+            {code: 'DKK', name: 'Danish Krone'},
+            {code: 'PLN', name: 'Polish Zloty'},
+            {code: 'TWD', name: 'New Taiwan Dollar'},
+            {code: 'THB', name: 'Thai Baht'},
+            {code: 'MYR', name: 'Malaysian Ringgit'},
+            {code: 'HUF', name: 'Hungarian Forint'},
+            {code: 'CZK', name: 'Czech Koruna'},
+            {code: 'ILS', name: 'Israeli New Shekel'},
+            {code: 'CLP', name: 'Chilean Peso'},
+            {code: 'PHP', name: 'Philippine Peso'},
+            {code: 'AED', name: 'UAE Dirham'},
+            {code: 'COP', name: 'Colombian Peso'},
+            {code: 'SAR', name: 'Saudi Riyal'},
+            {code: 'RON', name: 'Romanian Leu'},
+            {code: 'PEN', name: 'Peruvian Sol'},
+            {code: 'BHD', name: 'Bahraini Dinar'},
+            {code: 'BGN', name: 'Bulgarian Lev'},
+            {code: 'ARS', name: 'Argentine Peso'},
+            {code: 'HRK', name: 'Croatian Kuna'},
+            {code: 'JOD', name: 'Jordanian Dinar'},
+            {code: 'KWD', name: 'Kuwaiti Dinar'},
+            {code: 'QAR', name: 'Qatari Riyal'},
+            {code: 'OMR', name: 'Omani Rial'},
+            {code: 'NGN', name: 'Nigerian Naira'},
+            {code: 'EGP', name: 'Egyptian Pound'},
+            {code: 'DZD', name: 'Algerian Dinar'},
+            {code: 'MAD', name: 'Moroccan Dirham'},
+            {code: 'TND', name: 'Tunisian Dinar'},
+            {code: 'LBP', name: 'Lebanese Pound'},
+            {code: 'PKR', name: 'Pakistani Rupee'},
+            {code: 'BDT', name: 'Bangladeshi Taka'},
+            {code: 'VND', name: 'Vietnamese Dong'},
+            {code: 'IDR', name: 'Indonesian Rupiah'},
+            {code: 'RUB', name: 'Russian Ruble'},
+            {code: 'UAH', name: 'Ukrainian Hryvnia'},
+            {code: 'KZT', name: 'Kazakhstani Tenge'},
+            {code: 'BYN', name: 'Belarusian Ruble'},
+            {code: 'UZS', name: 'Uzbekistani Som'},
+            {code: 'AZN', name: 'Azerbaijani Manat'},
+            {code: 'GEL', name: 'Georgian Lari'},
+            {code: 'AMD', name: 'Armenian Dram'},
+            {code: 'KGS', name: 'Kyrgyzstani Som'},
+            {code: 'TJS', name: 'Tajikistani Somoni'},
+            {code: 'TMT', name: 'Turkmenistani Manat'},
+            {code: 'AFN', name: 'Afghan Afghani'},
+            {code: 'IRR', name: 'Iranian Rial'},
+            {code: 'IQD', name: 'Iraqi Dinar'},
+            {code: 'SYP', name: 'Syrian Pound'},
+            {code: 'YER', name: 'Yemeni Rial'},
+            {code: 'SDG', name: 'Sudanese Pound'},
+            {code: 'LYD', name: 'Libyan Dinar'},
+            {code: 'MZN', name: 'Mozambican Metical'},
+            {code: 'KES', name: 'Kenyan Shilling'},
+            {code: 'ETB', name: 'Ethiopian Birr'},
+            {code: 'UGX', name: 'Ugandan Shilling'},
+            {code: 'TZS', name: 'Tanzanian Shilling'},
+            {code: 'MWK', name: 'Malawian Kwacha'},
+            {code: 'ZMW', name: 'Zambian Kwacha'},
+            {code: 'ZWL', name: 'Zimbabwean Dollar'},
+            {code: 'GHS', name: 'Ghanaian Cedi'},
+            {code: 'XOF', name: 'West African CFA Franc'},
+            {code: 'XAF', name: 'Central African CFA Franc'},
+            {code: 'NAD', name: 'Namibian Dollar'},
+            {code: 'MUR', name: 'Mauritian Rupee'},
+            {code: 'SCR', name: 'Seychellois Rupee'},
+            {code: 'MVR', name: 'Maldivian Rufiyaa'},
+            {code: 'CDF', name: 'Congolese Franc'},
+            {code: 'RWF', name: 'Rwandan Franc'},
+            {code: 'BIF', name: 'Burundian Franc'},
+            {code: 'DJF', name: 'Djiboutian Franc'},
+            {code: 'SOS', name: 'Somali Shilling'},
+            {code: 'ERN', name: 'Eritrean Nakfa'},
+            {code: 'SLL', name: 'Sierra Leonean Leone'},
+            {code: 'GMD', name: 'Gambian Dalasi'},
+            {code: 'WST', name: 'Samoan Tala'},
+            {code: 'KMF', name: 'Comorian Franc'},
+            {code: 'STN', name: 'São Tomé and Príncipe Dobra'},
+            {code: 'ANG', name: 'Netherlands Antillean Guilder'},
+            {code: 'XCD', name: 'East Caribbean Dollar'},
+            {code: 'BBD', name: 'Barbadian Dollar'},
+            {code: 'BZD', name: 'Belize Dollar'},
+            {code: 'BND', name: 'Brunei Dollar'},
+            {code: 'FJD', name: 'Fijian Dollar'},
+            {code: 'SBD', name: 'Solomon Islands Dollar'},
+            {code: 'TOP', name: 'Tongan Paʻanga'},
+            {code: 'VUV', name: 'Vanuatu Vatu'},
+            {code: 'MOP', name: 'Macanese Pataca'},
+            {code: 'PGK', name: 'Papua New Guinean Kina'},
+            {code: 'LAK', name: 'Lao Kip'},
+            {code: 'MMK', name: 'Myanmar Kyat'},
+            {code: 'NPR', name: 'Nepalese Rupee'},
+            {code: 'BTN', name: 'Bhutanese Ngultrum'},
+            {code: 'MNT', name: 'Mongolian Tögrög'},
+            {code: 'KHR', name: 'Cambodian Riel'},
+            {code: 'LKR', name: 'Sri Lankan Rupee'},
+            {code: 'MKD', name: 'Macedonian Denar'},
+            {code: 'ALL', name: 'Albanian Lek'},
+            {code: 'RSD', name: 'Serbian Dinar'},
+            {code: 'BAM', name: 'Bosnia-Herzegovina Convertible Mark'},
+            {code: 'MDL', name: 'Moldovan Leu'},
+            {code: 'GIP', name: 'Gibraltar Pound'},
+            {code: 'ISK', name: 'Icelandic Króna'},
+            {code: 'FKP', name: 'Falkland Islands Pound'},
+            {code: 'SHP', name: 'Saint Helena Pound'},
+            {code: 'GGP', name: 'Guernsey Pound'},
+            {code: 'JEP', name: 'Jersey Pound'},
+            {code: 'IMP', name: 'Isle of Man Pound'},
+            {code: 'CUC', name: 'Cuban Convertible Peso'},
+            {code: 'CUP', name: 'Cuban Peso'},
+            {code: 'VED', name: 'Venezuelan Bolívar Digital'},
+            {code: 'SRD', name: 'Surinamese Dollar'},
+            {code: 'GYD', name: 'Guyanese Dollar'},
+            {code: 'BWP', name: 'Botswana Pula'},
+            {code: 'SZL', name: 'Swazi Lilangeni'},
+            {code: 'LSL', name: 'Lesotho Loti'},
+            {code: 'AOA', name: 'Angolan Kwanza'},
+            {code: 'BMD', name: 'Bermudan Dollar'},
+            {code: 'CVE', name: 'Cape Verdean Escudo'},
+            {code: 'AWG', name: 'Aruban Florin'},
+            {code: 'BSD', name: 'Bahamian Dollar'},
+            {code: 'KYD', name: 'Cayman Islands Dollar'},
+            {code: 'DOP', name: 'Dominican Peso'},
+            {code: 'GTQ', name: 'Guatemalan Quetzal'},
+            {code: 'HNL', name: 'Honduran Lempira'},
+            {code: 'NIO', name: 'Nicaraguan Córdoba'},
+            {code: 'PAB', name: 'Panamanian Balboa'},
+            {code: 'PYG', name: 'Paraguayan Guarani'},
+            {code: 'TTD', name: 'Trinidad & Tobago Dollar'},
+            {code: 'XPF', name: 'CFP Franc'},
+            {code: 'SPL', name: 'Seborga Luigino'}
+        ];
+
+        const currencySelect = $('#currency');
+        currencies.forEach(currency => {
+            currencySelect.append(`<option value="${currency.code}">${currency.code} - ${currency.name}</option>`);
+        });
+        currencySelect.select2();
+
+        // Sector to project type mappings
+        const sectorProjectTypes = {
+            commercial: ["Retail trade", "E-commerce", "Import/export", "Restaurants & cafes", "Other"],
+            industrial: ["Plastic manufacturing", "Electronics assembly", "Building materials", "Handicrafts & furniture", "Other"],
+            service: ["Consulting", "Education", "Software applications", "Logistics", "Maintenance", "Training centers", "Other"],
+            agricultural: ["Crop production", "Livestock", "Fish farms", "Agricultural products processing", "Other"],
+            technical: ["App development", "Software solutions", "Artificial intelligence", "Cybersecurity", "Data analysis", "Other"],
+            health: ["Clinics", "Hospitals", "Pharmacies", "Pharmaceutical companies", "Medical devices", "Other"],
+            realestate: ["Real estate development", "Contracting", "Facility management", "Architectural design", "Other"],
+            tourism: ["Hotels", "Resorts", "Travel agencies", "Event organizers", "Other"],
+            financial: ["Financial services", "Investment companies", "Funding platforms", "Asset management", "Other"],
+            energy: ["Solar energy", "Wind energy", "Sustainability solutions", "Waste treatment", "Other"],
+            educational: ["Schools", "Universities", "Training centers", "E-learning platforms", "Other"],
+            media: ["Media production", "Broadcasting platforms", "Event organization", "Publishing houses", "Other"],
+            government: ["Community initiatives", "Charitable organizations", "Other"],
+            other: []
+        };
+
+        // Dexie.js + FeasibilityDB (IndexedDB wrapper)
+        // NOTE: script tags added at end of body for performance. Ensure FeasibilityDB is available before storage calls.
+
+        // Restore persisted language
+        (async function(){
+          try {
+              const savedLang = await (window.FeasibilityDB ? window.FeasibilityDB.getString('preferredLanguage', null) : null);
+              if (savedLang) {
+                  $('#language-selector').val(savedLang).trigger('change.select2');
+              }
+          } catch (_) {}
+        })();
+
+        // Persist language changes
+        $('#language-selector').on('change', function() {
+            const val = $(this).val();
+            // [DOC] Bug fix: wrap localStorage in try/catch to avoid unhandled quota/security errors.
+            // Why: Prevents silent failures when storage is unavailable. Scope: this file only.
+            (async function(){ try { await window.FeasibilityDB.setString('preferredLanguage', val); } catch (_) { try { alert('Unable to save language preference.'); } catch(_) {} } })();
+        });
+
+        // Handle sector selection
+        $('#sector').on('change', function() {
+            const sector = $(this).val();
+            const projectTypeSelect = $('#projectType');
+            
+            // Show/hide other sector fields
+            $('#otherSectorFields').toggleClass('hidden', sector !== 'other');
+            
+            // Clear and repopulate project types
+            projectTypeSelect.empty().append('<option value="">Select project type</option>');
+            
+            if (sector && sector !== 'other') {
+                const types = sectorProjectTypes[sector];
+                types.forEach(type => {
+                    projectTypeSelect.append(`<option value="${type.toLowerCase().replace(/ /g, '_')}">${type}</option>`);
+                });
+            }
+        });
+
+        // Handle project type selection (show other field if "Other" is selected)
+        $('#projectType').on('change', function() {
+            const projectType = $(this).val();
+            $('#otherProjectTypeField').toggleClass('hidden', projectType !== 'other');
+        });
+
+        // Handle funding method changes
+        $('#fundingMethod').on('change', function() {
+            const method = $(this).val();
+            
+            // Reset and enable all fields first
+            $('#personalContribution, #loanAmount, #interestValue, #loanMonths').val('').removeClass('disabled').prop('disabled', false);
+            
+            // Disable fields based on selection
+            if (method === 'personal') {
+                $('#loanAmount, #interestValue, #loanMonths').val('').addClass('disabled').prop('disabled', true);
+            } else if (method === 'loan') {
+                $('#personalContribution').val('').addClass('disabled').prop('disabled', true);
+            }
+            
+            // Update total capital
+            updateTotalCapital();
+        });
+
+        // Funding calculation
+        $('#personalContribution, #loanAmount, #interestValue').on('input', updateTotalCapital);
+        
+        function updateTotalCapital() {
+            const personal = parseFloat($('#personalContribution').val()) || 0;
+            const loan = parseFloat($('#loanAmount').val()) || 0;
+            // Total capital here is initial funding (personal + loan)
+            const total = personal + loan;
+            $('#totalCapital').val(Number.isFinite(total) ? String(total) : '');
+        }
+
+        // Character count for description
+        $('#projectDescription').on('input', function() {
+            const remaining = 500 - $(this).val().length;
+            $('#charCount').text(`${remaining} remaining`);
+        });
+
+        // Location selection via map
+        $('#locationText').on('click', function() {
+            window.open('https://www.google.com/maps', '_blank');
+            // Note: In a real implementation, you would integrate a map picker directly
+            // This is a simplified version that opens Google Maps in a new tab
+        });
+
+        // Form validation and submission
+        $('#feasibilityForm').on('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate sector and project type
+            if ($('#sector').val() === 'other' && ($('#otherSector').val() === "" || $('#otherProjectType').val() === "")) {
+                alert("Please specify both sector and project type when selecting 'Other'");
+                return;
+            }
+            
+            // Validate project type "Other"
+            if ($('#projectType').val() === 'other' && $('#specifiedProjectType').val() === "") {
+                alert("Please specify the project type when selecting 'Other'");
+                return;
+            }
+            
+            // Validate funding method
+            const fundingMethod = $('#fundingMethod').val();
+            if (fundingMethod === 'personal' && ($('#personalContribution').val() === "" || $('#personalContribution').val() === "0")) {
+                alert("Please enter personal contribution amount");
+                return;
+            }
+            
+            if (fundingMethod === 'loan' && ($('#loanAmount').val() === "" || $('#loanAmount').val() === "0")) {
+                alert("Please enter loan amount");
+                return;
+            }
+            
+            if (fundingMethod === 'mixed' && (($('#personalContribution').val() === "" || $('#personalContribution').val() === "0") || 
+                ($('#loanAmount').val() === "" || $('#loanAmount').val() === "0"))) {
+                alert("Please enter both personal contribution and loan amounts");
+                return;
+            }
+            
+            // Validate loan months for loan or mixed funding
+            if ((fundingMethod === 'loan' || fundingMethod === 'mixed') && 
+                ($('#loanMonths').val() === "" || $('#loanMonths').val() === "0")) {
+                alert("Please enter the number of months to repay the loan");
+                return;
+            }
+            
+            // Determine which page to redirect to based on study type and sector
+            const studyType = $('#studyType').val();
+            const sector = $('#sector').val();
+            
+            let redirectUrl = '';
+            
+            if (studyType === 'preliminary') {
+                switch(sector) {
+                    case 'commercial':
+                        redirectUrl = 'pre-feasibility/Pre-Commercial sector.html';
+                        break;
+                    case 'industrial':
+                        redirectUrl = 'pre-feasibility/Pre-Industrial sector.html';
+                        break;
+                    case 'service':
+                        redirectUrl = 'pre-feasibility/Pre-Service sector.html';
+                        break;
+                    case 'agricultural':
+                        redirectUrl = 'pre-feasibility/Pre-Agricultural sector.html';
+                        break;
+                    case 'technical':
+                        redirectUrl = 'pre-feasibility/Pre-Software and Technology Sector.html';
+                        break;
+                    case 'health':
+                        redirectUrl = 'pre-feasibility/Pre-Healthcare sector.html';
+                        break;
+                    case 'realestate':
+                        redirectUrl = 'pre-feasibility/Pre-Real Estate and Construction Sector.html';
+                        break;
+                    case 'tourism':
+                        redirectUrl = 'pre-feasibility/Pre-Tourism Sector.html';
+                        break;
+                    case 'financial':
+                        redirectUrl = 'pre-feasibility/Pre-Financial Sector.html';
+                        break;
+                    case 'energy':
+                        redirectUrl = 'pre-feasibility/Pre-Energy sector.html';
+                        break;
+                    case 'educational':
+                        redirectUrl = 'pre-feasibility/Pre-Education sector.html';
+                        break;
+                    case 'media':
+                        redirectUrl = 'pre-feasibility/Pre-Media sector.html';
+                        break;
+                    case 'government':
+                        redirectUrl = 'pre-feasibility/Pre-Non-profit Sector.html';
+                        break;
+                    case 'other':
+                        redirectUrl = 'pre-feasibility/Pre-Other Sectors.html';
+                        break;
+                }
+            } else if (studyType === 'brief') {
+                redirectUrl = 'Brief-feasibility/Brief-feasibility Study.html';
+            } else if (studyType === 'comprehensive') {
+                redirectUrl = 'Comprehensive-feasibility/Market Feasibility.html';
+            }
+            
+            // Ensure computed totalCapital and projectTaxRate are included
+            updateTotalCapital();
+            const formEntries = new FormData(this).entries();
+            const formData = Object.fromEntries(formEntries);
+            // [DATA KEY UNIFICATION FIX]
+            // Bug fixed: mixed usage of 'sector' vs 'projectSector' caused AI/key retrieval mismatches.
+            // Why: Downstream logic (ai-report.js) relies on canonical keys.
+            // Scope: This change is exclusive to this file.
+            formData.projectSector = $('#sector').val() || '';
+            // Ensure canonical keys exist explicitly
+            formData.projectName = $('#projectName').val() || formData.projectName || '';
+            formData.projectType = $('#projectType').val() || formData.projectType || '';
+            // Remove legacy alias to avoid ambiguity in saved JSON blob
+            if (Object.prototype.hasOwnProperty.call(formData, 'sector')) delete formData.sector;
+            // Duplicate tax rate under a consistent key used by financial logic
+            if (formData.taxRate !== undefined) {
+                formData.projectTaxRate = formData.taxRate;
+            }
+            // Removed dependency on rawAnswersStore: save directly to localStorage
+
+            // Always persist a complete snapshot under startFeasibilityForm (canonical)
+            (async function(){ try { await window.FeasibilityDB.setJSON('startFeasibilityForm', formData); } catch (_) { try { alert('Saving form data failed.'); } catch(_) {} } })();
+
+            // [DATA KEY UNIFICATION FIX] Persist canonical keys individually for synchronized retrieval
+            (async function(){ try { await window.FeasibilityDB.setString('projectName', $('#projectName').val() || ''); } catch(_) {} })();
+            (async function(){ try { await window.FeasibilityDB.setString('projectType', $('#projectType').val() || ''); } catch(_) {} })();
+            (async function(){ try { await window.FeasibilityDB.setString('projectSector', $('#sector').val() || ''); } catch(_) {} })();
+            // Proactively remove legacy alias to prevent consumer confusion
+            (async function(){ try { await window.FeasibilityDB.remove('sector'); } catch(_) {} })();
+
+            // Mirror projectName inside userInfo for unified access (non-breaking)
+            (async function(){
+                try {
+                    const pn = ($('#projectName').val() || '').trim();
+                    let ui = await (window.FeasibilityDB ? window.FeasibilityDB.getJSON('userInfo', {}) : {});
+                    ui.projectName = pn;
+                    await window.FeasibilityDB.setJSON('userInfo', ui);
+                } catch(_) {}
+            })();
+
+            // Notify other opened pages (including Pre-feasibility) about updates immediately
+            (async function(){
+                try {
+                    const dispatch = function(key, newValue, oldValue){
+                        try { window.dispatchEvent(new StorageEvent('storage', { key: key, newValue: newValue, oldValue: oldValue, storageArea: null, url: location.href })); } catch(_) {}
+                    };
+                    let prevProjectName = null, prevStartForm = null, prevProjectType = null, prevProjectSector = null;
+                    try { prevProjectName = await window.FeasibilityDB.getString('projectName', null); } catch(_) {}
+                    try { prevStartForm = JSON.stringify(await window.FeasibilityDB.getJSON('startFeasibilityForm', null)); } catch(_) {}
+                    try { prevProjectType = await window.FeasibilityDB.getString('projectType', null); } catch(_) {}
+                    try { prevProjectSector = await window.FeasibilityDB.getString('projectSector', null); } catch(_) {}
+                    dispatch('projectName', await window.FeasibilityDB.getString('projectName', null), prevProjectName);
+                    dispatch('startFeasibilityForm', JSON.stringify(await window.FeasibilityDB.getJSON('startFeasibilityForm', null)), prevStartForm);
+                    // Also dispatch other changed canonical keys so that all pages can auto-sync
+                    dispatch('projectType', await window.FeasibilityDB.getString('projectType', null), prevProjectType);
+                    dispatch('projectSector', await window.FeasibilityDB.getString('projectSector', null), prevProjectSector);
+                } catch(_) {}
+            })();
+
+            // [DATA KEY UNIFICATION FIX] Integration check: print canonical keys and surveyData preview
+            (async function(){
+                try {
+                    const surveyData = await (window.FeasibilityDB ? window.FeasibilityDB.getJSON('surveyData', []) : []);
+                    console.log('INTEGRATION CHECK', {
+                        projectName: await window.FeasibilityDB.getString('projectName', ''),
+                        projectType: await window.FeasibilityDB.getString('projectType', ''),
+                        projectSector: await window.FeasibilityDB.getString('projectSector', ''),
+                        userName: await window.FeasibilityDB.getString('userName', ''),
+                        userEmail: await window.FeasibilityDB.getString('userEmail', ''),
+                        surveyData: Array.isArray(surveyData) ? surveyData : []
+                    });
+                } catch(_) {}
+            })();
+
+            // If all validations pass, redirect to next page
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            } else {
+                alert("Please select both study type and sector");
+            }
+        });
+    });
+</script>
+    <!-- Dexie.js + FeasibilityDB (IndexedDB wrapper) -->
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js?v=20251030"></script>
+    <script src="feasibility-db.js?v=20251030"></script>
+</body>
+</html>

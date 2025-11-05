@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation Feasibility Analysis</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .dynamic-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dynamic-field input {
+            flex: 1;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+        .confidence-level {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .confidence-level input[type="radio"] {
+            display: none;
+        }
+        .confidence-level label {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .confidence-level input[type="radio"]:checked + label {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 2fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .delay-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .delay-input select, .delay-input input {
+            flex: 1;
+        }
+        .conditional-field {
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Implementation Feasibility Analysis</h1>
+            <p>This section focuses on evaluating the feasibility of your project from a temporal and resource management perspective. The questionnaire examines key elements, including project timelines, resource allocation, potential risks, and mitigation strategies. Your responses will provide the basis for establishing a realistic and achievable schedule, identifying critical paths, and prioritising risks. The insights generated will also guide the development of effective monitoring and control mechanisms, ensuring that the project progresses efficiently and remains aligned with its strategic objectives.</p>
+
+            <div class="section-title">Project Timeline and Activities</div>
+            
+            <div class="form-group">
+                <label>Please specify the main project phases, estimated start and end dates for each phase, identifying the critical path and dependencies between activities (which activities depend on the completion of others):</label>
+                <div id="project-phases-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Phase Name" class="phase-name">
+                        <input type="date" class="phase-start">
+                        <input type="date" class="phase-end">
+                        <input type="text" placeholder="Dependencies" class="phase-dependencies">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addProjectPhase()">+ Add Phase</button>
+            </div>
+
+            <div class="form-group">
+                <label>Is the critical path identified? (The critical path is the sequence of activities that determines the shortest possible duration for the project)</label>
+                <div class="radio-group">
+                    <input type="radio" id="critical-path-yes" name="critical-path" value="yes">
+                    <label for="critical-path-yes">Yes</label>
+                    <input type="radio" id="critical-path-no" name="critical-path" value="no">
+                    <label for="critical-path-no">No</label>
+                </div>
+                <div id="critical-path-details" style="display: none;">
+                    <label for="critical-path-description">Please describe the critical path:</label>
+                    <textarea id="critical-path-description"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Resources Availability and Associated Risks</div>
+            
+            <div class="form-group">
+                <label>How do you assess the availability of essential project resources (such as raw materials, supplies, and funding) on schedule? What are the main risks that may affect their provision or the project timeline?</label>
+                <textarea id="resources-assessment"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Rate your team's experience in managing similar projects (1 = Low, 5 = High):</label>
+                <select id="team-experience">
+                    <option value="">Select rating</option>
+                    <option value="1">1 - Low</option>
+                    <option value="2">2</option>
+                    <option value="3">3 - Medium</option>
+                    <option value="4">4</option>
+                    <option value="5">5 - High</option>
+                </select>
+            </div>
+
+            <div class="section-title">Risk Assessment and Management</div>
+            
+            <div class="form-group">
+                <label>Please identify the main risks that may affect the project timeline (such as funding delays, supplier unavailability, or technical problems), assess each risk in terms of its probability and potential impact, and specify a mitigation or response plan for each risk:</label>
+                <div id="risk-list">
+                    <div class="risk-matrix">
+                        <input type="text" placeholder="Main Risk" class="risk-name">
+                        <select class="risk-probability">
+                            <option value="">Probability</option>
+                            <option value="1">1 (Very Low)</option>
+                            <option value="2">2 (Low)</option>
+                            <option value="3">3 (Medium)</option>
+                            <option value="4">4 (High)</option>
+                            <option value="5">5 (Very High)</option>
+                        </select>
+                        <select class="risk-impact">
+                            <option value="">Impact</option>
+                            <option value="1">1 (Minimal)</option>
+                            <option value="2">2 (Minor)</option>
+                            <option value="3">3 (Moderate)</option>
+                            <option value="4">4 (Major)</option>
+                            <option value="5">5 (Catastrophic)</option>
+                        </select>
+                        <input type="text" placeholder="Risk Level" class="risk-level" readonly>
+                        <input type="text" placeholder="Mitigation Plan" class="risk-mitigation">
+                        <button class="remove-btn" onclick="removeRiskField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addRiskField()">+ Add Risk</button>
+            </div>
+
+            <div class="form-group">
+                <label>What is the maximum delay the entire project can tolerate before it becomes unfeasible?</label>
+                <div class="delay-input">
+                    <select id="delay-unit">
+                        <option value="days">Days</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="months">Months</option>
+                    </select>
+                    <input type="number" id="max-tolerable-delay" placeholder="Enter value">
+                </div>
+            </div>
+
+            <div class="section-title">Monitoring and Emergency Response</div>
+            
+            <div class="form-group">
+                <label>What monitoring mechanisms will you use to ensure the project progresses according to the timeline? Do you have a clear emergency plan to deal with any unexpected delays or crises?</label>
+                <textarea id="monitoring-mechanisms"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Monitoring Frequency:</label>
+                <div class="radio-group">
+                    <input type="radio" id="freq-daily" name="frequency" value="daily">
+                    <label for="freq-daily">Daily</label>
+                    <input type="radio" id="freq-weekly" name="frequency" value="weekly">
+                    <label for="freq-weekly">Weekly</label>
+                    <input type="radio" id="freq-monthly" name="frequency" value="monthly">
+                    <label for="freq-monthly">Monthly</label>
+                    <input type="radio" id="freq-quarterly" name="frequency" value="quarterly">
+                    <label for="freq-quarterly">Quarterly</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Responsible for Monitoring:</label>
+                <div class="radio-group">
+                    <input type="radio" id="resp-manager" name="responsible" value="project-manager">
+                    <label for="resp-manager">Project Manager</label>
+                    <input type="radio" id="resp-team" name="responsible" value="risk-team">
+                    <label for="resp-team">Risk Team</label>
+                    <input type="radio" id="resp-management" name="responsible" value="top-management">
+                    <label for="resp-management">Top Management</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Emergency Response Mechanism:</label>
+                <p>(e.g., crisis management team, crisis communication plan, clear protocols)</p>
+                <textarea id="emergency-response"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Confidence level in adhering to the schedule (1 = Low, 10 = High):</label>
+                <div class="confidence-level">
+                    <input type="radio" id="confidence-1" name="confidence-level" value="1">
+                    <label for="confidence-1">1</label>
+                    <input type="radio" id="confidence-2" name="confidence-level" value="2">
+                    <label for="confidence-2">2</label>
+                    <input type="radio" id="confidence-3" name="confidence-level" value="3">
+                    <label for="confidence-3">3</label>
+                    <input type="radio" id="confidence-4" name="confidence-level" value="4">
+                    <label for="confidence-4">4</label>
+                    <input type="radio" id="confidence-5" name="confidence-level" value="5">
+                    <label for="confidence-5">5</label>
+                    <input type="radio" id="confidence-6" name="confidence-level" value="6">
+                    <label for="confidence-6">6</label>
+                    <input type="radio" id="confidence-7" name="confidence-level" value="7">
+                    <label for="confidence-7">7</label>
+                    <input type="radio" id="confidence-8" name="confidence-level" value="8">
+                    <label for="confidence-8">8</label>
+                    <input type="radio" id="confidence-9" name="confidence-level" value="9">
+                    <label for="confidence-9">9</label>
+                    <input type="radio" id="confidence-10" name="confidence-level" value="10">
+                    <label for="confidence-10">10</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="additional-notes">If there are any additional notes you would like to mention:</label>
+                <textarea id="additional-notes"></textarea>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../Brief-feasibility/Com-Economic and Financial Feasibility.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            const criticalPathRadios = document.querySelectorAll('input[name="critical-path"]');
+            const criticalPathContainer = document.getElementById('critical-path-details');
+            
+            criticalPathRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    criticalPathContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Setup risk level calculation
+            setupRiskLevelCalculation();
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Dynamic field functions
+        function addProjectPhase() {
+            const phasesList = document.getElementById('project-phases-list');
+            const phaseCount = document.querySelectorAll('.dynamic-field').length;
+            
+            if (phaseCount >= 20) {
+                alert('You can add up to 20 phases only.');
+                return;
+            }
+            
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Phase ${phaseCount + 1}" class="phase-name">
+                <input type="date" class="phase-start">
+                <input type="date" class="phase-end">
+                <input type="text" placeholder="Dependencies" class="phase-dependencies">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            phasesList.appendChild(newField);
+            
+            // Add event listeners to new fields
+            const inputs = newField.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                input.addEventListener('keyup', updateOutput);
+            });
+        }
+
+        function addRiskField() {
+            const riskList = document.getElementById('risk-list');
+            const riskCount = document.querySelectorAll('.risk-matrix').length;
+            
+            if (riskCount >= 20) {
+                alert('You can add up to 20 risks only.');
+                return;
+            }
+            
+            const newField = document.createElement('div');
+            newField.className = 'risk-matrix';
+            newField.innerHTML = `
+                <input type="text" placeholder="Potential Risk ${riskCount + 1}" class="risk-name">
+                <select class="risk-probability">
+                    <option value="">Probability</option>
+                    <option value="1">1 (Very Low)</option>
+                    <option value="2">2 (Low)</option>
+                    <option value="3">3 (Medium)</option>
+                    <option value="4">4 (High)</option>
+                    <option value="5">5 (Very High)</option>
+                </select>
+                <select class="risk-impact">
+                    <option value="">Impact</option>
+                    <option value="1">1 (Minimal)</option>
+                    <option value="2">2 (Minor)</option>
+                    <option value="3">3 (Moderate)</option>
+                    <option value="4">4 (Major)</option>
+                    <option value="5">5 (Catastrophic)</option>
+                </select>
+                <input type="text" placeholder="Risk Level" class="risk-level" readonly>
+                <input type="text" placeholder="Mitigation Plan" class="risk-mitigation">
+                <button class="remove-btn" onclick="removeRiskField(this)">×</button>
+            `;
+            riskList.appendChild(newField);
+            
+            // Setup event listeners for new risk assessment
+            const probability = newField.querySelector('.risk-probability');
+            const impact = newField.querySelector('.risk-impact');
+            const riskLevel = newField.querySelector('.risk-level');
+            
+            function calculateRiskLevel() {
+                if (probability.value && impact.value) {
+                    riskLevel.value = parseInt(probability.value) * parseInt(impact.value);
+                } else {
+                    riskLevel.value = '';
+                }
+                updateOutput();
+            }
+            
+            probability.addEventListener('change', calculateRiskLevel);
+            impact.addEventListener('change', calculateRiskLevel);
+            
+            // Add event listeners to other fields
+            const inputs = newField.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+        }
+
+        function setupRiskLevelCalculation() {
+            const riskAssessments = document.querySelectorAll('.risk-matrix');
+            
+            riskAssessments.forEach(assessment => {
+                const probability = assessment.querySelector('.risk-probability');
+                const impact = assessment.querySelector('.risk-impact');
+                const riskLevel = assessment.querySelector('.risk-level');
+                
+                function calculateRiskLevel() {
+                    if (probability.value && impact.value) {
+                        riskLevel.value = parseInt(probability.value) * parseInt(impact.value);
+                    } else {
+                        riskLevel.value = '';
+                    }
+                    updateOutput();
+                }
+                
+                probability.addEventListener('change', calculateRiskLevel);
+                impact.addEventListener('change', calculateRiskLevel);
+            });
+        }
+
+        function removeField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        function removeRiskField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Project Timeline
+            const phaseNames = document.querySelectorAll('.phase-name');
+            const phaseStarts = document.querySelectorAll('.phase-start');
+            const phaseEnds = document.querySelectorAll('.phase-end');
+            const phaseDependencies = document.querySelectorAll('.phase-dependencies');
+            
+            if (phaseNames.length > 0 && phaseNames[0].value) {
+                let phasesHTML = '';
+                for (let i = 0; i < phaseNames.length; i++) {
+                    if (phaseNames[i].value) {
+                        phasesHTML += `<li>${phaseNames[i].value}: ${phaseStarts[i].value || 'N/A'} to ${phaseEnds[i].value || 'N/A'} - Dependencies: ${phaseDependencies[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (phasesHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Project Phases:</h4>
+                            <ul>${phasesHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            const selectedCriticalPath = document.querySelector('input[name="critical-path"]:checked');
+            if (selectedCriticalPath) {
+                addOutputItem('Critical Path Identified', selectedCriticalPath.id.replace('critical-path-', ''));
+                if (selectedCriticalPath.value === 'yes') {
+                    addOutputItem('Critical Path Description', document.getElementById('critical-path-description').value);
+                }
+            }
+            
+            // Resources Assessment
+            addOutputItem('Resources Assessment', document.getElementById('resources-assessment').value);
+            addOutputItem('Team Experience', document.getElementById('team-experience').value ? document.getElementById('team-experience').value + '/5' : '');
+            
+            // Risk Assessment
+            const riskNames = document.querySelectorAll('.risk-name');
+            const riskProbabilities = document.querySelectorAll('.risk-probability');
+            const riskImpacts = document.querySelectorAll('.risk-impact');
+            const riskLevels = document.querySelectorAll('.risk-level');
+            const riskMitigations = document.querySelectorAll('.risk-mitigation');
+            
+            if (riskNames.length > 0 && riskNames[0].value) {
+                let risksHTML = '';
+                for (let i = 0; i < riskNames.length; i++) {
+                    if (riskNames[i].value) {
+                        risksHTML += `<li>${riskNames[i].value}: Probability ${riskProbabilities[i].value || 'N/A'}, Impact ${riskImpacts[i].value || 'N/A'}, Risk Level ${riskLevels[i].value || 'N/A'} - Mitigation: ${riskMitigations[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (risksHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Risk Assessment:</h4>
+                            <ul>${risksHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            const maxDelay = document.getElementById('max-tolerable-delay').value;
+            const delayUnit = document.getElementById('delay-unit').value;
+            if (maxDelay) {
+                addOutputItem('Maximum Tolerable Delay', `${maxDelay} ${delayUnit}`);
+            }
+            
+            // Monitoring and Emergency Response
+            addOutputItem('Monitoring Mechanisms', document.getElementById('monitoring-mechanisms').value);
+            
+            const frequency = document.querySelector('input[name="frequency"]:checked');
+            if (frequency) {
+                addOutputItem('Monitoring Frequency', frequency.value);
+            }
+            
+            const responsible = document.querySelector('input[name="responsible"]:checked');
+            if (responsible) {
+                addOutputItem('Responsible for Monitoring', responsible.value);
+            }
+            
+            addOutputItem('Emergency Response Mechanism', document.getElementById('emergency-response').value);
+            
+            const selectedConfidence = document.querySelector('input[name="confidence-level"]:checked');
+            if (selectedConfidence) {
+                addOutputItem('Confidence Level', selectedConfidence.value + '/10');
+            }
+            
+            addOutputItem('Additional Notes', document.getElementById('additional-notes').value);
+
+            // Update the output div
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            outputDiv.innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>

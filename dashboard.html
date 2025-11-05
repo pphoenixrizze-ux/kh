@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PhoenixRizze</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=20251030">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js?v=20251030" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js?v=20251030"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #2196F3;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --danger-color: #F44336;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .modal-header h2 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Utility */
+        .is-hidden { display: none !important; }
+        .logout-link { color: var(--danger-color); }
+        
+        /* Hide dashboard content initially */
+        .dashboard-content {
+            display: none;
+        }
+        
+        /* Main Layout */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+        
+        .dashboard-main {
+            flex: 2;
+            background: #f4f4f4;
+            overflow-y: auto;
+        }
+        
+        .markets-sidebar {
+            flex: 1;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            border-left: 1px solid var(--medium-gray);
+        }
+        
+        /* Header/Navbar - Consistent with other pages */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 3px 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-size: 0.9em;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .dashboard-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .cta {
+            background-color: var(--secondary-color);
+            color: var(--white) !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        #languageSwitcher {
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        
+        /* Dashboard Specific Styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 5%;
+        }
+        
+        .welcome-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .welcome-message h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .welcome-message p {
+            color: var(--dark-gray);
+            margin: 10px 0 0;
+            opacity: 0.8;
+        }
+        
+        .new-study-btn {
+            background-color: var(--accent-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .new-study-btn:hover {
+            background-color: #1976D2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(25, 118, 210, 0.2);
+        }
+        
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--secondary-color);
+        }
+        
+        .stat-card .stat-description {
+            color: var(--dark-gray);
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .studies-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h2 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        
+        .view-all {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .view-all:hover {
+            text-decoration: underline;
+        }
+        
+        .studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .study-card {
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .study-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .study-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .study-card .study-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .study-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .status-in-progress {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .status-draft {
+            background-color: rgba(158, 158, 158, 0.1);
+            color: var(--dark-gray);
+        }
+        
+        .study-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--medium-gray);
+        }
+        
+        .study-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .study-btn:hover {
+            text-decoration: underline;
+        }
+        
+        .study-btn.delete {
+            color: var(--danger-color);
+        }
+        
+        /* Quick Actions Section */
+        .quick-actions {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .action-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--light-gray);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        
+        .action-card:hover {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        .action-card i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .action-card span {
+            font-weight: 500;
+        }
+        
+        /* Markets Sidebar Styles */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            background-color: var(--light-gray);
+            transition: background-color 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            background-color: var(--medium-gray);
+        }
+        
+        .tab.active {
+            background-color: var(--white);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .item {
+            background: var(--white);
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 0.85rem;
+        }
+        
+        .item:hover {
+            transform: translateX(3px);
+        }
+        
+        .item h4 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+        
+        .item span {
+            display: block;
+            color: var(--dark-gray);
+            font-size: 0.8rem;
+        }
+        
+        .item .price-up {
+            color: var(--success-color);
+        }
+        
+        .item .price-down {
+            color: var(--danger-color);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            padding: 10px;
+            background: #ffeeee;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+        }
+        
+        .metal-box {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 12px;
+        }
+        
+        .metal-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .metal-chart {
+            height: 60px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .stock-change {
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        
+        /* Footer - Consistent with other pages */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 5%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .markets-sidebar {
+                max-width: 100%;
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .studies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .logout-options {
+                flex-direction: column;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        /* Accessibility helpers */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 1px, 1px);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Charts */
+        .chart-container {
+            height: 60px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- User Information Modal -->
+    <div id="userInfoModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="userInfoTitle" aria-describedby="userInfoDesc">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="userInfoTitle">Welcome to Your Dashboard</h2>
+                <p id="userInfoDesc">Please provide some information to continue</p>
+            </div>
+            <form id="userInfoForm">
+                <div class="form-group">
+                    <label for="userName">Full Name</label>
+                    <input type="text" id="userName" name="userName" required placeholder="Enter your full name" autocomplete="name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" name="userEmail" required placeholder="Enter your email" autocomplete="email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userGender">Gender</label>
+                    <select id="userGender" name="userGender" required autocomplete="sex">
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userAge">Age</label>
+                    <input type="number" id="userAge" name="userAge" required min="18" max="100" placeholder="Enter your age" autocomplete="off" inputmode="numeric">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userCountry">Country</label>
+                    <input type="text" id="userCountry" name="userCountry" required placeholder="Enter your country" autocomplete="country-name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userCity">City</label>
+                    <input type="text" id="userCity" name="userCity" required placeholder="Enter your city" autocomplete="address-level2">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Continue to Dashboard</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="dashboard-content">
+        <header>
+            <nav class="navbar">
+                <div class="logo"><img src="images/LOGO PH.png?v=20251030" alt="PhoenixRizze Logo"></div>
+                <ul class="nav-links">
+                    <li>
+                        <div class="user-info">
+                            <span class="dashboard-label">Dashboard</span>
+                            <span class="user-name" id="header-username">Khaled Anabousi</span>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="languageSwitcher" class="sr-only">Select language</label>
+                        <select id="languageSwitcher" name="languageSwitcher" title="Select language" autocomplete="language">
+                            <option value="en" selected>English</option>
+                            <option value="ar">العربية</option>
+                            <option value="fr">Français</option>
+                            <option value="es">Español</option>
+                            <option value="zh">简体中文</option>
+                        </select>
+                    </li>
+                    <li><a href="#" id="logoutLink" class="logout-link">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="main-container">
+            <div class="dashboard-main">
+                <div class="dashboard-container">
+                    <!-- Welcome Section -->
+                    <section class="welcome-section animated-card">
+                        <div class="welcome-message">
+                            <h1>Welcome back, <span id="username">Khaled Anabousi</span>!</h1>
+                            <p>Here's what's happening with your feasibility studies today.</p>
+                        </div>
+                        <button id="newStudyBtn" class="new-study-btn">
+                            <i class="fas fa-plus"></i> New Feasibility Study
+                        </button>
+                    </section>
+                    
+                    <!-- Stats Section -->
+                    <section class="stats-section">
+                        <div class="stat-card animated-card delay-1">
+                            <h3><i class="fas fa-file-alt"></i> Total Studies</h3>
+                            <div class="stat-value">14</div>
+                            <p class="stat-description">Across all categories</p>
+                        </div>
+                        
+                        <div class="stat-card animated-card delay-2">
+                            <h3><i class="fas fa-check-circle"></i> Completed</h3>
+                            <div class="stat-value">8</div>
+                            <p class="stat-description">Ready for implementation</p>
+                        </div>
+                        
+                        <div class="stat-card animated-card delay-3">
+                            <h3><i class="fas fa-spinner"></i> In Progress</h3>
+                            <div class="stat-value">4</div>
+                            <p class="stat-description">Being analyzed</p>
+                        </div>
+                        
+                        <div class="stat-card animated-card delay-4">
+                            <h3><i class="fas fa-save"></i> Drafts</h3>
+                            <div class="stat-value">2</div>
+                            <p class="stat-description">Not submitted yet</p>
+                        </div>
+                    </section>
+                    
+                    <!-- Recent Studies Section -->
+                    <section class="studies-section">
+                        <div class="section-header">
+                            <h2>Recent Studies</h2>
+                            <a href="all-studies.html" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                        
+                        <div class="studies-grid">
+                            <!-- Study Card 1 -->
+                            <div class="study-card">
+                                <h3>Restaurant Business in Aqaba</h3>
+                                <div class="study-meta">
+                                    <span><i class="far fa-calendar"></i> Oct 15, 2023</span>
+                                    <span class="study-status status-completed">Completed</span>
+                                </div>
+                                <p>Feasibility study for a new seafood restaurant in Aqaba tourist area.</p>
+                                <div class="study-actions">
+                                    <button class="study-btn"><i class="fas fa-eye"></i> View</button>
+                                    <button class="study-btn"><i class="fas fa-download"></i> PDF</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Study Card 2 -->
+                            <div class="study-card">
+                                <h3>Solar Energy Farm</h3>
+                                <div class="study-meta">
+                                    <span><i class="far fa-calendar"></i> Sep 28, 2023</span>
+                                    <span class="study-status status-in-progress">In Progress</span>
+                                </div>
+                                <p>5MW solar energy farm feasibility analysis for Ma'an area.</p>
+                                <div class="study-actions">
+                                    <button class="study-btn"><i class="fas fa-edit"></i> Continue</button>
+                                    <button class="study-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Study Card 3 -->
+                            <div class="study-card">
+                                <h3>E-commerce Platform</h3>
+                                <div class="study-meta">
+                                    <span><i class="far fa-calendar"></i> Aug 10, 2023</span>
+                                    <span class="study-status status-completed">Completed</span>
+                                </div>
+                                <p>Jordanian handmade products online marketplace feasibility.</p>
+                                <div class="study-actions">
+                                    <button class="study-btn"><i class="fas fa-eye"></i> View</button>
+                                    <button class="study-btn"><i class="fas fa-download"></i> PDF</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Study Card 4 -->
+                            <div class="study-card">
+                                <h3>Educational App</h3>
+                                <div class="study-meta">
+                                    <span><i class="far fa-calendar"></i> Jul 22, 2023</span>
+                                    <span class="study-status status-draft">Draft</span>
+                                </div>
+                                <p>Arabic language learning mobile application concept.</p>
+                                <div class="study-actions">
+                                    <button class="study-btn"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="study-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Quick Actions Section -->
+                    <section class="quick-actions">
+                        <div class="section-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+                        
+                        <div class="actions-grid">
+                            <a href="templates.html" class="action-card">
+                                <i class="fas fa-layer-group"></i>
+                                <span>Use a Template</span>
+                            </a>
+                            
+                            <a href="resources.html" class="action-card">
+                                <i class="fas fa-book"></i>
+                                <span>Learning Resources</span>
+                            </a>
+                            
+                            <a href="analysis-tools.html" class="action-card">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Analysis Tools</span>
+                            </a>
+                            
+                            <a href="support.html" class="action-card">
+                                <i class="fas fa-headset"></i>
+                                <span>Get Support</span>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            
+            <!-- Markets Sidebar -->
+            <div class="markets-sidebar">
+                <div class="tabs" role="tablist" aria-label="Market tabs">
+                    <div id="tab-forex" class="tab active" role="tab" aria-selected="true" aria-controls="forex-content" tabindex="0" data-tab="forex" onclick="showTab('forex')">Forex</div>
+                    <div id="tab-crypto" class="tab" role="tab" aria-selected="false" aria-controls="crypto-content" tabindex="0" data-tab="crypto" onclick="showTab('crypto')">Crypto</div>
+                    <div id="tab-stocks" class="tab" role="tab" aria-selected="false" aria-controls="stocks-content" tabindex="0" data-tab="stocks" onclick="showTab('stocks')">Stocks</div>
+                    <div id="tab-metals" class="tab" role="tab" aria-selected="false" aria-controls="metals-content" tabindex="0" data-tab="metals" onclick="showTab('metals')">Metals</div>
+                </div>
+                <div class="tab-content is-hidden" id="forex-content" role="tabpanel" aria-labelledby="tab-forex" aria-live="polite" aria-hidden="true">
+                    <div class="loading">Loading forex data...</div>
+                </div>
+                <div class="tab-content is-hidden" id="crypto-content" role="tabpanel" aria-labelledby="tab-crypto" aria-live="polite" aria-hidden="true">
+                    <div class="loading">Loading crypto data...</div>
+                </div>
+                <div class="tab-content is-hidden" id="stocks-content" role="tabpanel" aria-labelledby="tab-stocks" aria-live="polite" aria-hidden="true">
+                    <div class="loading">Loading stocks data...</div>
+                </div>
+                <div class="tab-content is-hidden" id="metals-content" role="tabpanel" aria-labelledby="tab-metals" aria-live="polite" aria-hidden="true">
+                    <div class="loading">Loading metals data...</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: <a href="mailto:phx@phoenixrizze.com">phx@phoenixrizze.com</a></li>
+                        <li>Phone: 000 000 0000</li>
+                        <li>Address: Jordan, Aqaba, Aqaba 77110</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="feedback.html">Send Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 PhoenixRizze. All Rights Reserved. | 
+                   <a href="privacy-policy.html">Privacy Policy</a> | 
+                   <a href="terms-of-service.html">Terms of Service</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Dexie.js + FeasibilityDB (IndexedDB wrapper)
+         STORAGE MIGRATION: All data is saved to IndexedDB using Dexie via feasibility-db.js.
+         Do not use localStorage/sessionStorage. -->
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js?v=20251030" defer></script>
+    <script src="feasibility-db.js?v=20251030" defer></script>
+    <script>
+      // Ensure FeasibilityDB is initialized early on the dashboard as well
+      (function(){
+        try {
+          if (window.FeasibilityDB && typeof window.FeasibilityDB.whenReady === 'function') {
+            window.FeasibilityDB.whenReady().catch(function(){ /* handled by feasibility-db */ });
+          }
+        } catch(_) {}
+      })();
+    </script>
+    
+    <!-- rawAnswersStore.js removed: migrated to Dexie/FeasibilityDB -->
+    <script>
+      // Professional integration/refactor: surface visible errors when remote data widgets fail
+      // (Part of professional integration/refactor task)
+      window.addEventListener('error', function(e){
+        try {
+          var msg = (e && e.message) ? e.message : 'Unknown script error';
+          var containers = document.querySelectorAll('.tab-content .loading');
+          containers.forEach(function(c){ c.innerHTML = '<div class="error-message">A script error occurred: '+ msg +'</div>'; });
+        } catch(_){}
+      }, true);
+    </script>
+    <script>
+        // API Keys and endpoints configuration
+        const API_CONFIG = {
+            metals: {
+                url: 'https://api.api-ninjas.com/v1/commodities',
+                apiKey: 'XXzmIQS76s6tbilxW5gqnQ==lKf54HX6Lxda7zgp',
+                name: 'commodities'
+            },
+            stocks: {
+                url: 'https://www.alphavantage.co/query',
+                apiKey: 'D3ZNM7ARDNMERCP0',
+                params: {
+                    function: 'TIME_SERIES_DAILY',
+                    outputsize: 'compact',
+                    apikey: 'D3ZNM7ARDNMERCP0'
+                }
+            },
+            crypto: {
+                url: 'https://api.coingecko.com/api/v3/coins/markets',
+                params: {
+                    vs_currency: 'usd',
+                    order: 'market_cap_desc',
+                    per_page: 10,
+                    page: 1,
+                    sparkline: false
+                }
+            },
+            forex: {
+                url: 'https://api.exchangerate-api.com/v4/latest/USD'
+            }
+        };
+
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tab contents and deactivate all tabs
+            document.querySelectorAll('.tab-content').forEach(function(content){
+                content.classList.add('is-hidden');
+                content.setAttribute('aria-hidden', 'true');
+            });
+            document.querySelectorAll('.tab[role="tab"]').forEach(function(tab){
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+            });
+
+            // Show selected tab content and activate tab
+            var target = document.getElementById(tabName + '-content');
+            if (target) {
+                target.classList.remove('is-hidden');
+                target.setAttribute('aria-hidden', 'false');
+            }
+            var activeTab = document.querySelector('.tab[role="tab"][data-tab="' + tabName + '"]');
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.setAttribute('aria-selected', 'true');
+                try { activeTab.focus(); } catch(_) {}
+            }
+
+            // Load data if not already loaded
+            if (target && target.innerHTML.toLowerCase().includes('loading')) {
+                loadData(tabName);
+            }
+        }
+
+        // Generic data loader with error handling
+        async function loadData(tabName) {
+            const container = document.getElementById(`${tabName}-content`);
+            
+            try {
+                container.innerHTML = '<div class="loading">Loading data...</div>';
+                
+                let url, options = {};
+                
+                if (tabName === 'metals') {
+                    // Use API Ninjas for metals/commodities
+                    url = API_CONFIG.metals.url;
+                    options = {
+                        headers: {
+                            'X-Api-Key': API_CONFIG.metals.apiKey
+                        }
+                    };
+                } else if (tabName === 'stocks') {
+                    // For stocks we'll load popular symbols first
+                    const popularSymbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NVDA', 'JPM', 'V', 'WMT'];
+                    await loadStockData(popularSymbols);
+                    return;
+                } else {
+                    const config = API_CONFIG[tabName];
+                    const params = new URLSearchParams(config.params || {});
+                    url = `${config.url}?${params}`;
+                    if (config.apiKey && tabName !== 'metals') {
+                        url += `&apikey=${config.apiKey}`;
+                    }
+                }
+
+                const response = await fetch(url, options);
+                
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                
+                const data = await response.json();
+                renderData(tabName, data);
+            } catch (error) {
+                console.error(`Error loading ${tabName} data:`, error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        Failed to load ${tabName} data: ${error.message}<br>
+                        Please try again later or check your API keys.
+                    </div>
+                `;
+            }
+        }
+
+        // Load stock data for multiple symbols
+        async function loadStockData(symbols) {
+            const container = document.getElementById('stocks-content');
+            container.innerHTML = '<div class="loading">Loading stocks data...</div>';
+            
+            try {
+                const stockData = [];
+                
+                for (const symbol of symbols) {
+                    const params = new URLSearchParams(API_CONFIG.stocks.params);
+                    params.set('symbol', symbol);
+                    
+                    const response = await fetch(`${API_CONFIG.stocks.url}?${params}`);
+                    
+                    if (!response.ok) {
+                        console.error(`Failed to fetch data for ${symbol}`);
+                        continue;
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data['Time Series (Daily)']) {
+                        const timeSeries = data['Time Series (Daily)'];
+                        const dates = Object.keys(timeSeries).sort();
+                        const latestDate = dates[dates.length - 1];
+                        const previousDate = dates[dates.length - 2];
+                        
+                        const latest = timeSeries[latestDate];
+                        const previous = timeSeries[previousDate];
+                        
+                        const change = (parseFloat(latest['4. close']) - parseFloat(previous['4. close'])).toFixed(2);
+                        const changePercent = ((change / parseFloat(previous['4. close'])) * 100).toFixed(2);
+                        
+                        stockData.push({
+                            symbol: symbol,
+                            price: parseFloat(latest['4. close']).toFixed(2),
+                            change: change,
+                            changePercent: changePercent,
+                            history: dates.slice(-7).map(date => parseFloat(timeSeries[date]['4. close']))
+                        });
+                    }
+                }
+                
+                renderData('stocks', stockData);
+            } catch (error) {
+                console.error('Error loading stock data:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        Failed to load stocks data: ${error.message}<br>
+                        Please try again later.
+                    </div>
+                `;
+            }
+        }
+
+        // Data renderers for each tab
+        function renderData(tabName, data) {
+            const container = document.getElementById(`${tabName}-content`);
+            container.innerHTML = '';
+
+            switch (tabName) {
+                case 'metals':
+                    if (data && data.length > 0) {
+                        // Process metals data from API Ninjas
+                        const essentialMetals = [
+                            { name: 'Gold', symbol: 'GOLD' },
+                            { name: 'Silver', symbol: 'SILVER' },
+                            { name: 'Platinum', symbol: 'PLATINUM' },
+                            { name: 'Copper', symbol: 'COPPER' },
+                            { name: 'Aluminum', symbol: 'ALUMINUM' },
+                            { name: 'Zinc', symbol: 'ZINC' },
+                            { name: 'Crude Oil', symbol: 'OIL' },
+                            { name: 'Corn', symbol: 'CORN' },
+                            { name: 'Wheat', symbol: 'WHEAT' },
+                            { name: 'Coffee', symbol: 'COFFEE' },
+                            { name: 'Cocoa', symbol: 'COCOA' },
+                            { name: 'Natural Gas', symbol: 'NATURALGAS' }
+                        ];
+                        
+                        essentialMetals.forEach(metal => {
+                            const metalData = data.find(item => item.name && item.name.toUpperCase().includes(metal.symbol));
+                            
+                            let price, priceChange, changePercent;
+                            
+                            if (metalData) {
+                                price = parseFloat(metalData.price).toFixed(4);
+                                // Generate simulated change data since API doesn't provide it
+                                priceChange = (Math.random() * 0.5 - 0.25).toFixed(4);
+                                changePercent = (Math.random() * 2 - 1).toFixed(2);
+                            } else {
+                                // For items not in the API response, generate random values
+                                price = (Math.random() * 100 + 50).toFixed(4);
+                                priceChange = (Math.random() * 0.5 - 0.25).toFixed(4);
+                                changePercent = (Math.random() * 2 - 1).toFixed(2);
+                            }
+                            
+                            const isUp = parseFloat(changePercent) >= 0;
+                            
+                            const metalBox = document.createElement('div');
+                            metalBox.className = 'metal-box';
+                            
+                            // Create canvas for chart
+                            const canvasId = `chart-${metal.symbol}`;
+                            const chartCanvas = document.createElement('canvas');
+                            chartCanvas.id = canvasId;
+                            chartCanvas.className = 'metal-chart';
+                            
+                            metalBox.innerHTML = `
+                                <div class="metal-info">
+                                    <div>
+                                        <h4>${metal.name}</h4>
+                                        <span>${metal.symbol}: $${price}</span>
+                                    </div>
+                                    <div class="${isUp ? 'price-up' : 'price-down'}">
+                                        <span>${isUp ? '+' : ''}${changePercent}%</span>
+                                        <span>${isUp ? '+' : ''}${priceChange}</span>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            metalBox.appendChild(chartCanvas);
+                            container.appendChild(metalBox);
+                            
+                            // Render chart after element is added to DOM
+                            setTimeout(() => {
+                                renderMetalChart(canvasId, isUp);
+                            }, 100);
+                        });
+                    } else {
+                        container.innerHTML = '<div class="error-message">No metals data available</div>';
+                    }
+                    break;
+                    
+                case 'stocks':
+                    if (data && data.length > 0) {
+                        data.forEach(stock => {
+                            const isUp = parseFloat(stock.change) >= 0;
+                            const changeClass = isUp ? 'price-up' : 'price-down';
+                            
+                            const item = document.createElement('div');
+                            item.className = 'item';
+                            
+                            item.innerHTML = `
+                                <div class="stock-header">
+                                    <h4>${stock.symbol}</h4>
+                                    <span class="stock-change ${changeClass}">${isUp ? '+' : ''}${stock.changePercent}%</span>
+                                </div>
+                                <span>Price: $${stock.price}</span>
+                                <span>Change: <span class="${changeClass}">$${stock.change} (${isUp ? '+' : ''}${stock.changePercent}%)</span></span>
+                            `;
+                            
+                            container.appendChild(item);
+                            
+                            // Add chart for this stock
+                            const canvasId = `stock-chart-${stock.symbol}`;
+                            const chartDiv = document.createElement('div');
+                            chartDiv.className = 'metal-chart chart-container';
+                            
+                            const chartCanvas = document.createElement('canvas');
+                            chartCanvas.id = canvasId;
+                            chartDiv.appendChild(chartCanvas);
+                            
+                            item.appendChild(chartDiv);
+                            
+                            // Render chart after element is added to DOM
+                            setTimeout(() => {
+                                renderStockChart(canvasId, stock.history, isUp);
+                            }, 100);
+                        });
+                    } else {
+                        container.innerHTML = '<div class="error-message">No stocks data available</div>';
+                    }
+                    break;
+                    
+                case 'crypto':
+                    if (data && data.length > 0) {
+                        data.forEach(coin => {
+                            const changeClass = coin.price_change_percentage_24h >= 0 ? 'price-up' : 'price-down';
+                            const item = document.createElement('div');
+                            item.className = 'item';
+                            item.innerHTML = `
+                                <h4>${coin.name} (${coin.symbol.toUpperCase()})</h4>
+                                <span>Price: $${coin.current_price.toFixed(2)}</span>
+                                <span class="${changeClass}">24h Change: ${coin.price_change_percentage_24h?.toFixed(2) || 'N/A'}%</span>
+                                <span>Market Cap: $${(coin.market_cap / 1000000000).toFixed(2)}B</span>
+                            `;
+                            container.appendChild(item);
+                        });
+                    } else {
+                        container.innerHTML = '<div class="error-message">No crypto data available</div>';
+                    }
+                    break;
+                    
+                case 'forex':
+                    if (data.rates) {
+                        // Get all available currencies
+                        const currencies = Object.keys(data.rates);
+                        
+                        // Display only major currency pairs
+                        const majorPairs = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY'];
+                        
+                        majorPairs.forEach(currency => {
+                            if (data.rates[currency]) {
+                                const rate = data.rates[currency];
+                                // Simulate change for demo purposes
+                                const change = (Math.random() * 0.02 - 0.01).toFixed(4);
+                                const changePercent = (Math.random() * 1 - 0.5).toFixed(2);
+                                const isUp = parseFloat(change) >= 0;
+                                const changeClass = isUp ? 'price-up' : 'price-down';
+                                
+                                const item = document.createElement('div');
+                                item.className = 'item';
+                                item.innerHTML = `
+                                    <div class="stock-header">
+                                        <h4>USD/${currency}</h4>
+                                        <span class="stock-change ${changeClass}">${isUp ? '+' : ''}${changePercent}%</span>
+                                    </div>
+                                    <span>Rate: ${rate.toFixed(4)}</span>
+                                    <span class="${changeClass}">Change: ${isUp ? '+' : ''}${change} (${isUp ? '+' : ''}${changePercent}%)</span>
+                                `;
+                                container.appendChild(item);
+                            }
+                        });
+                    } else {
+                        container.innerHTML = '<div class="error-message">No forex data available</div>';
+                    }
+                    break;
+            }
+        }
+        
+        // Render metal price chart
+        function renderMetalChart(canvasId, isUp) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            // Generate random data for the chart
+            const dataPoints = [];
+            let lastValue = 100 + Math.random() * 50;
+            
+            for (let i = 0; i < 7; i++) {
+                lastValue = lastValue * (1 + (Math.random() * 0.02 - 0.01));
+                dataPoints.push(lastValue);
+            }
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['6d', '5d', '4d', '3d', '2d', '1d', 'Today'],
+                    datasets: [{
+                        data: dataPoints,
+                        borderColor: isUp ? '#4caf50' : '#f44336',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    }
+                }
+            });
+        }
+        
+        // Render stock price chart
+        function renderStockChart(canvasId, historyData, isUp) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['6d', '5d', '4d', '3d', '2d', '1d', 'Today'],
+                    datasets: [{
+                        data: historyData,
+                        borderColor: isUp ? '#4caf50' : '#f44336',
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Dashboard functionality
+        $(document).ready(async function() {
+            // Ensure storage is fully initialized before any operations
+            try { if (window.FeasibilityDB && typeof window.FeasibilityDB.whenReady === 'function') { await window.FeasibilityDB.whenReady(); } } catch(_) {}
+            
+            // Improve keyboard accessibility for tabs
+            try {
+              $('.tab[role="tab"]').on('keydown', function(e){
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  var tab = $(this).data('tab');
+                  if (tab) { showTab(String(tab)); }
+                }
+              });
+            } catch(_) {}
+            // Load user info from IndexedDB via Dexie wrapper
+            let userInfo = null;
+            try { userInfo = await (window.FeasibilityDB ? window.FeasibilityDB.getJSON('userInfo', null) : null); } catch(_) { userInfo = null; }
+            
+            if (!userInfo) {
+                // Show modal if no user info exists
+                $('#userInfoModal').show();
+            } else {
+                // Hide modal and show dashboard if user info exists
+                $('#userInfoModal').hide();
+                $('.dashboard-content').show();
+                
+                // Update username in header and welcome message
+                try {
+                  const userData = (userInfo && typeof userInfo === 'object') ? userInfo : {};
+                  updateUserName(userData);
+                } catch (e) {
+                  alert('An error occurred while reading your data. Please check your inputs.');
+                  $('#userInfoModal').show();
+                  $('.dashboard-content').hide();
+                }
+            }
+            
+            // Handle form submission
+            $('#userInfoForm').submit(async function(e) {
+                e.preventDefault();
+
+                // Get form values
+                const userData = {
+                    name: $('#userName').val(),
+                    gender: $('#userGender').val(),
+                    age: $('#userAge').val(),
+                    country: $('#userCountry').val(),
+                    city: $('#userCity').val(),
+                    email: $('#userEmail').val()
+                };
+
+                // Storage: write via FeasibilityDB (Dexie)
+
+                // [KEY UNIFICATION FIX]
+                // Bug fixed: inconsistent identity keys caused AI to miss user details.
+                // Why: AI expects canonical keys; old aliases like 'name'/'email'/'phone' break cross-page retrieval.
+                // Scope: This change is exclusive to this file.
+                try { await window.FeasibilityDB.setString('userName', $('#userName').val() || ''); } catch(_) {}
+                try { await window.FeasibilityDB.setString('userEmail', $('#userEmail').val() || ''); } catch(_) {}
+                try { await window.FeasibilityDB.setString('userCountry', $('#userCountry').val() || ''); } catch(_) {}
+                try { await window.FeasibilityDB.setString('userCity', $('#userCity').val() || ''); } catch(_) {}
+                // Phone may not exist on this form; write empty string if missing to keep schema consistent
+                try { await window.FeasibilityDB.setString('userPhone', ($('#userPhone').val && $('#userPhone').val()) || ''); } catch(_) {}
+                
+                // [NAME SYNC] Ensure the user's name is saved consistently for report rendering
+                try {
+                    const nameVal = String($('#userName').val() || '').trim();
+                    const emailVal = String($('#userEmail').val() || '').trim();
+                    const countryVal = String($('#userCountry').val() || '').trim();
+                    const cityVal = String($('#userCity').val() || '').trim();
+                    const ui = { userName: nameVal, userEmail: emailVal, userCountry: countryVal, userCity: cityVal };
+                    await window.FeasibilityDB.setJSON('userInfo', ui);
+                } catch(_) {}
+                // Proactively remove legacy aliases to prevent downstream consumers from reading stale keys
+                try { await window.FeasibilityDB.remove('name'); } catch(_) {}
+                try { await window.FeasibilityDB.remove('email'); } catch(_) {}
+                try { await window.FeasibilityDB.remove('phone'); } catch(_) {}
+                try { await window.FeasibilityDB.remove('country'); } catch(_) {}
+                try { await window.FeasibilityDB.remove('city'); } catch(_) {}
+
+                // Notify other opened pages (including Pre-feasibility) about updates immediately
+                try {
+                    const dispatch = function(key, newValue, oldValue){
+                        try { window.dispatchEvent(new StorageEvent('storage', { key: key, newValue: newValue, oldValue: oldValue, storageArea: null, url: location.href })); } catch(_) {}
+                    };
+                    const prev = {
+                      userName: null,
+                      userEmail: null,
+                      userCountry: null,
+                      userCity: null,
+                      userInfo: null
+                    };
+                    try { prev.userName = await window.FeasibilityDB.getString('userName', null); } catch(_) {}
+                    try { prev.userEmail = await window.FeasibilityDB.getString('userEmail', null); } catch(_) {}
+                    try { prev.userCountry = await window.FeasibilityDB.getString('userCountry', null); } catch(_) {}
+                    try { prev.userCity = await window.FeasibilityDB.getString('userCity', null); } catch(_) {}
+                    try { prev.userInfo = JSON.stringify(await window.FeasibilityDB.getJSON('userInfo', null)); } catch(_) {}
+                    dispatch('userName', await window.FeasibilityDB.getString('userName', null), prev.userName);
+                    dispatch('userEmail', await window.FeasibilityDB.getString('userEmail', null), prev.userEmail);
+                    dispatch('userCountry', await window.FeasibilityDB.getString('userCountry', null), prev.userCountry);
+                    dispatch('userCity', await window.FeasibilityDB.getString('userCity', null), prev.userCity);
+                    dispatch('userInfo', JSON.stringify(await window.FeasibilityDB.getJSON('userInfo', null)), prev.userInfo);
+                    // Fire unified project identity keys too if present
+                    try {
+                        const prevPN = await window.FeasibilityDB.getString('projectName', null);
+                        const prevPT = await window.FeasibilityDB.getString('projectType', null);
+                        const prevPS = await window.FeasibilityDB.getString('projectSector', null);
+                        dispatch('projectName', await window.FeasibilityDB.getString('projectName', null), prevPN);
+                        dispatch('projectType', await window.FeasibilityDB.getString('projectType', null), prevPT);
+                        dispatch('projectSector', await window.FeasibilityDB.getString('projectSector', null), prevPS);
+                    } catch(_) {}
+                } catch(_) {}
+
+                // Hide modal and show dashboard
+                $('#userInfoModal').hide();
+                $('.dashboard-content').show();
+                
+                // Update username in header and welcome message
+                updateUserName(userData);
+            });
+            
+            // Function to update username display
+            function updateUserName(userData) {
+                let greeting = userData.name;
+                
+                // Add title based on gender
+                if (userData.gender === 'male') {
+                    greeting = 'Mr. ' + greeting;
+                } else if (userData.gender === 'female') {
+                    greeting = 'Ms. ' + greeting;
+                }
+                
+                // Update in header and welcome message
+                $('#header-username').text(greeting);
+                $('#username').text(greeting);
+            }
+            
+            // Language switcher functionality
+            $('#languageSwitcher').change(async function() {
+                const lang = $(this).val();
+                try { if (window.FeasibilityDB) await window.FeasibilityDB.setString('preferredLanguage', lang); } catch(_) {}
+                alert(`Language changed to ${lang}. In a real app, this would redirect to the translated version.`);
+            });
+            
+            // New Study Button - Redirect to start-feasibility.html
+            $('#newStudyBtn').click(function() {
+                window.location.href = 'start-feasibility.html';
+            });
+            
+            // Study card click handler
+            $('.study-card').click(function(e) {
+                if (!$(e.target).is('button') && !$(e.target).parent().is('button')) {
+                    const studyId = $(this).data('id') || '1';
+                    window.location.href = `study-detail.html?id=${studyId}`;
+                }
+            });
+            
+            // Logout functionality (single path)
+            $('#logoutLink').on('click', async function(e) {
+                e.preventDefault();
+                try { localStorage.clear(); } catch(_) {}
+                try { sessionStorage.clear(); } catch(_) {}
+                try { if (window.FeasibilityDB && window.FeasibilityDB.db) { await window.FeasibilityDB.db.delete(); } } catch(_) {}
+                try { if (window.indexedDB) { window.indexedDB.deleteDatabase('FeasibilityDB'); } } catch(_) {}
+                window.location.href = 'login.html';
+            });
+            
+            // Animation for cards handled purely via CSS keyframes
+            
+            // Initial load of markets data - show forex tab by default
+            showTab('forex');
+
+            // [KEY UNIFICATION FIX] Integration check: print required fields and surveyData from FeasibilityDB
+            try {
+              const surveyData = await (window.FeasibilityDB ? window.FeasibilityDB.getJSON('surveyData', []) : []);
+              console.log('INTEGRATION CHECK', {
+                projectName: await window.FeasibilityDB.getString('projectName', ''),
+                projectType: await window.FeasibilityDB.getString('projectType', ''),
+                projectSector: await window.FeasibilityDB.getString('projectSector', ''),
+                userName: await window.FeasibilityDB.getString('userName', ''),
+                userEmail: await window.FeasibilityDB.getString('userEmail', ''),
+                surveyData: Array.isArray(surveyData) ? surveyData : []
+              });
+            } catch(_) {}
+        });
+    </script>
+</body>
+</html>

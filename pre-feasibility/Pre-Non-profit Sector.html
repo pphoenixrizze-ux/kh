@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Feasibility Study - Non-Profit Sector</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .dynamic-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dynamic-field input {
+            flex: 1;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Pre-Feasibility Questionnaire for Non-Profit Project</h1>
+            <p>This form is designed to provide a preliminary assessment of your non-profit project's feasibility, focusing on social impact and organizational sustainability. Please fill in the data accurately to evaluate the project's effectiveness in achieving its community goals.</p>
+
+            <div class="section-title">Project Description</div>
+            <div class="form-group">
+                <label for="main-service">What is the main service or program your project will provide? (Required)</label>
+                <input type="text" id="main-service" placeholder="e.g., Psychological support program for disaster survivors">
+            </div>
+
+            <div class="form-group">
+                <label for="social-problem">What is the main social problem this project addresses? (Required)</label>
+                <input type="text" id="social-problem" placeholder="Description of the social problem">
+            </div>
+
+            <div class="form-group">
+                <label for="social-goal">What is the main social objective of the project? (Required)</label>
+                <select id="social-goal">
+                    <option value="">Select an objective</option>
+                    <option value="health">Improve mental health</option>
+                    <option value="education">Reduce illiteracy</option>
+                    <option value="environment">Raise environmental awareness</option>
+                    <option value="empowerment">Women empowerment</option>
+                    <option value="other">Other</option>
+                </select>
+                <label for="goal-notes">Notes:</label>
+                <textarea id="goal-notes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="target-group">Who is the main target group? (Required)</label>
+                <input type="text" id="target-group" placeholder="e.g., Low-income families, school students">
+            </div>
+
+            <div class="section-title">Needs Assessment and Social Impact</div>
+            <div class="form-group">
+                <label for="beneficiaries-count">Estimated number of direct beneficiaries in the first year: (Required)</label>
+                <input type="number" id="beneficiaries-count" placeholder="Enter estimated number">
+            </div>
+
+            <div class="form-group">
+                <label>What indicators confirm the community need for this project? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="indicator1" name="need-indicators" value="government-data">
+                    <label for="indicator1">Government data</label>
+                    
+                    <input type="checkbox" id="indicator2" name="need-indicators" value="previous-studies">
+                    <label for="indicator2">Previous studies</label>
+                    
+                    <input type="checkbox" id="indicator3" name="need-indicators" value="surveys">
+                    <label for="indicator3">Surveys</label>
+                    
+                    <input type="checkbox" id="indicator4" name="need-indicators" value="testimonials">
+                    <label for="indicator4">Potential beneficiary testimonials</label>
+                </div>
+                <label for="indicators-notes">Notes:</label>
+                <textarea id="indicators-notes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What Key Performance Indicators (KPIs) will be used to measure social impact? (Required)</label>
+                <div id="kpi-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Performance indicator" class="kpi-name">
+                        <input type="text" placeholder="Measurement method" class="kpi-method">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addKPIField()">+ Add KPI</button>
+                <p>You can add up to 20 indicators</p>
+            </div>
+
+            <div class="form-group">
+                <label>Does a similar project already exist? What is your project's competitive advantage? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="similar-yes" name="similar-project" value="yes">
+                    <label for="similar-yes">Yes</label>
+                    
+                    <input type="radio" id="similar-no" name="similar-project" value="no">
+                    <label for="similar-no">No</label>
+                </div>
+                <label for="competitive-advantage">Competitive advantage:</label>
+                <textarea id="competitive-advantage" placeholder="Service quality, specific target group, geographic coverage"></textarea>
+            </div>
+
+            <div class="section-title">Organizational Sustainability Analysis</div>
+            <div class="form-group">
+                <label>What is the proposed administrative structure? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="structure1" name="admin-structure" value="board">
+                    <label for="structure1">Board of trustees</label>
+                    
+                    <input type="checkbox" id="structure2" name="admin-structure" value="director">
+                    <label for="structure2">Executive director</label>
+                    
+                    <input type="checkbox" id="structure3" name="admin-structure" value="program-manager">
+                    <label for="structure3">Program manager</label>
+                    
+                    <input type="checkbox" id="structure4" name="admin-structure" value="accountant">
+                    <label for="structure4">Accountant</label>
+                    
+                    <input type="checkbox" id="structure5" name="admin-structure" value="other">
+                    <label for="structure5">Other</label>
+                </div>
+                <label for="structure-notes">Notes:</label>
+                <textarea id="structure-notes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What funding mechanisms will ensure project sustainability? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="funding1" name="funding-mechanism" value="government-grants">
+                    <label for="funding1">Government grants</label>
+                    
+                    <input type="checkbox" id="funding2" name="funding-mechanism" value="private-partnerships">
+                    <label for="funding2">Private sector partnerships</label>
+                    
+                    <input type="checkbox" id="funding3" name="funding-mechanism" value="individual-donations">
+                    <label for="funding3">Individual donations</label>
+                    
+                    <input type="checkbox" id="funding4" name="funding-mechanism" value="fundraising-events">
+                    <label for="funding4">Fundraising events</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there sufficient sustainable funding sources to cover operational costs long-term? (Required)</label>
+                <div class="radio-group">
+                    <input type="radio" id="funding-yes" name="sustainable-funding" value="yes">
+                    <label for="funding-yes">Yes</label>
+                    
+                    <input type="radio" id="funding-no" name="sustainable-funding" value="no">
+                    <label for="funding-no">No</label>
+                    
+                    <input type="radio" id="funding-unsure" name="sustainable-funding" value="unsure">
+                    <label for="funding-unsure">Unsure</label>
+                </div>
+                <div id="funding-explanation-container" style="display: none;">
+                    <label for="funding-explanation">If yes, please briefly explain:</label>
+                    <textarea id="funding-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Can the project be scaled to include other regions or target groups?</label>
+                <div class="radio-group">
+                    <input type="radio" id="scalable-yes" name="scalability" value="yes">
+                    <label for="scalable-yes">Yes, scalable</label>
+                    
+                    <input type="radio" id="scalable-challenges" name="scalability" value="challenges">
+                    <label for="scalable-challenges">Scalable with challenges</label>
+                    
+                    <input type="radio" id="scalable-no" name="scalability" value="no">
+                    <label for="scalable-no">Not currently scalable</label>
+                </div>
+                <label for="scalability-notes">Notes:</label>
+                <textarea id="scalability-notes"></textarea>
+            </div>
+
+            <div class="section-title">Risk Analysis</div>
+            <div class="form-group">
+                <label>What are the main risks the project might face? (Required)</label>
+                <div id="risks-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Risk (e.g., Donor priority changes)" class="risk-name">
+                        <input type="number" placeholder="Probability (1-5)" min="1" max="5" class="risk-probability">
+                        <input type="number" placeholder="Impact (1-5)" min="1" max="5" class="risk-impact">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addRiskField()">+ Add Risk</button>
+                <p>Probability/Impact scale: 1=Very low, 5=Very high (Max 10 risks)</p>
+            </div>
+
+            <div class="form-group">
+                <label>Is there a contingency plan to address these risks? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="contingency-yes" name="contingency" value="yes">
+                    <label for="contingency-yes">Yes</label>
+                    
+                    <input type="radio" id="contingency-no" name="contingency" value="no">
+                    <label for="contingency-no">No</label>
+                    
+                    <input type="radio" id="contingency-partial" name="contingency" value="partial">
+                    <label for="contingency-partial">Partially</label>
+                </div>
+                <div id="contingency-explanation-container" style="display: none;">
+                    <label for="contingency-explanation">If yes, please briefly explain:</label>
+                    <textarea id="contingency-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Operational Requirements</div>
+            <div class="form-group">
+                <label>Total number of staff and volunteers required to operate the project? (Required)</label>
+                <div id="staff-list">
+                    <div class="dynamic-field">
+                        <input type="text" placeholder="Position (e.g., Program coordinator)" class="staff-position">
+                        <input type="number" placeholder="Number" class="staff-count">
+                        <input type="number" placeholder="Salary/Allowance" class="staff-salary">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addStaffField()">+ Add Position</button>
+                <p>You can add up to 20 positions</p>
+            </div>
+
+            <div class="form-group">
+                <label>What are the main daily operations of the project? (Required)</label>
+                <textarea id="daily-operations" placeholder="e.g., Providing support to beneficiaries, data collection, partner communication"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Is the required infrastructure and technology available or easily obtainable? (Optional)</label>
+                <div class="radio-group">
+                    <input type="radio" id="infrastructure-yes" name="infrastructure" value="yes">
+                    <label for="infrastructure-yes">Yes, available</label>
+                    
+                    <input type="radio" id="infrastructure-challenges" name="infrastructure" value="challenges">
+                    <label for="infrastructure-challenges">Availability challenges</label>
+                    
+                    <input type="radio" id="infrastructure-planning" name="infrastructure" value="planning">
+                    <label for="infrastructure-planning">Needs planning</label>
+                </div>
+                <label for="infrastructure-notes">Notes:</label>
+                <textarea id="infrastructure-notes"></textarea>
+            </div>
+
+            <div class="section-title">Financial Data</div>
+            <div class="form-group">
+                <label for="total-budget">Total amount required to establish and operate the project in its initial phases? (Required)</label>
+                <input type="number" id="total-budget" placeholder="Enter amount">
+            </div>
+
+            <div class="form-group">
+                <label for="operational-costs">Estimated monthly operational costs? (Required)</label>
+                <input type="number" id="operational-costs" placeholder="Enter amount">
+            </div>
+
+            <div class="form-group">
+                <label>Is there a clear plan for transparent financial management?</label>
+                <div class="radio-group">
+                    <input type="radio" id="financial-plan-yes" name="financial-plan" value="yes">
+                    <label for="financial-plan-yes">Yes</label>
+                    
+                    <input type="radio" id="financial-plan-no" name="financial-plan" value="no">
+                    <label for="financial-plan-no">No</label>
+                    
+                    <input type="radio" id="financial-plan-partial" name="financial-plan" value="partial">
+                    <label for="financial-plan-partial">Partially</label>
+                </div>
+                <label for="financial-plan-notes">Notes:</label>
+                <textarea id="financial-plan-notes"></textarea>
+            </div>
+
+            <div class="section-title">Final Assessment</div>
+            <div class="form-group">
+                <label>Social Merit: Does the project achieve real and important social impact?</label>
+                <div class="radio-group">
+                    <input type="radio" id="merit-yes" name="social-merit" value="yes">
+                    <label for="merit-yes">Yes</label>
+                    
+                    <input type="radio" id="merit-no" name="social-merit" value="no">
+                    <label for="merit-no">No</label>
+                    
+                    <input type="radio" id="merit-unsure" name="social-merit" value="unsure">
+                    <label for="merit-unsure">Unsure</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Organizational Sustainability: Does the project have the elements for continuity and growth?</label>
+                <div class="radio-group">
+                    <input type="radio" id="sustainability-yes" name="sustainability" value="yes">
+                    <label for="sustainability-yes">Yes</label>
+                    
+                    <input type="radio" id="sustainability-no" name="sustainability" value="no">
+                    <label for="sustainability-no">No</label>
+                    
+                    <input type="radio" id="sustainability-unsure" name="sustainability" value="unsure">
+                    <label for="sustainability-unsure">Unsure</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Scalability: Can the project be replicated in other areas or for different target groups?</label>
+                <div class="radio-group">
+                    <input type="radio" id="replicability-yes" name="replicability" value="yes">
+                    <label for="replicability-yes">Yes</label>
+                    
+                    <input type="radio" id="replicability-no" name="replicability" value="no">
+                    <label for="replicability-no">No</label>
+                    
+                    <input type="radio" id="replicability-unsure" name="replicability" value="unsure">
+                    <label for="replicability-unsure">Unsure</label>
+                </div>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../pre-feasibility/Pre-feasibility Study.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            const fundingRadios = document.querySelectorAll('input[name="sustainable-funding"]');
+            const fundingExplanationContainer = document.getElementById('funding-explanation-container');
+            
+            fundingRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    fundingExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const contingencyRadios = document.querySelectorAll('input[name="contingency"]');
+            const contingencyExplanationContainer = document.getElementById('contingency-explanation-container');
+            
+            contingencyRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    contingencyExplanationContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Dynamic field functions
+        function addKPIField() {
+            const kpiList = document.getElementById('kpi-list');
+            if (document.querySelectorAll('.kpi-name').length >= 20) {
+                alert('Maximum 20 KPIs allowed');
+                return;
+            }
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Performance indicator" class="kpi-name">
+                <input type="text" placeholder="Measurement method" class="kpi-method">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            kpiList.appendChild(newField);
+        }
+
+        function addRiskField() {
+            const risksList = document.getElementById('risks-list');
+            if (document.querySelectorAll('.risk-name').length >= 10) {
+                alert('Maximum 10 risks allowed');
+                return;
+            }
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Risk (e.g., Donor priority changes)" class="risk-name">
+                <input type="number" placeholder="Probability (1-5)" min="1" max="5" class="risk-probability">
+                <input type="number" placeholder="Impact (1-5)" min="1" max="5" class="risk-impact">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            risksList.appendChild(newField);
+        }
+
+        function addStaffField() {
+            const staffList = document.getElementById('staff-list');
+            if (document.querySelectorAll('.staff-position').length >= 20) {
+                alert('Maximum 20 positions allowed');
+                return;
+            }
+            const newField = document.createElement('div');
+            newField.className = 'dynamic-field';
+            newField.innerHTML = `
+                <input type="text" placeholder="Position (e.g., Program coordinator)" class="staff-position">
+                <input type="number" placeholder="Number" class="staff-count">
+                <input type="number" placeholder="Salary/Allowance" class="staff-salary">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            staffList.appendChild(newField);
+        }
+
+        function removeField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Project Description
+            addOutputItem('Main Service', document.getElementById('main-service').value);
+            addOutputItem('Social Problem', document.getElementById('social-problem').value);
+            
+            const socialGoal = document.getElementById('social-goal');
+            addOutputItem('Social Objective', socialGoal.options[socialGoal.selectedIndex].text);
+            addOutputItem('Objective Notes', document.getElementById('goal-notes').value);
+            
+            addOutputItem('Target Group', document.getElementById('target-group').value);
+
+            // Needs Assessment
+            addOutputItem('Estimated Beneficiaries', document.getElementById('beneficiaries-count').value);
+            
+            const selectedIndicators = [];
+            document.querySelectorAll('input[name="need-indicators"]:checked').forEach(indicator => {
+                selectedIndicators.push(indicator.id.replace('indicator', 'Indicator '));
+            });
+            if (selectedIndicators.length > 0) {
+                addOutputItem('Need Indicators', selectedIndicators.join(', '));
+            }
+            addOutputItem('Indicators Notes', document.getElementById('indicators-notes').value);
+
+            // KPIs List
+            const kpiNames = document.querySelectorAll('.kpi-name');
+            const kpiMethods = document.querySelectorAll('.kpi-method');
+            if (kpiNames.length > 0 && kpiNames[0].value) {
+                let kpisHTML = '';
+                for (let i = 0; i < kpiNames.length; i++) {
+                    if (kpiNames[i].value) {
+                        kpisHTML += `<li>${kpiNames[i].value}: ${kpiMethods[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (kpisHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Key Performance Indicators:</h4>
+                            <ul>${kpisHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            const selectedSimilar = document.querySelector('input[name="similar-project"]:checked');
+            if (selectedSimilar) {
+                addOutputItem('Similar Project Exists', selectedSimilar.id.replace('similar-', ''));
+                addOutputItem('Competitive Advantage', document.getElementById('competitive-advantage').value);
+            }
+
+            // Organizational Sustainability
+            const selectedStructure = [];
+            document.querySelectorAll('input[name="admin-structure"]:checked').forEach(structure => {
+                selectedStructure.push(structure.id.replace('structure', 'Structure '));
+            });
+            if (selectedStructure.length > 0) {
+                addOutputItem('Administrative Structure', selectedStructure.join(', '));
+            }
+            addOutputItem('Structure Notes', document.getElementById('structure-notes').value);
+
+            const selectedFunding = [];
+            document.querySelectorAll('input[name="funding-mechanism"]:checked').forEach(funding => {
+                selectedFunding.push(funding.id.replace('funding', 'Funding '));
+            });
+            if (selectedFunding.length > 0) {
+                addOutputItem('Funding Mechanisms', selectedFunding.join(', '));
+            }
+
+            const selectedSustainable = document.querySelector('input[name="sustainable-funding"]:checked');
+            if (selectedSustainable) {
+                addOutputItem('Sustainable Funding', selectedSustainable.id.replace('funding-', ''));
+                if (selectedSustainable.value === 'yes') {
+                    addOutputItem('Funding Explanation', document.getElementById('funding-explanation').value);
+                }
+            }
+
+            const selectedScalable = document.querySelector('input[name="scalability"]:checked');
+            if (selectedScalable) {
+                addOutputItem('Scalability', selectedScalable.id.replace('scalable-', ''));
+                addOutputItem('Scalability Notes', document.getElementById('scalability-notes').value);
+            }
+
+            // Risk Analysis
+            const riskNames = document.querySelectorAll('.risk-name');
+            const riskProbabilities = document.querySelectorAll('.risk-probability');
+            const riskImpacts = document.querySelectorAll('.risk-impact');
+            if (riskNames.length > 0 && riskNames[0].value) {
+                let risksHTML = '';
+                for (let i = 0; i < riskNames.length; i++) {
+                    if (riskNames[i].value) {
+                        risksHTML += `<li>${riskNames[i].value}: Probability ${riskProbabilities[i].value || 'N/A'}, Impact ${riskImpacts[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (risksHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Project Risks:</h4>
+                            <ul>${risksHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            const selectedContingency = document.querySelector('input[name="contingency"]:checked');
+            if (selectedContingency) {
+                addOutputItem('Contingency Plan', selectedContingency.id.replace('contingency-', ''));
+                if (selectedContingency.value === 'yes') {
+                    addOutputItem('Contingency Explanation', document.getElementById('contingency-explanation').value);
+                }
+            }
+
+            // Operational Requirements
+            const staffPositions = document.querySelectorAll('.staff-position');
+            const staffCounts = document.querySelectorAll('.staff-count');
+            const staffSalaries = document.querySelectorAll('.staff-salary');
+            if (staffPositions.length > 0 && staffPositions[0].value) {
+                let staffHTML = '';
+                for (let i = 0; i < staffPositions.length; i++) {
+                    if (staffPositions[i].value) {
+                        staffHTML += `<li>${staffPositions[i].value}: ${staffCounts[i].value || 'N/A'} staff, Salary: ${staffSalaries[i].value || 'N/A'}</li>`;
+                    }
+                }
+                if (staffHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Staff Requirements:</h4>
+                            <ul>${staffHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+
+            addOutputItem('Daily Operations', document.getElementById('daily-operations').value);
+
+            const selectedInfrastructure = document.querySelector('input[name="infrastructure"]:checked');
+            if (selectedInfrastructure) {
+                addOutputItem('Infrastructure Availability', selectedInfrastructure.id.replace('infrastructure-', ''));
+                addOutputItem('Infrastructure Notes', document.getElementById('infrastructure-notes').value);
+            }
+
+            // Financial Data
+            addOutputItem('Total Budget Required', document.getElementById('total-budget').value);
+            addOutputItem('Monthly Operational Costs', document.getElementById('operational-costs').value);
+
+            const selectedFinancialPlan = document.querySelector('input[name="financial-plan"]:checked');
+            if (selectedFinancialPlan) {
+                addOutputItem('Financial Management Plan', selectedFinancialPlan.id.replace('financial-plan-', ''));
+                addOutputItem('Financial Plan Notes', document.getElementById('financial-plan-notes').value);
+            }
+
+            // Final Assessment
+            const selectedMerit = document.querySelector('input[name="social-merit"]:checked');
+            if (selectedMerit) {
+                addOutputItem('Social Merit', selectedMerit.id.replace('merit-', ''));
+            }
+
+            const selectedSustainability = document.querySelector('input[name="sustainability"]:checked');
+            if (selectedSustainability) {
+                addOutputItem('Organizational Sustainability', selectedSustainability.id.replace('sustainability-', ''));
+            }
+
+            const selectedReplicability = document.querySelector('input[name="replicability"]:checked');
+            if (selectedReplicability) {
+                addOutputItem('Scalability/Replicability', selectedReplicability.id.replace('replicability-', ''));
+            }
+
+            // Update the output div
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            outputDiv.innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>

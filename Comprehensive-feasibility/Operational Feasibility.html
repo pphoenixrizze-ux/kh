@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operational Feasibility Analysis</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 60px;
+        }
+        .language-dropdown {
+            margin-left: 20px;
+        }
+        .language-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .input-section {
+            flex: 2;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .output-section {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .radio-group, .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background-color: #2980b9;
+        }
+        .dynamic-field {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .dynamic-field input {
+            flex: 1;
+        }
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .next-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .next-btn:hover {
+            background-color: #219653;
+        }
+        .output-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .output-item h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .output-item p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+        .staff-position {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .resource-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .resource-item input[type="number"] {
+            width: 80px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="language-dropdown">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        <img src="../images/LOGO PH.png" alt="Company Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <div class="input-section">
+            <h1>Operational Feasibility Assessment</h1>
+            <p>This questionnaire aims to assess the readiness of your business project from an operational perspective, including the mechanism for receiving and storing goods, sales and point-of-sale management, required resources, supply chain, and customer service. These questions help you determine operational efficiency and identify potential challenges to ensure project continuity and success.</p>
+
+            <div class="section-title">Operating Model</div>
+            
+            <div class="form-group">
+                <label for="daily-operations">How will the daily work of the business project be implemented (from receipt to sale)? (Required)</label>
+                <textarea id="daily-operations"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>What are the detailed steps of daily operations? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="step1" name="operation-steps" value="receiving">
+                    <label for="step1">Receiving goods from suppliers (quality inspection, counting, pricing)</label><br>
+                    <input type="checkbox" id="step2" name="operation-steps" value="storage">
+                    <label for="step2">Goods storage and management (shelf arrangement, space management, refrigeration)</label><br>
+                    <input type="checkbox" id="step3" name="operation-steps" value="sales">
+                    <label for="step3">Sales operations at point of sale (POS) (barcode scanning, payment methods, invoicing)</label><br>
+                    <input type="checkbox" id="step4" name="operation-steps" value="back-office">
+                    <label for="step4">Back-office operations management (inventory, reordering, cash reconciliation)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there standardized written procedures (SOPs) for these operations?</label>
+                <div class="radio-group">
+                    <input type="radio" id="sops-yes" name="sops" value="yes">
+                    <label for="sops-yes">Yes</label>
+                    <input type="radio" id="sops-no" name="sops" value="no">
+                    <label for="sops-no">No</label>
+                    <input type="radio" id="sops-inprogress" name="sops" value="inprogress">
+                    <label for="sops-inprogress">In progress</label>
+                </div>
+            </div>
+
+            <div class="section-title">Administrative and Organizational Structure</div>
+            
+            <div class="form-group">
+                <label for="essential-functions">What are the essential functions required to manage and operate the business project? (Required)</label>
+                <textarea id="essential-functions"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Estimated number of employees:</label>
+                <div id="staff-list">
+                    <div class="staff-position">
+                        <input type="text" placeholder="Position" class="position-name">
+                        <input type="number" placeholder="Number of employees" class="staff-count">
+                        <button class="remove-btn" onclick="removeField(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addStaffField()">+ Add Position</button>
+            </div>
+
+            <div class="form-group">
+                <label for="supervisor">Who is the main supervisor responsible for daily oversight of operations?</label>
+                <input type="text" id="supervisor">
+            </div>
+
+            <div class="form-group">
+                <label>Is there a clear plan for distributing tasks and authorities (job description, specific authorities)?</label>
+                <div class="radio-group">
+                    <input type="radio" id="plan-yes" name="task-plan" value="yes">
+                    <label for="plan-yes">Yes</label>
+                    <input type="radio" id="plan-no" name="task-plan" value="no">
+                    <label for="plan-no">No</label>
+                </div>
+            </div>
+
+            <div class="section-title">Operational Policies and Procedures</div>
+            
+            <div class="form-group">
+                <label>Are there written policies for business operations management? (Required)</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="policy1" name="operational-policies" value="quality">
+                    <label for="policy1">Quality policies</label><br>
+                    <input type="checkbox" id="policy2" name="operational-policies" value="complaints">
+                    <label for="policy2">Customer complaints management policies</label><br>
+                    <input type="checkbox" id="policy3" name="operational-policies" value="hr">
+                    <label for="policy3">Human resources policies</label><br>
+                    <input type="checkbox" id="policy4" name="operational-policies" value="safety">
+                    <label for="policy4">Occupational health and safety policies</label><br>
+                    <input type="checkbox" id="policy5" name="operational-policies" value="inventory">
+                    <label for="policy5">Inventory management policies (reordering, handling damaged/expired goods)</label><br>
+                    <input type="checkbox" id="policy6" name="operational-policies" value="other-policy">
+                    <label for="policy6">Other</label>
+                </div>
+                <div id="other-policy-container" style="display: none;">
+                    <label for="other-policy">Please specify other policies:</label>
+                    <textarea id="other-policy"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What procedures are followed to ensure continuous quality of service/products?</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="quality1" name="quality-procedures" value="periodic">
+                    <label for="quality1">Periodic quality inspection</label><br>
+                    <input type="checkbox" id="quality2" name="quality-procedures" value="training">
+                    <label for="quality2">Continuous employee training</label><br>
+                    <input type="checkbox" id="quality3" name="quality-procedures" value="feedback">
+                    <label for="quality3">Customer feedback mechanisms</label><br>
+                    <input type="checkbox" id="quality4" name="quality-procedures" value="other-quality">
+                    <label for="quality4">Other</label>
+                </div>
+                <div id="other-quality-container" style="display: none;">
+                    <label for="other-quality">Please specify other quality procedures:</label>
+                    <textarea id="other-quality"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Resources Required for Operation</div>
+            
+            <div class="form-group">
+                <label>Required human resources:</label>
+                <div class="resource-item">
+                    <input type="checkbox" id="hr1" name="human-resources" value="administrative">
+                    <label for="hr1">Administrative staff:</label>
+                    <input type="number" id="admin-count" placeholder="Number">
+                </div>
+                <div class="resource-item">
+                    <input type="checkbox" id="hr2" name="human-resources" value="supervisors">
+                    <label for="hr2">Supervisors:</label>
+                    <input type="number" id="supervisor-count" placeholder="Number">
+                </div>
+                <div class="resource-item">
+                    <input type="checkbox" id="hr3" name="human-resources" value="sales">
+                    <label for="hr3">Sales staff/Cashiers:</label>
+                    <input type="number" id="sales-count" placeholder="Number">
+                </div>
+                <div class="resource-item">
+                    <input type="checkbox" id="hr4" name="human-resources" value="warehouse">
+                    <label for="hr4">Warehouse workers:</label>
+                    <input type="number" id="warehouse-count" placeholder="Number">
+                </div>
+                <div class="resource-item">
+                    <input type="checkbox" id="hr5" name="human-resources" value="customer-service">
+                    <label for="hr5">Customer service:</label>
+                    <input type="number" id="service-count" placeholder="Number">
+                </div>
+                <div class="resource-item">
+                    <input type="checkbox" id="hr6" name="human-resources" value="security">
+                    <label for="hr6">Security and safety:</label>
+                    <input type="number" id="security-count" placeholder="Number">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Physical and technical resources:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="resource1" name="physical-resources" value="pos">
+                    <label for="resource1">Point of sale (POS) systems and barcode devices</label><br>
+                    <input type="checkbox" id="resource2" name="physical-resources" value="inventory">
+                    <label for="resource2">Inventory management software</label><br>
+                    <input type="checkbox" id="resource3" name="physical-resources" value="security-sys">
+                    <label for="resource3">Surveillance and security systems (CCTV, EAS)</label><br>
+                    <input type="checkbox" id="resource4" name="physical-resources" value="storage">
+                    <label for="resource4">Storage equipment (shelves, display refrigerators, boxes)</label><br>
+                    <input type="checkbox" id="resource5" name="physical-resources" value="handling">
+                    <label for="resource5">Handling equipment (transport carts, manual lifts)</label><br>
+                    <input type="checkbox" id="resource6" name="physical-resources" value="vehicles">
+                    <label for="resource6">Vehicles/goods transportation means</label><br>
+                    <input type="checkbox" id="resource7" name="physical-resources" value="other-resource">
+                    <label for="resource7">Other</label>
+                </div>
+                <div id="other-resource-container" style="display: none;">
+                    <label for="other-resource">Please specify other resources:</label>
+                    <textarea id="other-resource"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are resources available to start operations?</label>
+                <div class="radio-group">
+                    <input type="radio" id="resources-yes" name="resources-available" value="yes">
+                    <label for="resources-yes">Yes</label>
+                    <input type="radio" id="resources-no" name="resources-available" value="no">
+                    <label for="resources-no">No</label>
+                </div>
+                <div id="resources-explanation-container" style="display: none;">
+                    <label for="resources-explanation">If no, please clarify:</label>
+                    <textarea id="resources-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Supply Chain Management</div>
+            
+            <div class="form-group">
+                <label>Supplier selection criteria:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="criteria1" name="supplier-criteria" value="quality">
+                    <label for="criteria1">Quality</label><br>
+                    <input type="checkbox" id="criteria2" name="supplier-criteria" value="price">
+                    <label for="criteria2">Price</label><br>
+                    <input type="checkbox" id="criteria3" name="supplier-criteria" value="delivery">
+                    <label for="criteria3">Delivery speed</label><br>
+                    <input type="checkbox" id="criteria4" name="supplier-criteria" value="payment">
+                    <label for="criteria4">Payment terms</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>What is the inventory management policy in the project?</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="inventory1" name="inventory-policy" value="reorder">
+                    <label for="inventory1">Setting reorder point for replenishment when inventory reaches a certain level</label><br>
+                    <input type="checkbox" id="inventory2" name="inventory-policy" value="safety">
+                    <label for="inventory2">Maintaining safety stock to avoid sudden shortages</label><br>
+                    <input type="checkbox" id="inventory3" name="inventory-policy" value="damaged">
+                    <label for="inventory3">Having a mechanism for handling damaged or expired goods (return to supplier - discounts - organized disposal)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Are there clear schedules for supply and distribution?</label>
+                <div class="radio-group">
+                    <input type="radio" id="schedules-yes" name="supply-schedules" value="yes">
+                    <label for="schedules-yes">Yes</label>
+                    <input type="radio" id="schedules-no" name="supply-schedules" value="no">
+                    <label for="schedules-no">No</label>
+                </div>
+                <div id="schedules-explanation-container" style="display: none;">
+                    <label for="schedules-explanation">Please explain:</label>
+                    <textarea id="schedules-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Customer Service and Support</div>
+            
+            <div class="form-group">
+                <label>What payment methods are available to customers?</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="payment1" name="payment-methods" value="cash">
+                    <label for="payment1">Cash</label><br>
+                    <input type="checkbox" id="payment2" name="payment-methods" value="cards">
+                    <label for="payment2">Cards</label><br>
+                    <input type="checkbox" id="payment3" name="payment-methods" value="ewallets">
+                    <label for="payment3">E-wallets</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is there a clear return/exchange policy?</label>
+                <div class="radio-group">
+                    <input type="radio" id="return-yes" name="return-policy" value="yes">
+                    <label for="return-yes">Yes</label>
+                    <input type="radio" id="return-no" name="return-policy" value="no">
+                    <label for="return-no">No</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is delivery service provided?</label>
+                <div class="radio-group">
+                    <input type="radio" id="delivery-yes" name="delivery-service" value="yes">
+                    <label for="delivery-yes">Yes</label>
+                    <input type="radio" id="delivery-no" name="delivery-service" value="no">
+                    <label for="delivery-no">No</label>
+                </div>
+                <div id="delivery-explanation-container" style="display: none;">
+                    <label for="delivery-explanation">If yes, please specify:</label>
+                    <textarea id="delivery-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Customer communication mechanisms:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="communication1" name="communication-methods" value="phone">
+                    <label for="communication1">Phone</label>
+                    <input type="checkbox" id="communication2" name="communication-methods" value="email">
+                    <label for="communication2">Email</label>
+                    <input type="checkbox" id="communication3" name="communication-methods" value="apps">
+                    <label for="communication3">Chat applications</label>
+                    <input type="checkbox" id="communication4" name="communication-methods" value="social">
+                    <label for="communication4">Social media</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="complaints-mechanism">Complaint handling mechanism:</label>
+                <textarea id="complaints-mechanism"></textarea>
+            </div>
+
+            <div class="section-title">Monitoring and Evaluation Systems (KPIs)</div>
+            
+            <div class="form-group">
+                <label>Key performance indicators for the commercial sector:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="kpi1" name="performance-indicators" value="turnover">
+                    <label for="kpi1">Inventory turnover rate</label><br>
+                    <input type="checkbox" id="kpi2" name="performance-indicators" value="margin">
+                    <label for="kpi2">Gross profit margin</label><br>
+                    <input type="checkbox" id="kpi3" name="performance-indicators" value="transaction">
+                    <label for="kpi3">Average transaction value</label><br>
+                    <input type="checkbox" id="kpi4" name="performance-indicators" value="sales-per-sqft">
+                    <label for="kpi4">Sales per square foot</label><br>
+                    <input type="checkbox" id="kpi5" name="performance-indicators" value="shrinkage">
+                    <label for="kpi5">Product loss rate (Shrinkage)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>How will performance be evaluated and improved?</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="evaluation1" name="evaluation-methods" value="reports">
+                    <label for="evaluation1">Monthly performance reports</label><br>
+                    <input type="checkbox" id="evaluation2" name="evaluation-methods" value="meetings">
+                    <label for="evaluation2">Regular meetings</label><br>
+                    <input type="checkbox" id="evaluation3" name="evaluation-methods" value="analysis">
+                    <label for="evaluation3">Sales data analysis</label><br>
+                    <input type="checkbox" id="evaluation4" name="evaluation-methods" value="quality-review">
+                    <label for="evaluation4">Quality review programs</label>
+                </div>
+            </div>
+
+            <div class="section-title">Feasibility and Potential Challenges</div>
+            
+            <div class="form-group">
+                <label>What are the expected operational obstacles?</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="obstacle1" name="operational-obstacles" value="hiring">
+                    <label for="obstacle1">Hiring difficulties</label><br>
+                    <input type="checkbox" id="obstacle2" name="operational-obstacles" value="suppliers">
+                    <label for="obstacle2">Weak suppliers</label><br>
+                    <input type="checkbox" id="obstacle3" name="operational-obstacles" value="infrastructure">
+                    <label for="obstacle3">Infrastructure problems</label><br>
+                    <input type="checkbox" id="obstacle4" name="operational-obstacles" value="logistics">
+                    <label for="obstacle4">Logistical challenges</label><br>
+                    <input type="checkbox" id="obstacle5" name="operational-obstacles" value="no-difficulties">
+                    <label for="obstacle5">No difficulties</label>
+                </div>
+                <div id="obstacles-explanation-container">
+                    <label for="obstacles-explanation">Please clarify:</label>
+                    <textarea id="obstacles-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Is the project compatible with the regulatory and legal environment?</label>
+                <div class="radio-group">
+                    <input type="radio" id="compliance-yes" name="regulatory-compliance" value="yes">
+                    <label for="compliance-yes">Yes</label>
+                    <input type="radio" id="compliance-no" name="regulatory-compliance" value="no">
+                    <label for="compliance-no">No</label>
+                    <input type="radio" id="compliance-partial" name="regulatory-compliance" value="partial">
+                    <label for="compliance-partial">To a large extent</label>
+                </div>
+                <div id="compliance-explanation-container">
+                    <label for="compliance-explanation">Please explain:</label>
+                    <textarea id="compliance-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Emergency plans:</label>
+                <div class="radio-group">
+                    <input type="radio" id="emergency-yes" name="emergency-plan" value="yes">
+                    <label for="emergency-yes">Yes</label>
+                    <input type="radio" id="emergency-no" name="emergency-plan" value="no">
+                    <label for="emergency-no">No</label>
+                </div>
+                <div id="emergency-details-container" style="display: none;">
+                    <label>Emergency plan details:</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="emergency1" name="emergency-details" value="alternative">
+                        <label for="emergency1">Alternative suppliers</label><br>
+                        <input type="checkbox" id="emergency2" name="emergency-details" value="backup">
+                        <label for="emergency2">Backup systems</label><br>
+                        <input type="checkbox" id="emergency3" name="emergency-details" value="operational">
+                        <label for="emergency3">Emergency operational plans</label>
+                    </div>
+                    <label for="emergency-explanation">Please explain emergency plans:</label>
+                    <textarea id="emergency-explanation"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Overall Operational Assessment</div>
+            
+            <div class="form-group">
+                <label>Degree of complexity of project operation:</label>
+                <div class="radio-group">
+                    <input type="radio" id="complexity-easy" name="operation-complexity" value="easy">
+                    <label for="complexity-easy">Easy</label>
+                    <input type="radio" id="complexity-medium" name="operation-complexity" value="medium">
+                    <label for="complexity-medium">Medium</label>
+                    <input type="radio" id="complexity-somewhat" name="operation-complexity" value="somewhat">
+                    <label for="complexity-somewhat">Somewhat complex</label>
+                    <input type="radio" id="complexity-complex" name="operation-complexity" value="complex">
+                    <label for="complexity-complex">Complex</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Operational feasibility:</label>
+                <div class="radio-group">
+                    <input type="radio" id="feasibility-yes" name="operational-feasibility" value="yes-efficient">
+                    <label for="feasibility-yes">Yes, efficiently</label>
+                    <input type="radio" id="feasibility-challenges" name="operational-feasibility" value="yes-challenges">
+                    <label for="feasibility-challenges">Yes, with some challenges</label>
+                    <input type="radio" id="feasibility-no" name="operational-feasibility" value="no">
+                    <label for="feasibility-no">No, not currently feasible</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="additional-notes">Additional notes, recommendations, or additions not mentioned:</label>
+                <textarea id="additional-notes"></textarea>
+            </div>
+
+            <button class="next-btn" onclick="window.location.href='../Comprehensive-feasibility/Organisational Feasibility.html'">Save and Continue</button>
+        </div>
+
+        <div class="output-section">
+            <h2>Your Input Summary</h2>
+            <div id="output-content">
+                <p>Your entered information will appear here as you fill out the form.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide conditional fields
+            const policyCheckbox = document.getElementById('policy6');
+            const policyContainer = document.getElementById('other-policy-container');
+            
+            policyCheckbox.addEventListener('change', function() {
+                policyContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const qualityCheckbox = document.getElementById('quality4');
+            const qualityContainer = document.getElementById('other-quality-container');
+            
+            qualityCheckbox.addEventListener('change', function() {
+                qualityContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const resourceCheckbox = document.getElementById('resource7');
+            const resourceContainer = document.getElementById('other-resource-container');
+            
+            resourceCheckbox.addEventListener('change', function() {
+                resourceContainer.style.display = this.checked ? 'block' : 'none';
+                updateOutput();
+            });
+
+            const resourcesRadios = document.querySelectorAll('input[name="resources-available"]');
+            const resourcesContainer = document.getElementById('resources-explanation-container');
+            
+            resourcesRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    resourcesContainer.style.display = this.value === 'no' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const schedulesRadios = document.querySelectorAll('input[name="supply-schedules"]');
+            const schedulesContainer = document.getElementById('schedules-explanation-container');
+            
+            schedulesRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    schedulesContainer.style.display = this.checked ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const deliveryRadios = document.querySelectorAll('input[name="delivery-service"]');
+            const deliveryContainer = document.getElementById('delivery-explanation-container');
+            
+            deliveryRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    deliveryContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            const emergencyRadios = document.querySelectorAll('input[name="emergency-plan"]');
+            const emergencyContainer = document.getElementById('emergency-details-container');
+            
+            emergencyRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    emergencyContainer.style.display = this.value === 'yes' ? 'block' : 'none';
+                    updateOutput();
+                });
+            });
+
+            // Update output when inputs change
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                input.addEventListener('change', updateOutput);
+                if (input.tagName !== 'SELECT') {
+                    input.addEventListener('keyup', updateOutput);
+                }
+            });
+
+            // Language selector
+            document.getElementById('language-selector').addEventListener('change', function() {
+                alert('Language changed to: ' + this.options[this.selectedIndex].text);
+            });
+
+            // Initial output update
+            updateOutput();
+        });
+
+        // Dynamic field functions
+        function addStaffField() {
+            const staffList = document.getElementById('staff-list');
+            const staffCount = document.querySelectorAll('.staff-position').length;
+            
+            if (staffCount >= 20) {
+                alert('You can add up to 20 positions only.');
+                return;
+            }
+            
+            const newField = document.createElement('div');
+            newField.className = 'staff-position';
+            newField.innerHTML = `
+                <input type="text" placeholder="Position" class="position-name">
+                <input type="number" placeholder="Number of employees" class="staff-count">
+                <button class="remove-btn" onclick="removeField(this)">×</button>
+            `;
+            staffList.appendChild(newField);
+        }
+
+        function removeField(button) {
+            button.parentElement.remove();
+            updateOutput();
+        }
+
+        // Update output section
+        function updateOutput() {
+            const outputDiv = document.getElementById('output-content');
+            let outputHTML = '';
+            
+            // Helper function to add output items
+            function addOutputItem(title, value) {
+                if (value) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>${title}:</h4>
+                            <p>${value}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Operating Model
+            addOutputItem('Daily Operations', document.getElementById('daily-operations').value);
+            
+            const selectedSteps = [];
+            document.querySelectorAll('input[name="operation-steps"]:checked').forEach(step => {
+                selectedSteps.push(step.id.replace('step', 'Step '));
+            });
+            if (selectedSteps.length > 0) {
+                addOutputItem('Operation Steps', selectedSteps.join(', '));
+            }
+            
+            const selectedSOPs = document.querySelector('input[name="sops"]:checked');
+            if (selectedSOPs) {
+                addOutputItem('SOPs Availability', selectedSOPs.id.replace('sops-', ''));
+            }
+
+            // Administrative Structure
+            addOutputItem('Essential Functions', document.getElementById('essential-functions').value);
+            
+            // Staff positions
+            const positionNames = document.querySelectorAll('.position-name');
+            const staffCounts = document.querySelectorAll('.staff-count');
+            
+            if (positionNames.length > 0 && positionNames[0].value) {
+                let staffHTML = '';
+                for (let i = 0; i < positionNames.length; i++) {
+                    if (positionNames[i].value) {
+                        staffHTML += `<li>${positionNames[i].value}: ${staffCounts[i].value || '0'} employees</li>`;
+                    }
+                }
+                if (staffHTML) {
+                    outputHTML += `
+                        <div class="output-item">
+                            <h4>Staff Positions:</h4>
+                            <ul>${staffHTML}</ul>
+                        </div>
+                    `;
+                }
+            }
+            
+            addOutputItem('Main Supervisor', document.getElementById('supervisor').value);
+            
+            const selectedPlan = document.querySelector('input[name="task-plan"]:checked');
+            if (selectedPlan) {
+                addOutputItem('Task Distribution Plan', selectedPlan.id.replace('plan-', ''));
+            }
+
+            // Operational Policies
+            const selectedPolicies = [];
+            document.querySelectorAll('input[name="operational-policies"]:checked').forEach(policy => {
+                selectedPolicies.push(policy.id.replace('policy', 'Policy '));
+            });
+            if (selectedPolicies.length > 0) {
+                addOutputItem('Operational Policies', selectedPolicies.join(', '));
+                if (document.getElementById('policy6').checked) {
+                    addOutputItem('Other Policies', document.getElementById('other-policy').value);
+                }
+            }
+            
+            const selectedQuality = [];
+            document.querySelectorAll('input[name="quality-procedures"]:checked').forEach(quality => {
+                selectedQuality.push(quality.id.replace('quality', 'Quality '));
+            });
+            if (selectedQuality.length > 0) {
+                addOutputItem('Quality Procedures', selectedQuality.join(', '));
+                if (document.getElementById('quality4').checked) {
+                    addOutputItem('Other Quality Procedures', document.getElementById('other-quality').value);
+                }
+            }
+
+            // Required Resources
+            const selectedHR = [];
+            document.querySelectorAll('input[name="human-resources"]:checked').forEach(hr => {
+                let count = 0;
+                switch(hr.value) {
+                    case 'administrative': count = document.getElementById('admin-count').value; break;
+                    case 'supervisors': count = document.getElementById('supervisor-count').value; break;
+                    case 'sales': count = document.getElementById('sales-count').value; break;
+                    case 'warehouse': count = document.getElementById('warehouse-count').value; break;
+                    case 'customer-service': count = document.getElementById('service-count').value; break;
+                    case 'security': count = document.getElementById('security-count').value; break;
+                }
+                selectedHR.push(`${hr.id.replace('hr', 'HR ')}: ${count}`);
+            });
+            if (selectedHR.length > 0) {
+                addOutputItem('Human Resources', selectedHR.join(', '));
+            }
+            
+            const selectedResources = [];
+            document.querySelectorAll('input[name="physical-resources"]:checked').forEach(resource => {
+                selectedResources.push(resource.id.replace('resource', 'Resource '));
+            });
+            if (selectedResources.length > 0) {
+                addOutputItem('Physical Resources', selectedResources.join(', '));
+                if (document.getElementById('resource7').checked) {
+                    addOutputItem('Other Resources', document.getElementById('other-resource').value);
+                }
+            }
+            
+            const selectedResourcesAvail = document.querySelector('input[name="resources-available"]:checked');
+            if (selectedResourcesAvail) {
+                addOutputItem('Resources Availability', selectedResourcesAvail.id.replace('resources-', ''));
+                if (selectedResourcesAvail.value === 'no') {
+                    addOutputItem('Resources Explanation', document.getElementById('resources-explanation').value);
+                }
+            }
+
+            // Supply Chain
+            const selectedCriteria = [];
+            document.querySelectorAll('input[name="supplier-criteria"]:checked').forEach(criterion => {
+                selectedCriteria.push(criterion.id.replace('criteria', 'Criterion '));
+            });
+            if (selectedCriteria.length > 0) {
+                addOutputItem('Supplier Criteria', selectedCriteria.join(', '));
+            }
+            
+            const selectedInventory = [];
+            document.querySelectorAll('input[name="inventory-policy"]:checked').forEach(policy => {
+                selectedInventory.push(policy.id.replace('inventory', 'Inventory '));
+            });
+            if (selectedInventory.length > 0) {
+                addOutputItem('Inventory Policies', selectedInventory.join(', '));
+            }
+            
+            const selectedSchedules = document.querySelector('input[name="supply-schedules"]:checked');
+            if (selectedSchedules) {
+                addOutputItem('Supply Schedules', selectedSchedules.id.replace('schedules-', ''));
+                if (selectedSchedules.checked) {
+                    addOutputItem('Schedules Explanation', document.getElementById('schedules-explanation').value);
+                }
+            }
+
+            // Customer Service
+            const selectedPayments = [];
+            document.querySelectorAll('input[name="payment-methods"]:checked').forEach(payment => {
+                selectedPayments.push(payment.id.replace('payment', 'Payment '));
+            });
+            if (selectedPayments.length > 0) {
+                addOutputItem('Payment Methods', selectedPayments.join(', '));
+            }
+            
+            const selectedReturn = document.querySelector('input[name="return-policy"]:checked');
+            if (selectedReturn) {
+                addOutputItem('Return Policy', selectedReturn.id.replace('return-', ''));
+            }
+            
+            const selectedDelivery = document.querySelector('input[name="delivery-service"]:checked');
+            if (selectedDelivery) {
+                addOutputItem('Delivery Service', selectedDelivery.id.replace('delivery-', ''));
+                if (selectedDelivery.value === 'yes') {
+                    addOutputItem('Delivery Details', document.getElementById('delivery-explanation').value);
+                }
+            }
+            
+            const selectedCommunications = [];
+            document.querySelectorAll('input[name="communication-methods"]:checked').forEach(communication => {
+                selectedCommunications.push(communication.id.replace('communication', 'Communication '));
+            });
+            if (selectedCommunications.length > 0) {
+                addOutputItem('Communication Methods', selectedCommunications.join(', '));
+            }
+            
+            addOutputItem('Complaint Mechanism', document.getElementById('complaints-mechanism').value);
+
+            // KPIs
+            const selectedKPIs = [];
+            document.querySelectorAll('input[name="performance-indicators"]:checked').forEach(kpi => {
+                selectedKPIs.push(kpi.id.replace('kpi', 'KPI '));
+            });
+            if (selectedKPIs.length > 0) {
+                addOutputItem('Performance Indicators', selectedKPIs.join(', '));
+            }
+            
+            const selectedEvaluations = [];
+            document.querySelectorAll('input[name="evaluation-methods"]:checked').forEach(evaluation => {
+                selectedEvaluations.push(evaluation.id.replace('evaluation', 'Evaluation '));
+            });
+            if (selectedEvaluations.length > 0) {
+                addOutputItem('Evaluation Methods', selectedEvaluations.join(', '));
+            }
+
+            // Challenges
+            const selectedObstacles = [];
+            document.querySelectorAll('input[name="operational-obstacles"]:checked').forEach(obstacle => {
+                selectedObstacles.push(obstacle.id.replace('obstacle', 'Obstacle '));
+            });
+            if (selectedObstacles.length > 0) {
+                addOutputItem('Operational Obstacles', selectedObstacles.join(', '));
+                addOutputItem('Obstacles Explanation', document.getElementById('obstacles-explanation').value);
+            }
+            
+            const selectedCompliance = document.querySelector('input[name="regulatory-compliance"]:checked');
+            if (selectedCompliance) {
+                addOutputItem('Regulatory Compliance', selectedCompliance.id.replace('compliance-', ''));
+                addOutputItem('Compliance Explanation', document.getElementById('compliance-explanation').value);
+            }
+            
+            const selectedEmergency = document.querySelector('input[name="emergency-plan"]:checked');
+            if (selectedEmergency) {
+                addOutputItem('Emergency Plan', selectedEmergency.id.replace('emergency-', ''));
+                if (selectedEmergency.value === 'yes') {
+                    const selectedEmergencyDetails = [];
+                    document.querySelectorAll('input[name="emergency-details"]:checked').forEach(detail => {
+                        selectedEmergencyDetails.push(detail.id.replace('emergency', 'Emergency '));
+                    });
+                    if (selectedEmergencyDetails.length > 0) {
+                        addOutputItem('Emergency Details', selectedEmergencyDetails.join(', '));
+                    }
+                    addOutputItem('Emergency Explanation', document.getElementById('emergency-explanation').value);
+                }
+            }
+
+            // Overall Assessment
+            const selectedComplexity = document.querySelector('input[name="operation-complexity"]:checked');
+            if (selectedComplexity) {
+                addOutputItem('Operation Complexity', selectedComplexity.id.replace('complexity-', ''));
+            }
+            
+            const selectedFeasibility = document.querySelector('input[name="operational-feasibility"]:checked');
+            if (selectedFeasibility) {
+                addOutputItem('Operational Feasibility', selectedFeasibility.id.replace('feasibility-', ''));
+            }
+
+            // Additional Notes
+            addOutputItem('Additional Notes', document.getElementById('additional-notes').value);
+
+            // Update the output div
+            if (outputHTML === '') {
+                outputHTML = '<p>Your entered information will appear here as you fill out the form.</p>';
+            }
+            document.getElementById('output-content').innerHTML = outputHTML;
+        }
+    </script>
+</body>
+</html>
